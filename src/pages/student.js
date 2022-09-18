@@ -33,7 +33,7 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData("0", "박성진", 21700266, "전산전자공학부", 4),
+  createData("1", "박성진", 21700266, "전산전자공학부", 4),
   createData("Donut", 452, 25.0, 51, 4.9),
   createData("Eclair", 262, 16.0, 24, 6.0),
   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
