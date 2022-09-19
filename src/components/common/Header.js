@@ -47,7 +47,10 @@ export default function Header(props) {
     window !== undefined ? () => window().document.body : undefined;
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        // sx={{ backgroundColor: "background.paper", color: "text.primary" }}
+      >
         <Toolbar>
           <IconButton
             size="large"
