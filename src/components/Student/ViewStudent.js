@@ -18,89 +18,76 @@ function ViewStudent({ id, handleClose }) {
             {...register("studentName", {
               required: true,
             })}
-            InputProps={{
-              readOnly: true,
-            }}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학번</InputLabel>
           <TextField
             variant="standard"
             {...register("studentId", {
               required: true,
             })}
-            InputProps={{
-              readOnly: true,
-            }}
           />
         </div>
         <div>
           <InputLabel>전공</InputLabel>
           <TextField
             variant="standard"
-            {...register("major")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("major", {
+              required: true,
+            })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학년</InputLabel>
           <TextField
             variant="standard"
-            {...register("year")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("year", {
+              required: true,
+            })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학기</InputLabel>
           <TextField
             variant="standard"
-            {...register("semester")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("semester", {
+              required: true,
+            })}
           />
         </div>
         <div>
           <InputLabel>생년월일</InputLabel>
           <TextField
             variant="standard"
-            {...register("birth")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("birth", {
+              required: true,
+            })}
           />
-        </div>
-        <div>
+          <p></p>
           <InputLabel>전화번호</InputLabel>
           <TextField
             variant="standard"
-            {...register("phone")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("phone", {
+              required: true,
+            })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>이메일</InputLabel>
           <TextField
             variant="standard"
-            {...register("email")}
-            InputProps={{
-              readOnly: true,
-            }}
+            {...register("email", {
+              required: true,
+            })}
           />
         </div>
       </Box>
       <Typography>학생 세부 정보</Typography>
       <ul>
-        <li>성별:</li>
-        <li>이메일:</li>
-        <li>핸드폰:</li>
+        <li>정보</li>
+        <li>정보</li>
+        <li>정보</li>
       </ul>
     </>
   );

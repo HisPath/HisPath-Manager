@@ -23,8 +23,7 @@ function EditStudent({ id, handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
           <InputLabel>학번</InputLabel>
           <TextField
             variant="standard"
@@ -36,8 +35,7 @@ function EditStudent({ id, handleClose }) {
         <div>
           <InputLabel>전공</InputLabel>
           <TextField variant="standard" {...register("major")} />
-        </div>
-        <div>
+          <p></p>
           <InputLabel>학년</InputLabel>
           <TextField variant="standard" {...register("year")} />
         </div>

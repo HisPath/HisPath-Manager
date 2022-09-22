@@ -22,8 +22,8 @@ function AddStudent({ handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학번</InputLabel>
           <TextField
             variant="standard"
@@ -40,8 +40,8 @@ function AddStudent({ handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학년</InputLabel>
           <TextField
             variant="standard"
@@ -49,8 +49,8 @@ function AddStudent({ handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>학기</InputLabel>
           <TextField
             variant="standard"
@@ -67,8 +67,7 @@ function AddStudent({ handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
           <InputLabel>전화번호</InputLabel>
           <TextField
             variant="standard"
@@ -76,8 +75,8 @@ function AddStudent({ handleClose }) {
               required: true,
             })}
           />
-        </div>
-        <div>
+          <p></p>
+
           <InputLabel>이메일</InputLabel>
           <TextField
             variant="standard"
