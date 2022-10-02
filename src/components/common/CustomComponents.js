@@ -118,50 +118,44 @@ export function Search() {
 
 export function Button({ title, onClick }) {
   return (
-    <div>
-      <InputLabel sx={{ m: 0.5 }}>일반 버튼</InputLabel>
-      <ButtonBase
-        onClick={onClick}
-        sx={{
-          fontSize: 16,
-          height: 40,
-          borderRadius: 2,
-          backgroundColor: "action.selected",
-          "&:hover": {
-            backgroundColor: "action.focus",
-          },
-          boxShadow: (theme) => theme.shadows[1],
-          color: "secondary.main",
-          fontWeight: 500,
-          padding: "0 16px",
-        }}
-      >
-        {title}
-      </ButtonBase>
-    </div>
+    <ButtonBase
+      onClick={onClick}
+      sx={{
+        fontSize: 16,
+        height: 40,
+        borderRadius: 2,
+        backgroundColor: "action.selected",
+        "&:hover": {
+          backgroundColor: "action.focus",
+        },
+        boxShadow: (theme) => theme.shadows[1],
+        color: "secondary.main",
+        fontWeight: 500,
+        padding: "0 16px",
+      }}
+    >
+      {title}
+    </ButtonBase>
   );
 }
 
 export function EmButton({ title, onClick }) {
   return (
-    <div>
-      <InputLabel sx={{ m: 0.5 }}>강조 버튼</InputLabel>
-      <MUIButton
-        onClick={onClick}
-        variant="contained"
-        color="secondary"
-        sx={{
-          fontSize: 16,
-          height: 40,
-          borderRadius: 2,
-          boxShadow: (theme) => theme.shadows[1],
-          fontWeight: 500,
-          padding: "0 16px",
-        }}
-      >
-        {title}
-      </MUIButton>
-    </div>
+    <MUIButton
+      onClick={onClick}
+      variant="contained"
+      color="secondary"
+      sx={{
+        fontSize: 16,
+        height: 40,
+        borderRadius: 2,
+        boxShadow: (theme) => theme.shadows[1],
+        fontWeight: 500,
+        padding: "0 16px",
+      }}
+    >
+      {title}
+    </MUIButton>
   );
 }
 
