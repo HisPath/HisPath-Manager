@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Modal,
+  Paper,
   styled,
   Typography,
 } from "@mui/material";
@@ -17,32 +18,39 @@ import { mileageState } from "../atom";
 import AddMileage from "../components/Mileage/AddMileage";
 import ViewMileage from "../components/Mileage/ViewMileage";
 import EditMileage from "../components/Mileage/EditMileage";
+import exampleExcel from "../assets/example.xlsx";
 
 const Section = styled(Container)({
-  height: "calc(100vh - 96px)",
+  marginTop: 40,
+  padding: 24,
+  borderRadius: 8,
 });
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-end",
   paddingBottom: 24,
 });
 
-const Article = styled("div")({
-  height: "85%",
+const Article = styled(Box)({
+  height: "calc(100vh - 236.5px)",
 });
 
 const columns = [
+  {
+    field: "category",
+    headerName: "카테고리",
+    width: 200,
+  },
   {
     field: "mileageName",
     headerName: "활동명",
     width: 250,
   },
   {
-    field: "category",
-    headerName: "카테고리",
+    field: "remark",
+    headerName: "비고",
     width: 200,
   },
   {
@@ -51,9 +59,10 @@ const columns = [
     width: 200,
   },
   {
-    field: "remark",
-    headerName: "비고",
-    width: 150,
+    field: "isListUpload",
+    headerName: "인원 등록 여부",
+    type: "boolean",
+    width: 120,
   },
 ];
 
@@ -64,7 +73,9 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  width: 450,
+  p: 3.5,
+  borderRadius: 4,
 };
 
 function Mileage() {
@@ -85,12 +96,31 @@ function Mileage() {
     }
   };
   return (
-    <Section>
+    <Section component={Paper}>
       <Header>
         <Typography variant="h5">마일리지 관리 시스템</Typography>
-        <Button onClick={handleOpenAdd} variant="outlined">
-          항목 추가
-        </Button>
+        <Box display="flex" gap={1.5}>
+          <Button
+            component="a"
+            href={exampleExcel}
+            download="마일리지 항목 추가 양식"
+            variant="outlined"
+          >
+            엑셀 양식 다운로드
+          </Button>
+          <Button component="label" variant="outlined">
+            엑셀로 항목 추가
+            <input
+              type="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              // onChange={}
+              hidden
+            />
+          </Button>
+          <Button onClick={handleOpenAdd} variant="contained">
+            개별 항목 추가
+          </Button>
+        </Box>
       </Header>
       <Article>
         <DataGrid
