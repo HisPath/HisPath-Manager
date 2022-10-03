@@ -1,67 +1,85 @@
-import { Box, InputLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { mileageState } from "../../atom";
 
 function ViewMileage({ id, handleClose }) {
   const mileage = useRecoilValue(mileageState);
+  const target = mileage.filter((item) => item.id === id)[0];
   const { register } = useForm({
-    defaultValues: mileage.filter((item) => item.id === id)[0],
+    defaultValues: target,
   });
   return (
     <>
-      <Box my={8} display="flex" justifyContent="space-between" gap={2}>
-        <div>
+      <Box mt={3} mb={8}>
+        <Box mb={2}>
+          <InputLabel>카테고리</InputLabel>
+          <FormControl fullWidth hiddenLabel variant="filled" size="small">
+            <TextField
+              color="secondary"
+              InputProps={{ disableUnderline: true, readOnly: true }}
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+              {...register("category", {
+                required: "필수 항목입니다.",
+              })}
+            />
+          </FormControl>
+        </Box>
+        <Box mb={2}>
           <InputLabel>활동명</InputLabel>
           <TextField
-            variant="standard"
+            color="secondary"
+            InputProps={{ disableUnderline: true, readOnly: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
             {...register("mileageName", {
-              required: true,
+              required: "필수 항목입니다.",
             })}
-            InputProps={{
-              readOnly: true,
-            }}
           />
-        </div>
-        <div>
-          <InputLabel>카테고리</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("category", {
-              required: true,
-            })}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </div>
-        <div>
+        </Box>
+        <Box mb={2}>
           <InputLabel>설명</InputLabel>
           <TextField
-            variant="standard"
+            color="secondary"
+            InputProps={{ disableUnderline: true, readOnly: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
             {...register("description")}
-            InputProps={{
-              readOnly: true,
-            }}
           />
-        </div>
-        <div>
+        </Box>
+        <Box mb={2}>
           <InputLabel>비고</InputLabel>
           <TextField
-            variant="standard"
+            color="secondary"
+            InputProps={{ disableUnderline: true, readOnly: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
             {...register("remark")}
-            InputProps={{
-              readOnly: true,
-            }}
           />
-        </div>
+        </Box>
       </Box>
-      <Typography>학생 목록</Typography>
-      <ul>
-        <li>학생1</li>
-        <li>학생2</li>
-        <li>학생3</li>
-      </ul>
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" gap={1.5}>
+          <Button color="secondary" variant="outlined">
+            엑셀 양식 다운
+          </Button>
+          <Button color="secondary" variant="outlined">
+            엑셀 업로드
+          </Button>
+        </Box>
+        <Button color="secondary" variant="contained">
+          학생 목록 보기
+        </Button>
+      </Box>
     </>
   );
 }

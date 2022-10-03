@@ -9,6 +9,7 @@ import {
   Search,
   Select,
 } from "../components/common/CustomComponents";
+import S3Upload from "../components/common/S3Upload";
 
 function Sample() {
   const [open, setOpen] = useState(false);
@@ -25,9 +26,14 @@ function Sample() {
         <DatePicker title="시작일" />
         <InputText title="입력창" placeholder="이름을 입력하세요" />
         <Search />
+      </Box>
+
+      <Box display="flex" gap={1.5} mt={2.5}>
         <Button title="모달 열기" onClick={handleOpen} />
         <EmButton title="강조 버튼" />
       </Box>
+
+      <S3Upload />
 
       <Modal open={open} handleClose={handleClose} />
     </Container>

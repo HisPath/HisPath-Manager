@@ -3,10 +3,10 @@ import Header from "./components/common/Header";
 import Main from "./pages/Main";
 import Mileage from "./pages/Mileage";
 import Sample from "./pages/Sample";
-import Notice from './pages/Notice';
-import Post from './pages/Post';
-import AddPost from './pages/AddPost';
-import EditPost from './pages/EditPost';
+import Notice from "./pages/Notice";
+import Post from "./pages/Post";
+import AddPost from "./pages/AddPost";
+import EditPost from "./pages/EditPost";
 
 function Router() {
   return (

@@ -49,7 +49,7 @@ export default function Header(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        // sx={{ backgroundColor: "background.paper", color: "text.primary" }}
+        sx={{ backgroundColor: "background.paper", color: "primary.main" }}
       >
         <Toolbar>
           <IconButton
