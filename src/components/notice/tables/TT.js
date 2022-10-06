@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
@@ -31,6 +31,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import ReportOffIcon from '@mui/icons-material/ReportOff';
 import { waitForNone } from 'recoil';
 import { getInitColorSchemeScript } from '@mui/system';
+import axios from 'axios';
 
 function createData(no, title, writer, sdate, edate, view) {
   return {
@@ -165,10 +166,16 @@ const headCells = [
     label: 'Writer',
   },
   {
-    id: 'Date',
+    id: 'PubDate',
     numeric: false,
     disablePadding: false,
-    label: 'Date',
+    label: 'Publish Date',
+  },
+  {
+    id: 'ExpDate',
+    numeric: false,
+    disablePadding: false,
+    label: 'Expire Date',
   },
   {
     id: 'View',
@@ -338,6 +345,21 @@ export default function EnhancedTable() {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  // AXIOS
+  const [noticeList, setNoticeList] = useState([]);
+  useEffect(() => {
+    const fetchNoticeList = async () => {
+      try {
+        const res1 = await axios.get('http://localhost:8080/api/notice');
+        console.log(res1.data);
+        setNoticeList(res1.data);
+      } catch (err) {
+        console.log('err >> ', err);
+      }
+    };
+    fetchNoticeList();
+  }, []);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -354,7 +376,7 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={noticeList.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -365,7 +387,7 @@ export default function EnhancedTable() {
                   const isItemSelected = isSelected(row.no);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
+                  return noticeList.map((notice) => (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row.no)}
@@ -375,7 +397,7 @@ export default function EnhancedTable() {
                       key={row.no}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      <TableCell padding="checkbox" key={notice.id}>
                         <Checkbox
                           color="primary"
                           checked={isItemSelected}
@@ -384,29 +406,27 @@ export default function EnhancedTable() {
                           }}
                         />
                       </TableCell>
-
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.no}
+                        {notice.id}
                       </TableCell>
                       <TableCell align="left">
                         <Link
-                          to={`/notice/${row.no}`}
-                          key={row.no}
+                          to={`/notice/${notice.id}`}
+                          key={notice.id}
                           style={{
                             textDecoration: 'none',
                             color: 'inherit',
                           }}
                         >
-                          {row.title}
+                          {notice.title}
                         </Link>
                       </TableCell>
-                      <TableCell align="right">{row.writer}</TableCell>
-                      <TableCell align="right">
-                        {row.sdate} ~ {row.edate}
-                      </TableCell>
-                      <TableCell align="right">{row.view}</TableCell>
+                      <TableCell align="right">{notice.managerName}</TableCell>
+                      <TableCell align="right">{notice.pubDate}</TableCell>
+                      <TableCell align="right">{notice.expDate}</TableCell>
+                      <TableCell align="right">{notice.viewCnt} </TableCell>
                     </TableRow>
-                  );
+                  ));
                 })}
               {emptyRows > 0 && (
                 <TableRow
