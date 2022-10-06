@@ -4,107 +4,44 @@ import React, { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid'; // Grid version 1
-import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
-import { AdapterDayjs, LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import ReportIcon from '@mui/icons-material/Report';
+import ReportOffIcon from '@mui/icons-material/ReportOff';
+
+let noticeId = 3432;
+var mName = 'Adam';
+var title = 'Title';
+var content =
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+var viewCnt = 75;
+var important = true;
+var sDate = '2022-10-03';
+var eDate = '2022-10-10';
 
 function Header() {
   return (
     <header>
-      <h1>공지 상세</h1>
+      <Typography variant="h2" style={{ fontWeight: 'bold' }}>
+        공지 상세
+      </Typography>
     </header>
   );
 }
-function Article() {
-  //Temporary
-  let noticeId = 3432;
-
+function Buttons() {
   const [open, setOpen] = useState(false);
-  const [visibility, setVisibility] = useState(true);
-  const [reserved, setReserved] = useState(false);
-  const [date, setDate] = useState('2022-09-22');
-  const [view, setView] = useState(70);
   return (
-    <article>
-      <h1>Title</h1>
-      <Grid container spacing={3}>
-        <Grid item xs="6">
-          <icons>
-            <VisibilityIcon value="Visible" />
-            <VisibilityOffIcon value="Visible" />
-            <AccessTimeIcon value="Reserve" />
-          </icons>
-        </Grid>
-        <Grid item xs="6">
-          <Stack
-            direction="row"
-            spacing={1}
-            style={{
-              float: 'right',
-            }}
-          >
-            <Chip label={'Date: ' + date} variant="outlined" color="primary" />
-            <Chip label={'View: ' + view} variant="outlined" color="primary" />
-          </Stack>
-        </Grid>
-      </Grid>
-
-      <hr />
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-        galley of type and scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-        passages, and more recently with desktop publishing software like Aldus PageMaker including
-        versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-        an unknown printer took a galley of type and scrambled it to make a type specimen book. It
-        has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with the release of
-        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-        software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy
-        text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-        dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-        it to make a type specimen book. It has survived not only five centuries, but also the leap
-        into electronic typesetting, remaining essentially unchanged. It was popularised in the
-        1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      </p>
-      <hr />
-    </article>
-  );
-}
-export default function Post() {
-  let noticeId = 3432;
-
-  const [open, setOpen] = useState(false);
-  const [visibility, setVisibility] = useState(true);
-  const [reserved, setReserved] = useState(false);
-  const [date, setDate] = useState('2022-09-22');
-  const [view, setView] = useState(70);
-  const { params } = useParams();
-  const history = useSearchParams();
-  return (
-    <Container fixed>
-      <Header />
-      <Article />
+    <Box>
       <ButtonGroup
         style={{
           float: 'right',
@@ -162,6 +99,67 @@ export default function Post() {
           </Button>
         </DialogActions>
       </Dialog>
+    </Box>
+  );
+}
+function Article(props) {
+  const nid = props.noticeId;
+
+  // const [post, setPost] = useState();
+  // useEffect(() => {
+  //   const fetchPost = async () => {
+  //     try {
+  //       const res = axios.get('http://localhost:8080/api/notice/{}');
+  //       console.log(res1.data);
+  //       setNoticeList(res1.data);
+  //     } catch (err) {
+  //       console.log('err >> ', err);
+  //     }
+  //   };
+  //   fetchNoticeList();
+  // }, []);
+  //Temporary
+  const [imp, setImp] = useState(important);
+  const [managerName, setManagerName] = useState(mName);
+  const [contents, setContents] = useState(content);
+  const [startDate, setStartDate] = useState(new Date(sDate).toLocaleDateString());
+  const [endDate, setEndDate] = useState(new Date(eDate).toLocaleDateString());
+  const [view, setView] = useState(viewCnt);
+  return (
+    <Box container>
+      <br />
+      <Grid container spacing={3}>
+        <Grid item xs="3">
+          <Stack direction="row" spacing={1}>
+            <ReportIcon value="Visible" />
+            <AccessTimeIcon value="Reserve" />
+          </Stack>
+        </Grid>
+        <Grid item xs="5">
+          <Stack direction="row" spacing={1} justifyContent="center">
+            <Chip label={'Writen by: ' + managerName} variant="outlined" color="primary" />
+            <Chip label={'Publish Date: ' + startDate} variant="outlined" color="primary" />
+            <Chip label={'Expired Date: ' + endDate} variant="outlined" color="primary" />
+            <Chip label={'Views: ' + view} variant="outlined" color="primary" />
+          </Stack>
+        </Grid>
+        <Grid item xs="4">
+          <Buttons />
+        </Grid>
+      </Grid>
+      <hr />
+      {contents}
+    </Box>
+  );
+}
+
+export default function Post() {
+  const { params } = this.props.match;
+
+  return (
+    <Container fixed>
+      <Header />
+      <Article noticeId={params.noticeId} />
     </Container>
   );
 }

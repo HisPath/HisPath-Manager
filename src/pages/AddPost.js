@@ -1,25 +1,14 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import { render } from 'react-dom';
-//import ajax from '../../utils/ajax';
 import Editor from '../components/notice/Editor';
-//import UploadFiles from '../UploadFiles';
-//import LFSelect from '../common/LFSelect';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Chip from '@mui/material/Chip';
-import Checkbox from '@mui/material/Checkbox';
 
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 
-import Grid from '@mui/material/Grid'; // Grid version 1
 import ToggleButton from '@mui/material/ToggleButton';
 import CheckIcon from '@mui/icons-material/Check';
-
-//import DatePicker from '../components/common/DatePicker';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -32,9 +21,6 @@ export default function AddPost() {
   const [id, setId] = useState(0);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [type, setType] = useState('공지사항');
-  const uploadReferenece = React.createRef();
-  const [temp, setTemp] = useState(true);
   const [important, setImportant] = useState(false);
 
   const [startDate, setStartDate] = useState(new Date());
@@ -108,8 +94,8 @@ export default function AddPost() {
   }
 
   return (
-    <Box>
-      <Box width="80%" display="flex" justifyContent="center" p={2}>
+    <Box container p={2}>
+      <Box width="80%" display="flex" justifyContent="center" p={1}>
         <TextField
           required
           id="outlined-required"
@@ -118,61 +104,44 @@ export default function AddPost() {
           onChange={(event) => setTitle(event.target.value)}
         />
       </Box>
-      <Box width="80%" display="flex" gap={4} container p={2}>
-        <Stack direction="row" spacing={2}>
-          <ToggleButton
-            value="Visible"
-            variant="outlined"
-            selected={important}
-            onChange={importance}
-          >
-            Important
-            <CheckIcon />
-          </ToggleButton>
-          <BasicDatePicker />
-        </Stack>
+      <Box width="80%" justifyContent={'right'} display="flex" gap={4} container p={1}>
+        <ToggleButton value="Visible" variant="outlined" selected={important} onChange={importance}>
+          Important
+          <CheckIcon />
+        </ToggleButton>
+        <BasicDatePicker />
       </Box>
 
-      <div
-        className="container"
+      <Box
+        container
+        p={0}
         style={{
           fontFamily: 'Noto Sans Korean,Malgun Gothic,sans-serif',
-          width: '100%',
+          width: '80%',
           justifyContent: 'center',
         }}
       >
-        <div style={{ padding: '12px', width: '70%' }}>
+        <div style={{ padding: '12px', width: '100%' }}>
           <div className="form-group"></div>
           <Editor value={desc} onChange={onEditorChange} />
-          <Box
-            style={{
-              gap: '10px',
-            }}
-          >
+
+          <Box container gap={1} display="flex" justifyContent={'right'}>
             <Link id="notice_Detail_Link" to={{ pathname: `/notice/${id}` }}>
-              <Button
-                variant="contained"
-                style={{
-                  float: 'right',
-                }}
-              >
-                저장
-              </Button>
+              <Button variant="contained">저장</Button>
             </Link>
-            <Link to={{ pathname: '/notice' }}>
-              <Button
-                variant="outlined"
-                style={{
-                  float: 'right',
-                }}
-                color="error"
-              >
+            <Link
+              to={{ pathname: '/notice' }}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Button variant="outlined" color="error">
                 뒤로가기
               </Button>
             </Link>
           </Box>
         </div>
-      </div>
+      </Box>
     </Box>
   );
 }
