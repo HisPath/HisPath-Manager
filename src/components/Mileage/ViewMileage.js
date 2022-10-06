@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react";
-import { Box, Button, FormControl, InputLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  Modal,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
@@ -7,7 +20,83 @@ import { useSnackbar } from "notistack";
 import { mileageState } from "../../atom";
 import mileageStudentRegisterExcel from "../../assets/mileage_student_register.xlsx";
 
-function ViewMileage({ id, handleClose }) {
+const style = {
+  display: "flex",
+  flexDirection: "column",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  height: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 3.5,
+  borderRadius: 4,
+};
+
+function ViewStudentsModal({ students }) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={handleOpen} color="secondary" variant="contained">
+        학생 목록 보기
+      </Button>
+      <Modal hideBackdrop open={open} onClose={handleClose}>
+        <Box sx={{ ...style }}>
+          <Typography variant="h6">학생 목록</Typography>
+          <Box
+            my={2.5}
+            sx={{
+              overflow: "auto",
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "divider",
+            }}
+          >
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ backgroundColor: "background.paper" }}>
+                    학번
+                  </TableCell>
+                  <TableCell sx={{ backgroundColor: "background.paper" }}>
+                    이름
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {students.map((student) => (
+                  <TableRow
+                    key={student.studentNum}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{student.studentNum}</TableCell>
+                    <TableCell>{student.name}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+          <Box mt="auto" display="flex" justifyContent="flex-end">
+            <Button color="secondary" variant="contained" onClick={handleClose}>
+              닫기
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </>
+  );
+}
+
+function ViewMileage({ id, handleClose, loadData }) {
   const { enqueueSnackbar } = useSnackbar();
   const [students, setStudents] = useState([]);
   const mileage = useRecoilValue(mileageState);
@@ -18,16 +107,23 @@ function ViewMileage({ id, handleClose }) {
   const onChangeExcel = async (event) => {
     const { files } = event.target;
     const formData = new FormData();
-    formData.append("activityId", id);
+    formData.append(
+      "activityId",
+      new Blob([JSON.stringify(id)], { type: "application/json" })
+    );
     formData.append("file", files[0]);
-    await axios.post("/api/mileage/students", formData);
+    await axios
+      .post("/api/mileage/students", formData)
+      .then(function (response) {
+        console.log(response);
+      });
     enqueueSnackbar("학생 목록을 등록했습니다.", { variant: "success" });
     loadStudents();
+    loadData();
   };
   const loadStudents = () => {
     axios.get(`/api/mileage/${id}`).then(function (response) {
       setStudents(response.data.students);
-      console.log(response.data);
     });
   };
   useEffect(() => {
@@ -123,13 +219,7 @@ function ViewMileage({ id, handleClose }) {
             />
           </Button>
         </Box>
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={() => alert(students)}
-        >
-          학생 목록 보기
-        </Button>
+        <ViewStudentsModal students={students} />
       </Box>
     </>
   );

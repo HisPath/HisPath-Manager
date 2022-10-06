@@ -67,7 +67,7 @@ const columns = [
     width: 100,
   },
   {
-    field: "isListUpload",
+    field: "studentRegistered",
     headerName: "학생 등록 여부",
     type: "boolean",
     width: 120,
@@ -133,7 +133,6 @@ function Mileage() {
       .get(`/api/mileage/semester?semester=${semester}`)
       .then(function (response) {
         setMileages(response.data);
-        console.log(response.data);
         setInit(true);
       });
   };
@@ -254,7 +253,11 @@ function Mileage() {
           <Typography variant="h6" component="h2">
             마일리지 세부사항
           </Typography>
-          <ViewMileage id={currentId} handleClose={handleCloseView} />
+          <ViewMileage
+            id={currentId}
+            handleClose={handleCloseView}
+            loadData={loadData}
+          />
         </Box>
       </Modal>
       <Modal open={openEdit} onClose={handleCloseEdit}>
