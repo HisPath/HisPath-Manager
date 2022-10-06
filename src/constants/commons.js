@@ -8,3 +8,12 @@ export const mileageCategories = [
   "7. 비교과-학회활동",
   "8. 기타",
 ];
+
+export const semesterList = [
+  "2022-2",
+  "2022-1",
+  "2021-2",
+  "2021-1",
+  "2020-2",
+  "2020-1",
+];
