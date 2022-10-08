@@ -7,7 +7,7 @@
 // import { useRecoilState } from 'recoil';
 import Notice_TabTT from '../components/notice/Notice_TabTT';
 import Header from '../components/common/Header';
-
+import TT from '../components/notice/tables/TT';
 // const Header = styled('div')({
 //   height: '15%',
 //   display: 'flex',
@@ -19,7 +19,8 @@ import Header from '../components/common/Header';
 function Notice() {
   return (
     <div>
-      <Notice_TabTT />
+      {/* <Notice_TabTT /> */}
+      <TT />
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -15,31 +14,77 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { getStepIconUtilityClass, Typography } from '@mui/material';
 import ReportIcon from '@mui/icons-material/Report';
 import ReportOffIcon from '@mui/icons-material/ReportOff';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 
-let noticeId = 3432;
-var mName = 'Adam';
-var title = 'Title';
-var content =
-  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
-var viewCnt = 75;
-var important = true;
-var sDate = '2022-10-03';
-var eDate = '2022-10-10';
-
-function Header() {
+function Article({
+  id,
+  managerId,
+  managerName,
+  title,
+  content,
+  viewCnt,
+  importance,
+  pubDate,
+  expDate,
+}) {
+  function ImpIcon({ imp }) {
+    if (imp) return <ReportIcon />;
+    else return <p> </p>;
+  }
+  function TimeIcon({ pubDate }) {
+    const today = new Date();
+    // const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    // const today = new Date(t);
+    const pDate = new Date(pubDate);
+    if (pDate > today) return <AccessTimeIcon />;
+    else return <p> </p>;
+  }
   return (
-    <header>
-      <Typography variant="h2" style={{ fontWeight: 'bold' }}>
-        공지 상세
-      </Typography>
-    </header>
+    <Box container>
+      <br />
+      <Typography variant="h4">{title}</Typography>
+      <Grid container spacing={3}>
+        <Grid item xs="3">
+          <Stack direction="row" spacing={1}>
+            {/* <ReportIcon value="Visible" /> */}
+            <ImpIcon imp={importance} label="Important Notice" />
+            {/* <AccessTimeIcon value="Reserve" /> */}
+            <TimeIcon pubDate={pubDate} label="Reserved Notice" />
+          </Stack>
+        </Grid>
+        <Grid item xs="5">
+          <Stack direction="row" spacing={1} justifyContent="center">
+            <Chip label={'Writen by: ' + managerName} variant="outlined" color="primary" />
+            <Chip label={'Publish Date: ' + pubDate} variant="outlined" color="primary" />
+            <Chip label={'Expired Date: ' + expDate} variant="outlined" color="primary" />
+            <Chip label={'Views: ' + viewCnt} variant="outlined" color="primary" />
+          </Stack>
+        </Grid>
+        <Grid item xs="4">
+          <Buttons noticeId={id} />
+        </Grid>
+      </Grid>
+      <hr />
+      {content}
+    </Box>
   );
 }
-function Buttons() {
+function Buttons({ noticeId }) {
   const [open, setOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleDelete = async (noticeId) => {
+    setOpen(false);
+    // axios.delete(`/api/notice/${noticeId}`).then(function (response) {
+    //   enqueueSnackbar('삭제되었습니다.'), { variant: 'success' };
+    // });
+    axios.delete(`/api/notice/${noticeId}`);
+    enqueueSnackbar('삭제되었습니다.');
+  };
   return (
     <Box>
       <ButtonGroup
@@ -80,14 +125,22 @@ function Buttons() {
       <Dialog open={open}>
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setOpen(false);
+          <Link
+            to={'/notice'}
+            style={{
+              textDecoration: 'none',
             }}
           >
-            예
-          </Button>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                handleDelete(noticeId);
+              }}
+            >
+              예
+            </Button>
+          </Link>
+
           <Button
             variant="outlined"
             color="error"
@@ -102,64 +155,35 @@ function Buttons() {
     </Box>
   );
 }
-function Article(props) {
-  const nid = props.noticeId;
-
-  // const [post, setPost] = useState();
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     try {
-  //       const res = axios.get('http://localhost:8080/api/notice/{}');
-  //       console.log(res1.data);
-  //       setNoticeList(res1.data);
-  //     } catch (err) {
-  //       console.log('err >> ', err);
-  //     }
-  //   };
-  //   fetchNoticeList();
-  // }, []);
-  //Temporary
-  const [imp, setImp] = useState(important);
-  const [managerName, setManagerName] = useState(mName);
-  const [contents, setContents] = useState(content);
-  const [startDate, setStartDate] = useState(new Date(sDate).toLocaleDateString());
-  const [endDate, setEndDate] = useState(new Date(eDate).toLocaleDateString());
-  const [view, setView] = useState(viewCnt);
+function Header() {
   return (
-    <Box container>
-      <br />
-      <Grid container spacing={3}>
-        <Grid item xs="3">
-          <Stack direction="row" spacing={1}>
-            <ReportIcon value="Visible" />
-            <AccessTimeIcon value="Reserve" />
-          </Stack>
-        </Grid>
-        <Grid item xs="5">
-          <Stack direction="row" spacing={1} justifyContent="center">
-            <Chip label={'Writen by: ' + managerName} variant="outlined" color="primary" />
-            <Chip label={'Publish Date: ' + startDate} variant="outlined" color="primary" />
-            <Chip label={'Expired Date: ' + endDate} variant="outlined" color="primary" />
-            <Chip label={'Views: ' + view} variant="outlined" color="primary" />
-          </Stack>
-        </Grid>
-        <Grid item xs="4">
-          <Buttons />
-        </Grid>
-      </Grid>
-      <hr />
-      {contents}
-    </Box>
+    <header>
+      <Typography variant="h4" style={{ fontWeight: 'bold' }}>
+        상세공지
+      </Typography>
+    </header>
   );
 }
 
-export default function Post() {
-  const { params } = this.props.match;
+function Post() {
+  let { noticeId } = useParams();
+  const [notice, setNotice] = useState();
+
+  const loadData = () => {
+    axios.get(`/api/notice/${noticeId}`).then(function (response) {
+      setNotice(response.data);
+    });
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <Container fixed>
       <Header />
-      <Article noticeId={params.noticeId} />
+      <Article {...notice} />
     </Container>
   );
 }
+
+export default Post;
