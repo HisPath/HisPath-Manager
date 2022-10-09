@@ -1,95 +1,222 @@
-import { Box, InputLabel, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  Modal,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { studentState } from "../../atom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const style = {
+  display: "flex",
+  flexDirection: "column",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  height: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 3.5,
+  borderRadius: 4,
+};
 
 function ViewStudent({ id, handleClose }) {
+  const [students, setStudents] = useState([]);
   const student = useRecoilValue(studentState);
+  const target = student.filter((item) => item.id === id)[0];
   const { register } = useForm({
-    defaultValues: student.filter((item) => item.id === id)[0],
+    defaultValues: target,
   });
+  const loadStudents = () => {
+    axios.get(`/api/student/${id}`).then(function (response) {
+      setStudents(response.data.students);
+    });
+  };
+  useEffect(() => {
+    loadStudents();
+  }, []);
   return (
-    <>
-      <Box my={8} display="flex" justifyContent="space-between" gap={2}>
-        <div>
-          <InputLabel>이름</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("studentName", {
-              required: true,
-            })}
-          />
-          <p></p>
+    <Box mt={3} mb={8}>
+      <Box mb={2}>
+        <Box>
+          <Box display="flex" justifyContent="space-between"></Box>
+          <Box display="flex" gap={2}>
+            <Box width="50%">
+              <InputLabel sx={{ mt: 1 }}>이름</InputLabel>
+              <TextField
+                {...register("name")}
+                color="secondary"
+                InputProps={{ disableUnderline: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+              />
+            </Box>
+            <Box width="50%">
+              <InputLabel sx={{ mt: 1 }}>학번</InputLabel>
+              <TextField
+                {...register("studentNum")}
+                color="secondary"
+                InputProps={{ disableUnderline: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+              />
+            </Box>
+          </Box>
 
-          <InputLabel>학번</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("studentId", {
-              required: true,
-            })}
-          />
-        </div>
-        <div>
-          <InputLabel>전공</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("major", {
-              required: true,
-            })}
-          />
-          <p></p>
+          <Box mb={2} display="flex" gap={2}>
+            <Box width="50%">
+              <InputLabel sx={{ mt: 1 }}>학부</InputLabel>
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true, readOnly: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+                {...register("departmentName")}
+              />
+            </Box>
+            <Box width="50%">
+              <InputLabel sx={{ mt: 1 }}>학기</InputLabel>
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+                {...register("semester")}
+              />
+            </Box>
+          </Box>
 
-          <InputLabel>학년</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("year", {
-              required: true,
-            })}
-          />
-          <p></p>
+          <Box display="flex" gap={2}>
+            <Box width="50%">
+              <InputLabel>1전공</InputLabel>
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true, readOnly: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+                {...register("major1")}
+              />
+            </Box>
+            <Box width="50%">
+              <InputLabel>2전공</InputLabel>
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true, readOnly: true }}
+                fullWidth
+                hiddenLabel
+                variant="filled"
+                size="small"
+                {...register("major2")}
+              />
+            </Box>
+          </Box>
 
-          <InputLabel>학기</InputLabel>
+          <InputLabel sx={{ mt: 1 }}>이메일</InputLabel>
           <TextField
-            variant="standard"
-            {...register("semester", {
-              required: true,
-            })}
-          />
-        </div>
-        <div>
-          <InputLabel>생년월일</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("birth", {
-              required: true,
-            })}
-          />
-          <p></p>
-          <InputLabel>전화번호</InputLabel>
-          <TextField
-            variant="standard"
-            {...register("phone", {
-              required: true,
-            })}
-          />
-          <p></p>
-
-          <InputLabel>이메일</InputLabel>
-          <TextField
-            variant="standard"
+            color="secondary"
+            InputProps={{ disableUnderline: true, readOnly: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
             {...register("email", {
-              required: true,
+              required: "필수 항목입니다.",
             })}
           />
-        </div>
+        </Box>
+
+        <Box display="flex" gap={2}>
+          <Box width="50%">
+            <InputLabel sx={{ mt: 1 }}>프로필</InputLabel>
+            <TextField
+              {...register("profile")}
+              color="secondary"
+              InputProps={{ disableUnderline: true, readOnly: true }}
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+            />
+          </Box>
+          <Box width="50%">
+            <InputLabel sx={{ mt: 1 }}>전화번호</InputLabel>
+            <TextField
+              {...register("phone", {
+                required: true,
+              })}
+              color="secondary"
+              InputProps={{ disableUnderline: true, readOnly: true }}
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+            />
+          </Box>
+        </Box>
+
+        <Box display="flex" gap={2}>
+          <Box width="50%">
+            <InputLabel sx={{ mt: 1 }}>블로그</InputLabel>
+            <TextField
+              {...register("blog")}
+              color="secondary"
+              InputProps={{ disableUnderline: true, readOnly: true }}
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+            />
+          </Box>
+
+          <Box width="50%">
+            <InputLabel sx={{ mt: 1 }}>깃허브 아이디</InputLabel>
+            <TextField
+              {...register("githubId")}
+              color="secondary"
+              InputProps={{ disableUnderline: true, readOnly: true }}
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+            />
+          </Box>
+        </Box>
+
+        <InputLabel sx={{ mt: 1 }}>README</InputLabel>
+        <TextField
+          color="secondary"
+          InputProps={{ disableUnderline: true, readOnly: true }}
+          fullWidth
+          hiddenLabel
+          variant="filled"
+          size="small"
+          {...register("readme")}
+        />
       </Box>
-      <Typography>학생 세부 정보</Typography>
-      <ul>
-        <li>정보</li>
-        <li>정보</li>
-        <li>정보</li>
-      </ul>
-    </>
+    </Box>
   );
 }
 

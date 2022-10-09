@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -17,9 +17,13 @@ import { studentState } from "../atom";
 import AddStudent from "../components/Student/AddStudent";
 import ViewStudent from "../components/Student/ViewStudent";
 import EditStudent from "../components/Student/EditStudent";
+import axios from "axios";
+import studentRegisterExcel from "../assets/student_register.xlsx";
 
 const Section = styled(Container)({
-  height: "calc(100vh - 96px)",
+  marginTop: 40,
+  padding: 24,
+  borderRadius: 8,
 });
 
 const Header = styled("div")({
@@ -30,55 +34,40 @@ const Header = styled("div")({
   paddingBottom: 24,
 });
 
-const Article = styled("div")({
-  height: "85%",
+const Article = styled(Box)({
+  height: "calc(100vh - 236.5px)",
 });
 
 const columns = [
   {
     field: "id",
-    headerName: "id",
-    width: 75,
+    headerName: "ID",
+    width: 60,
   },
   {
-    field: "studentName",
-    headerName: "이름",
-    width: 150,
-  },
-  {
-    field: "studentId",
+    field: "studentNum",
     headerName: "학번",
-    width: 100,
+    width: 250,
   },
   {
-    field: "major",
+    field: "name",
+    headerName: "이름",
+    width: 200,
+  },
+  {
+    field: "departmentName",
+    headerName: "학부",
+    width: 200,
+  },
+  {
+    field: "major1",
     headerName: "전공",
-    width: 150,
-  },
-  {
-    field: "year",
-    headerName: "학년",
-    width: 50,
+    width: 200,
   },
   {
     field: "semester",
     headerName: "학기",
-    width: 50,
-  },
-  {
-    field: "birth",
-    headerName: "생년월일",
     width: 100,
-  },
-  {
-    field: "phone",
-    headerName: "전화번호",
-    width: 150,
-  },
-  {
-    field: "email",
-    headerName: "이메일",
-    width: 150,
   },
 ];
 
@@ -89,11 +78,28 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  width: 450,
+  p: 3.5,
+  borderRadius: 4,
 };
 
-function Students() {
-  const [students, setStudents] = useRecoilState(studentState);
+function Student() {
+  const [students, setStudent] = useRecoilState(studentState);
+  const [init, setInit] = useState(false);
+  const onChangeExcel = async (event) => {
+    // const fileReader = new FileReader();
+    // fileReader.onload = function () {
+    //   setNewExcelDir(fileReader.result);
+    // };
+    const { files } = event.target;
+    // setNewExcelFile(files ? files[0] : null);
+    // if (files) fileReader.readAsDataURL(files[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    await axios.post("/api/students", formData);
+    loadData();
+  };
+
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
@@ -104,18 +110,58 @@ function Students() {
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      setStudents((old) => old.filter((item) => item.id !== id));
+      await axios.delete(`/api/student/${id}`).then(function (response) {});
+      loadData();
     }
   };
+  const loadData = () => {
+    axios.get().then(function (response) {
+      setStudent(response.data);
+      setInit(true);
+    });
+  };
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "/api/students",
+      responseType: "json",
+    }).then(function (response) {
+      setStudent(
+        response.data.map((item) => {
+          return { ...item, id: item.studentId };
+        })
+      );
+      console.log(response.data);
+    });
+  }, []);
   return (
     <Section>
       <Header>
         <Typography variant="h5">학생 관리 시스템</Typography>
-        <Button onClick={handleOpenAdd} variant="outlined">
-          학생 추가
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            component="a"
+            href={studentRegisterExcel}
+            download="학생 추가 양식"
+            variant="outlined"
+          >
+            엑셀 양식 다운로드
+          </Button>
+          <Button component="label" variant="outlined">
+            엑셀로 항목 추가
+            <input
+              type="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              onChange={onChangeExcel}
+              hidden
+            />
+          </Button>
+          <Button onClick={handleOpenAdd} variant="outlined">
+            학생 추가
+          </Button>
+        </Box>
       </Header>
       <Article>
         <DataGrid
@@ -178,13 +224,13 @@ function Students() {
           <Typography variant="h6" component="h2">
             학생 추가
           </Typography>
-          <AddStudent handleClose={handleCloseAdd} />
+          <AddStudent handleClose={handleCloseAdd} loadData={loadData} />
         </Box>
       </Modal>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생 세부정보
+            학생 정보
           </Typography>
           <ViewStudent id={currentId} handleClose={handleCloseView} />
         </Box>
@@ -192,13 +238,17 @@ function Students() {
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생정보 수정
+            학생 정보 수정
           </Typography>
-          <EditStudent id={currentId} handleClose={handleCloseEdit} />
+          <EditStudent
+            id={currentId}
+            handleClose={handleCloseEdit}
+            loadData={loadData}
+          />
         </Box>
       </Modal>
     </Section>
   );
 }
 
-export default Students;
+export default Student;

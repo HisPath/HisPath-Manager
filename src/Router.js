@@ -8,6 +8,7 @@ import Post from "./pages/Post";
 import AddPost from "./pages/AddPost";
 import EditPost from "./pages/EditPost";
 import AxiTest from "./AxiTest";
+import Student from "./pages/Student";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/editpost/:noticeId" element={<EditPost />} />
         <Route path="/notice/:noticeId" element={<Post />} />
+        <Route path="/student" element={<Student />} />
       </Routes>
     </BrowserRouter>
   );
