@@ -17,3 +17,21 @@ export const semesterList = [
   "2020-2",
   "2020-1",
 ];
+
+export const departmentList = [
+  "전산전자",
+  "국제어문",
+  "경영경제",
+  "법학부",
+  "커뮤니케이션",
+  "상당복지",
+  "공간환경시스템",
+  "콘텐츠융합디자인",
+  "기계제어",
+  "ICT창업학부",
+  "기계제어",
+];
+
+export const major1List = ["전산", "전자"];
+
+export const major2List = ["전산", "전자"];
