@@ -5,29 +5,13 @@ import {
   Button,
   CircularProgress,
   Container,
-  FormControl,
-  MenuItem,
-  Modal,
   Paper,
-  Select,
   styled,
   Typography,
 } from '@mui/material';
-
 import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
-
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
-
-// // visibility
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-
-// import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import ReportIcon from '@mui/icons-material/Report';
-// import ReportOffIcon from '@mui/icons-material/ReportOff';
-// import { waitForNone } from 'recoil';
-// import { getInitColorSchemeScript } from '@mui/system';
 import axios from 'axios';
 
 const Section = styled(Container)({
@@ -51,47 +35,43 @@ const columns = [
   {
     field: 'id',
     width: 100,
-    headerName: 'NO',
+    headerName: '공지번호',
   },
   {
     field: 'title',
     width: 300,
-    headerName: 'Title',
+    headerName: '제목',
   },
   {
     field: 'managerName',
     width: 100,
-    headerName: 'Writer',
+    headerName: '작성자',
   },
   {
     field: 'pubDate',
     width: 100,
     type: Date,
-    headerName: 'Publish Date',
+    headerName: '게시일',
   },
   {
     field: 'expDate',
     width: 100,
     type: Date,
-    headerName: 'Expire Date',
+    headerName: '만료일',
   },
   {
     field: 'viewCnt',
     width: 100,
-    headerName: 'View',
+    headerName: '조회수',
   },
 ];
 
-function TT() {
+function TT({ history }) {
   const [noticeType, setNoticeType] = useState(0);
-  // const { enqueueSnackbar } = useSnackbar();
   const [init, setInit] = useState(false);
   const [currentId, setCurrentId] = useState(0);
 
-  // AXIOS
   const [noticeList, setNoticeList] = useState([]);
-
-  const handleOpenEdit = () => function () {};
 
   function noticeFilter(arr) {
     if (noticeType === 1) {
@@ -110,7 +90,7 @@ function TT() {
     setNoticeList(arr);
   }
   const loadData = () => {
-    axios.get('http://localhost:8080/api/notice').then(function (response) {
+    axios.get('/api/notice').then(function (response) {
       noticeFilter(response.data);
       setInit(true);
     });
@@ -158,28 +138,8 @@ function TT() {
               },
             }}
             rows={noticeList}
-            columns={[
-              ...columns,
-              {
-                field: 'actions',
-                type: 'actions',
-                headerName: '자세히',
-                width: 128,
-                cellClassName: 'actions',
-                getActions: ({ id }) => {
-                  return [
-                    <Link
-                      to={`/notice/${id}`}
-                      style={{
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <GridActionsCellItem icon={<OpenInFullIcon />} label="View" />
-                    </Link>,
-                  ];
-                },
-              },
-            ]}
+            columns={columns}
+            onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
             pageSize={20}
             rowsPerPageOptions={[20]}
             disableColumnMenu
