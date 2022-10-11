@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import {
-  Backdrop,
   Box,
   Button,
   ButtonGroup,
@@ -9,15 +8,9 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  CircularProgress,
   Container,
-  FormControl,
-  MenuItem,
-  Modal,
-  getStepIconUtilityClass,
   Grid,
   Paper,
-  Select,
   styled,
   Stack,
   Typography,
@@ -208,15 +201,6 @@ function Buttons({ noticeId, history }) {
     </Box>
   );
 }
-// function Header() {
-//   return (
-//     <header>
-//       <Typography paddingLeft={1} variant="h4" style={{ fontWeight: 'bold' }}>
-//         상세공지
-//       </Typography>
-//     </header>
-//   );
-// }
 
 function Post() {
   const { noticeId } = useParams();
