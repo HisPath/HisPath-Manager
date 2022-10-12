@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   Modal,
@@ -115,11 +120,14 @@ function ViewMileage({ id, handleClose, loadData }) {
     await axios
       .post("/api/mileage/students", formData)
       .then(function (response) {
-        console.log(response);
+        enqueueSnackbar("학생 목록을 등록했습니다.", { variant: "success" });
+        loadStudents();
+        loadData();
+      })
+      .catch(function (error) {
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
       });
-    enqueueSnackbar("학생 목록을 등록했습니다.", { variant: "success" });
-    loadStudents();
-    loadData();
   };
   const loadStudents = () => {
     axios.get(`/api/mileage/${id}`).then(function (response) {
@@ -129,6 +137,11 @@ function ViewMileage({ id, handleClose, loadData }) {
   useEffect(() => {
     loadStudents();
   }, []);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
   return (
     <>
       <Box mt={3} mb={8}>
@@ -170,32 +183,17 @@ function ViewMileage({ id, handleClose, loadData }) {
             {...register("remark")}
           />
         </Box>
-        <Box mb={2} display="flex" gap={2}>
-          <Box width="100%">
-            <InputLabel>학기</InputLabel>
-            <TextField
-              color="secondary"
-              InputProps={{ disableUnderline: true, readOnly: true }}
-              fullWidth
-              hiddenLabel
-              variant="filled"
-              size="small"
-              {...register("semester")}
-            />
-          </Box>
-          <Box width="100%">
-            <InputLabel>가중치</InputLabel>
-            <TextField
-              type="number"
-              color="secondary"
-              InputProps={{ disableUnderline: true, readOnly: true }}
-              fullWidth
-              hiddenLabel
-              variant="filled"
-              size="small"
-              {...register("weight")}
-            />
-          </Box>
+        <Box mb={2}>
+          <InputLabel>학기</InputLabel>
+          <TextField
+            color="secondary"
+            InputProps={{ disableUnderline: true, readOnly: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+            {...register("semester")}
+          />
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-between">
@@ -220,6 +218,17 @@ function ViewMileage({ id, handleClose, loadData }) {
           </Button>
         </Box>
         <ViewStudentsModal students={students} />
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>잘못된 파일</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{dialogContent}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} autoFocus>
+              닫기
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </>
   );
