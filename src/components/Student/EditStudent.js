@@ -41,7 +41,7 @@ function EditStudent({ id, handleClose, loadData }) {
       githubId: data.githubId,
       readme: data.readme,
       major1Id: data.major1Id,
-      major2Id: data.major1Id,
+      major2Id: data.major2Id,
     });
     loadData();
     handleClose();
@@ -133,10 +133,10 @@ function EditStudent({ id, handleClose, loadData }) {
               <InputLabel>1전공</InputLabel>
               <FormControl fullWidth hiddenLabel variant="filled" size="small">
                 <Select
-                  {...register("major1", {
+                  {...register("major1Id", {
                     required: "필수 항목입니다.",
                   })}
-                  defaultValue={target.departmentId}
+                  defaultValue={target.major1Id}
                   disableUnderline
                 >
                   {major1List.map((item, index) => (
@@ -154,7 +154,7 @@ function EditStudent({ id, handleClose, loadData }) {
               <InputLabel>2전공</InputLabel>
               <FormControl fullWidth hiddenLabel variant="filled" size="small">
                 <Select
-                  {...register("major2", {
+                  {...register("major2Id", {
                     required: "필수 항목입니다.",
                   })}
                   defaultValue={target.major2Id}

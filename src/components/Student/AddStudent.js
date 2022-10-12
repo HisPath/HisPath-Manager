@@ -36,7 +36,7 @@ function AddStudent({ handleClose, loadData }) {
       githubId: data.githubId,
       readme: data.readme,
       major1Id: data.major1Id,
-      major2Id: data.major1Id,
+      major2Id: data.major2Id,
     });
     loadData();
     handleClose();

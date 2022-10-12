@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
 import { studentState } from "../atom";
 import AddStudent from "../components/Student/AddStudent";
-import ViewStudent from "../components/Student/ViewStudent";
+import ViewScholarshipRegistered from "../components/Management/ViewScholarshipRegistered";
 import EditStudent from "../components/Student/EditStudent";
 import axios from "axios";
 import studentRegisterExcel from "../assets/student_register.xlsx";
@@ -45,29 +45,24 @@ const columns = [
     width: 60,
   },
   {
+    field: "departmentName",
+    headerName: "학부",
+    width: 350,
+  },
+  {
+    field: "name",
+    headerName: "이름",
+    width: 250,
+  },
+  {
     field: "studentNum",
     headerName: "학번",
     width: 250,
   },
   {
-    field: "name",
-    headerName: "이름",
-    width: 200,
-  },
-  {
-    field: "departmentName",
-    headerName: "학부",
-    width: 200,
-  },
-  {
-    field: "major1",
-    headerName: "전공",
-    width: 200,
-  },
-  {
     field: "semester",
     headerName: "학기",
-    width: 100,
+    width: 150,
   },
 ];
 
@@ -139,8 +134,8 @@ function Student() {
   return (
     <Section>
       <Header>
-        <Typography variant="h5">학생 관리 시스템</Typography>
-        <Box display="flex" gap={2}>
+        <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
+        {/* <Box display="flex" gap={2}>
           <Button
             component="a"
             href={studentRegisterExcel}
@@ -161,7 +156,7 @@ function Student() {
           <Button onClick={handleOpenAdd} variant="outlined">
             학생 추가
           </Button>
-        </Box>
+        </Box> */}
       </Header>
       <Article>
         <DataGrid
@@ -183,7 +178,7 @@ function Student() {
               field: "actions",
               type: "actions",
               headerName: "기능",
-              width: 128,
+              width: 60,
               cellClassName: "actions",
               getActions: ({ id }) => {
                 return [
@@ -194,19 +189,6 @@ function Student() {
                       setCurrentId(+id);
                       handleOpenView();
                     }}
-                  />,
-                  <GridActionsCellItem
-                    icon={<EditIcon />}
-                    label="Edit"
-                    onClick={() => {
-                      setCurrentId(+id);
-                      handleOpenEdit();
-                    }}
-                  />,
-                  <GridActionsCellItem
-                    icon={<DeleteIcon />}
-                    label="Delete"
-                    onClick={() => handleDeleteClick(+id)}
                   />,
                 ];
               },
@@ -219,31 +201,14 @@ function Student() {
           hideFooterSelectedRowCount
         />
       </Article>
-      <Modal open={openAdd} onClose={handleCloseAdd}>
-        <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
-            학생 추가
-          </Typography>
-          <AddStudent handleClose={handleCloseAdd} loadData={loadData} />
-        </Box>
-      </Modal>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생 정보
+            마일리지 등록 목록
           </Typography>
-          <ViewStudent id={currentId} handleClose={handleCloseView} />
-        </Box>
-      </Modal>
-      <Modal open={openEdit} onClose={handleCloseEdit}>
-        <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
-            학생 정보 수정
-          </Typography>
-          <EditStudent
+          <ViewScholarshipRegistered
             id={currentId}
-            handleClose={handleCloseEdit}
-            loadData={loadData}
+            handleClose={handleCloseView}
           />
         </Box>
       </Modal>

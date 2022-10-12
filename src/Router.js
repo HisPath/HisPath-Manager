@@ -9,6 +9,7 @@ import AddPost from "./pages/AddPost";
 import EditPost from "./pages/EditPost";
 import AxiTest from "./AxiTest";
 import Student from "./pages/Student";
+import ScholarshipManagement from "./pages/ScholarshipManagement";
 
 function Router() {
   return (
@@ -24,6 +25,10 @@ function Router() {
         <Route path="/editpost/:noticeId" element={<EditPost />} />
         <Route path="/notice/:noticeId" element={<Post />} />
         <Route path="/student" element={<Student />} />
+        <Route
+          path="/scholarship/management"
+          element={<ScholarshipManagement />}
+        />
       </Routes>
     </BrowserRouter>
   );
