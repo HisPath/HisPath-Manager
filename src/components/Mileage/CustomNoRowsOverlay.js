@@ -66,7 +66,7 @@ function CustomNoRowsOverlay() {
           </g>
         </g>
       </svg>
-      <Box sx={{ mt: 1 }}>마일리지 항목을 추가해주세요.</Box>
+      <Box sx={{ mt: 1 }}>결과가 없습니다.</Box>
     </StyledGridOverlay>
   );
 }

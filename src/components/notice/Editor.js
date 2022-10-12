@@ -1,10 +1,16 @@
+import { Box } from '@mui/material';
 import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { styled } from '@mui/material';
 
 class Editor extends Component {
   constructor(props) {
     super(props);
+
+    const Article = styled(Box)({
+      height: 'calc(100vh - 236.5px)',
+    });
   }
 
   modules = {
@@ -40,16 +46,16 @@ class Editor extends Component {
   render() {
     const { value, onChange } = this.props;
     return (
-      <div style={{ height: '650px' }}>
+      <Box style={{ height: 'calc(100vh - 420.5px)' }}>
         <ReactQuill
-          style={{ height: '600px' }}
           theme="snow"
+          style={{ height: '100%' }}
           modules={this.modules}
           formats={this.formats}
           value={value || ''}
           onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
         />
-      </div>
+      </Box>
     );
   }
 }
