@@ -13,9 +13,15 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["마일리지 관리", "학생 관리", "공지 관리"];
+const navItems = [
+  { title: "마일리지 항목 관리", to: "/mileage/activity" },
+  { title: "마일리지 참여 관리", to: "/mileage/participant" },
+  { title: "학생 관리", to: "/" },
+  { title: "공지 관리", to: "/" },
+];
 
 export default function Header(props) {
   const { window } = props;
@@ -33,9 +39,15 @@ export default function Header(props) {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem
+            key={item.title}
+            disablePadding
+            component={NavLink}
+            to={item.to}
+            sx={{ color: "text.primary" }}
+          >
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
         ))}

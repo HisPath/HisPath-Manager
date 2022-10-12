@@ -8,16 +8,10 @@ import {
   FormControl,
   MenuItem,
   Modal,
-  Paper,
   Select,
   styled,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import CustomNoRowsOverlay from "../components/Mileage/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
 import { mileageState } from "../atom";
 import AddMileage from "../components/Mileage/AddMileage";
@@ -27,9 +21,11 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import { semesterList } from "../constants/commons";
 import mileageRegisterExcel from "../assets/mileage_register.xlsx";
+import MileageTable from "../components/Mileage/AcitivityTable";
+import { SelectColumnFilter } from "../components/Mileage/filters";
 
 const Section = styled(Container)({
-  marginTop: 40,
+  marginTop: 8,
   padding: 24,
   borderRadius: 8,
 });
@@ -42,35 +38,26 @@ const Header = styled("div")({
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 200px)",
 });
 
 const columns = [
   {
-    field: "categoryName",
-    headerName: "카테고리",
-    width: 200,
+    accessor: "categoryName",
+    Header: "카테고리",
+    Filter: SelectColumnFilter,
   },
   {
-    field: "name",
-    headerName: "활동명",
-    width: 250,
+    accessor: "name",
+    Header: "활동명",
   },
   {
-    field: "remark",
-    headerName: "비고",
-    width: 200,
+    accessor: "remark",
+    Header: "비고",
   },
   {
-    field: "weight",
-    headerName: "가중치",
-    width: 100,
-  },
-  {
-    field: "studentRegistered",
-    headerName: "학생 등록 여부",
-    type: "boolean",
-    width: 120,
+    accessor: "weight",
+    Header: "가중치",
   },
 ];
 
@@ -86,12 +73,12 @@ const modalStyle = {
   borderRadius: 4,
 };
 
-function Mileage() {
+function MileageActivity() {
   const { enqueueSnackbar } = useSnackbar();
   const [init, setInit] = useState(false);
   const [semester, setSemester] = useState("2022-2");
   const [mileages, setMileages] = useRecoilState(mileageState);
-  const [currentId, setCurrentId] = useState(0);
+  const [currentId, setCurrentId] = useState();
   // 확인 과정 추가
   // const [newExcelFile, setNewExcelFile] = useState(null);
   // const [newExcelDir, setNewExcelDir] = useState(null);
@@ -115,7 +102,10 @@ function Mileage() {
   const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
+  const handleOpenEdit = (id) => {
+    setCurrentId(id);
+    setOpenEdit(true);
+  };
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
@@ -140,9 +130,9 @@ function Mileage() {
     loadData();
   }, [semester]);
   return (
-    <Section component={Paper}>
+    <Section>
       <Header>
-        <Typography variant="h5">마일리지 관리 시스템</Typography>
+        <Typography variant="h5">마일리지 항목 관리</Typography>
         <Box display="flex" gap={1.5}>
           <FormControl hiddenLabel variant="filled" size="small">
             <Select onChange={onChangeSelect} value={semester} disableUnderline>
@@ -177,59 +167,11 @@ function Mileage() {
       </Header>
       <Article>
         {init ? (
-          <DataGrid
-            components={{
-              Toolbar: GridToolbar,
-              NoRowsOverlay: CustomNoRowsOverlay,
-            }}
-            componentsProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
-                printOptions: { disableToolbarButton: true },
-              },
-            }}
-            rows={mileages}
-            columns={[
-              ...columns,
-              {
-                field: "actions",
-                type: "actions",
-                headerName: "기능",
-                width: 128,
-                cellClassName: "actions",
-                getActions: ({ id }) => {
-                  return [
-                    <GridActionsCellItem
-                      icon={<OpenInFullIcon />}
-                      label="View"
-                      onClick={() => {
-                        setCurrentId(+id);
-                        handleOpenView();
-                      }}
-                    />,
-                    <GridActionsCellItem
-                      icon={<EditIcon />}
-                      label="Edit"
-                      onClick={() => {
-                        setCurrentId(+id);
-                        handleOpenEdit();
-                      }}
-                    />,
-                    <GridActionsCellItem
-                      icon={<DeleteIcon />}
-                      label="Delete"
-                      onClick={() => handleDeleteClick(+id)}
-                    />,
-                  ];
-                },
-              },
-            ]}
-            pageSize={20}
-            rowsPerPageOptions={[20]}
-            disableColumnMenu
-            disableDensitySelector
-            hideFooterSelectedRowCount
+          <MileageTable
+            columns={columns}
+            data={mileages}
+            handleOpenEdit={handleOpenEdit}
+            handleDeleteClick={handleDeleteClick}
           />
         ) : (
           <Backdrop
@@ -276,4 +218,4 @@ function Mileage() {
   );
 }
 
-export default Mileage;
+export default MileageActivity;
