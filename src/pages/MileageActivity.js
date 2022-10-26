@@ -5,10 +5,7 @@ import {
   Button,
   CircularProgress,
   Container,
-  FormControl,
-  MenuItem,
   Modal,
-  Select,
   styled,
   Typography,
 } from "@mui/material";
@@ -19,7 +16,6 @@ import ViewMileage from "../components/Mileage/ViewMileage";
 import EditMileage from "../components/Mileage/EditMileage";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import { semesterList } from "../constants/commons";
 import mileageRegisterExcel from "../assets/mileage_register.xlsx";
 import MileageTable from "../components/Mileage/AcitivityTable";
 import { SelectColumnFilter } from "../components/Mileage/filters";
@@ -42,6 +38,11 @@ const Article = styled(Box)({
 });
 
 const columns = [
+  {
+    accessor: "semester",
+    Header: "학기",
+    Filter: SelectColumnFilter,
+  },
   {
     accessor: "categoryName",
     Header: "카테고리",
@@ -76,7 +77,6 @@ const modalStyle = {
 function MileageActivity() {
   const { enqueueSnackbar } = useSnackbar();
   const [init, setInit] = useState(false);
-  const [semester, setSemester] = useState("2022-2");
   const [mileages, setMileages] = useRecoilState(mileageState);
   const [currentId, setCurrentId] = useState();
   // 확인 과정 추가
@@ -115,34 +115,20 @@ function MileageActivity() {
       loadData();
     }
   };
-  const onChangeSelect = (event) => {
-    setSemester(event.target.value);
-  };
   const loadData = () => {
-    axios
-      .get(`/api/mileage/semester?semester=${semester}`)
-      .then(function (response) {
-        setMileages(response.data);
-        setInit(true);
-      });
+    axios.get(`/api/mileages`).then(function (response) {
+      setMileages(response.data);
+      setInit(true);
+    });
   };
   useEffect(() => {
     loadData();
-  }, [semester]);
+  }, []);
   return (
     <Section>
       <Header>
         <Typography variant="h5">마일리지 항목 관리</Typography>
         <Box display="flex" gap={1.5}>
-          <FormControl hiddenLabel variant="filled" size="small">
-            <Select onChange={onChangeSelect} value={semester} disableUnderline>
-              {semesterList.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <Button
             component="a"
             href={mileageRegisterExcel}

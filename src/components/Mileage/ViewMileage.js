@@ -8,6 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   Modal,
   Table,
@@ -24,6 +25,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import { mileageState } from "../../atom";
 import mileageStudentRegisterExcel from "../../assets/mileage_student_register.xlsx";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const style = {
   display: "flex",
@@ -40,7 +42,8 @@ const style = {
   borderRadius: 4,
 };
 
-function ViewStudentsModal({ students }) {
+function ViewStudentsModal({ id, students, loadStudents }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -48,7 +51,53 @@ function ViewStudentsModal({ students }) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const [newName, setNewName] = useState("");
+  const [newstudentNum, setNewStudentNum] = useState("");
+  const onChangeName = (event) => {
+    setNewName(event.target.value);
+  };
+  const onChangeStudentNum = (event) => {
+    setNewStudentNum(event.target.value);
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await axios
+      .post("/api/mileage/student", {
+        activityId: id,
+        name: newName,
+        studentNum: newstudentNum,
+      })
+      .then(function (response) {
+        enqueueSnackbar("학생을 등록했습니다.", { variant: "success" });
+        loadStudents();
+      })
+      .catch(function (error) {
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
+      });
+  };
+  const onDelete = async (studentId) => {
+    await axios
+      .delete("/api/mileage/student", {
+        data: {
+          activityId: id,
+          studentId,
+        },
+      })
+      .then(function (response) {
+        enqueueSnackbar("학생을 삭제했습니다.", { variant: "success" });
+        loadStudents();
+      })
+      .catch(function (error) {
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
+      });
+  };
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
   return (
     <>
       <Button onClick={handleOpen} color="secondary" variant="contained">
@@ -56,7 +105,42 @@ function ViewStudentsModal({ students }) {
       </Button>
       <Modal hideBackdrop open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography variant="h6">학생 목록</Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6">학생 목록</Typography>
+            <Box
+              component="form"
+              onSubmit={onSubmit}
+              sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+            >
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true }}
+                hiddenLabel
+                variant="filled"
+                size="small"
+                sx={{ width: 100 }}
+                placeholder="학번"
+                value={newstudentNum}
+                onChange={onChangeStudentNum}
+                required
+              />
+              <TextField
+                color="secondary"
+                InputProps={{ disableUnderline: true }}
+                hiddenLabel
+                variant="filled"
+                size="small"
+                sx={{ width: 70 }}
+                placeholder="이름"
+                value={newName}
+                onChange={onChangeName}
+                required
+              />
+              <Button type="submit" variant="outlined">
+                참여 학생 추가
+              </Button>
+            </Box>
+          </Box>
           <Box
             my={2.5}
             sx={{
@@ -64,29 +148,45 @@ function ViewStudentsModal({ students }) {
               borderWidth: 1,
               borderStyle: "solid",
               borderColor: "divider",
+              borderRadius: 1,
             }}
           >
-            <Table stickyHeader>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ backgroundColor: "background.paper" }}>
-                    학번
-                  </TableCell>
-                  <TableCell sx={{ backgroundColor: "background.paper" }}>
-                    이름
-                  </TableCell>
+                  <TableCell>학번</TableCell>
+                  <TableCell>이름</TableCell>
+                  <TableCell align="center">삭제</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {students.map((student) => (
+                {students.length !== 0 ? (
+                  students.map((student) => (
+                    <TableRow
+                      key={student.studentNum}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{student.studentNum}</TableCell>
+                      <TableCell>{student.name}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          size="small"
+                          onClick={() => onDelete(student.id)}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
                   <TableRow
-                    key={student.studentNum}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell>{student.studentNum}</TableCell>
-                    <TableCell>{student.name}</TableCell>
+                    <TableCell colSpan={3} align="center">
+                      <Typography>등록된 학생이 없습니다.</Typography>
+                    </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </Box>
@@ -97,6 +197,17 @@ function ViewStudentsModal({ students }) {
           </Box>
         </Box>
       </Modal>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>오류</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} autoFocus>
+            닫기
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
@@ -217,7 +328,11 @@ function ViewMileage({ id, handleClose, loadData }) {
             />
           </Button>
         </Box>
-        <ViewStudentsModal students={students} />
+        <ViewStudentsModal
+          id={id}
+          students={students}
+          loadStudents={loadStudents}
+        />
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
           <DialogTitle>잘못된 파일</DialogTitle>
           <DialogContent>
