@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,22 +14,17 @@ import {
   styled,
   Stack,
   Typography,
-} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { Link } from 'react-router-dom';
-import ReportIcon from '@mui/icons-material/Report';
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
+} from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Link } from "react-router-dom";
+import ReportIcon from "@mui/icons-material/Report";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
-const Section = styled(Container)({
-  marginTop: 40,
-  padding: 24,
-  borderRadius: 8,
-});
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingBottom: 10,
 });
 function Article({
@@ -44,13 +39,13 @@ function Article({
   expDate,
 }) {
   function ImpIcon({ imp }) {
-    if (imp) return <ReportIcon style={{ height: 'inherit' }} />;
+    if (imp) return <ReportIcon style={{ height: "inherit" }} />;
     else return <p></p>;
   }
   function TimeIcon({ pubDate }) {
     const today = new Date();
     const pDate = new Date(pubDate);
-    if (pDate > today) return <AccessTimeIcon style={{ height: 'inherit' }} />;
+    if (pDate > today) return <AccessTimeIcon style={{ height: "inherit" }} />;
     else return <p></p>;
   }
   function HtmlToString() {
@@ -58,9 +53,9 @@ function Article({
   }
   //
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
-        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" style={{ fontWeight: "bold" }}>
           상세공지
         </Typography>
       </Header>
@@ -73,10 +68,26 @@ function Article({
         <Grid container spacing={2}>
           <Grid item xs="8">
             <Stack direction="row" spacing={2} justifyContent="left">
-              <Chip label={'작성자: ' + managerName} variant="outlined" color="primary" />
-              <Chip label={'게시일: ' + pubDate} variant="outlined" color="primary" />
-              <Chip label={'만료일: ' + expDate} variant="outlined" color="primary" />
-              <Chip label={'조회수: ' + viewCnt} variant="outlined" color="primary" />
+              <Chip
+                label={"작성자: " + managerName}
+                variant="outlined"
+                color="primary"
+              />
+              <Chip
+                label={"게시일: " + pubDate}
+                variant="outlined"
+                color="primary"
+              />
+              <Chip
+                label={"만료일: " + expDate}
+                variant="outlined"
+                color="primary"
+              />
+              <Chip
+                label={"조회수: " + viewCnt}
+                variant="outlined"
+                color="primary"
+              />
               <ImpIcon imp={importance} label="Important Notice" />
               <TimeIcon pubDate={pubDate} label="Reserved Notice" />
             </Stack>
@@ -89,7 +100,7 @@ function Article({
         <hr />
         <HtmlToString />
       </Box>
-    </Section>
+    </Container>
   );
 }
 function Buttons({ noticeId, history }) {
@@ -100,16 +111,16 @@ function Buttons({ noticeId, history }) {
   const handleDelete = async (noticeId) => {
     setOpen(false);
     axios.delete(`/api/notice/${noticeId}`);
-    enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
+    enqueueSnackbar("삭제되었습니다.", { variant: "success" });
   };
   return (
     <Box>
       <ButtonGroup
         gap={2}
         style={{
-          float: 'right',
-          paddingTop: '8px',
-          display: 'flex',
+          float: "right",
+          paddingTop: "8px",
+          display: "flex",
         }}
       >
         <Button
@@ -132,7 +143,7 @@ function Buttons({ noticeId, history }) {
         <Button
           variant="outlined"
           onClick={() => {
-            window.open('/notice', '_self');
+            window.open("/notice", "_self");
           }}
         >
           돌아가기
@@ -142,9 +153,9 @@ function Buttons({ noticeId, history }) {
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
           <Link
-            to={'/notice'}
+            to={"/notice"}
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Button
@@ -174,7 +185,7 @@ function Buttons({ noticeId, history }) {
           <Link
             to={`/editpost/${noticeId}`}
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Button
