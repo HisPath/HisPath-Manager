@@ -20,16 +20,10 @@ import mileageRegisterExcel from "../assets/mileage_register.xlsx";
 import MileageTable from "../components/Mileage/AcitivityTable";
 import { SelectColumnFilter } from "../components/Mileage/filters";
 
-const Section = styled(Container)({
-  marginTop: 8,
-  padding: 24,
-  borderRadius: 8,
-});
-
 const Header = styled("div")({
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "flex-end",
+  alignItems: "flex-start",
   paddingBottom: 24,
 });
 
@@ -125,7 +119,7 @@ function MileageActivity() {
     loadData();
   }, []);
   return (
-    <Section>
+    <Container>
       <Header>
         <Typography variant="h5">마일리지 항목 관리</Typography>
         <Box display="flex" gap={1.5}>
@@ -200,7 +194,7 @@ function MileageActivity() {
           />
         </Box>
       </Modal>
-    </Section>
+    </Container>
   );
 }
 

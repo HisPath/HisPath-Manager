@@ -113,6 +113,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
               sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
             >
               <TextField
+                name="studentNum"
                 color="secondary"
                 InputProps={{ disableUnderline: true }}
                 hiddenLabel
@@ -125,6 +126,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
                 required
               />
               <TextField
+                name="studentName"
                 color="secondary"
                 InputProps={{ disableUnderline: true }}
                 hiddenLabel

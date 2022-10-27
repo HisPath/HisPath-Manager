@@ -15,12 +15,6 @@ import axios from "axios";
 import ParticipantTable from "../components/Mileage/ParticipantTable";
 import { SelectColumnFilter } from "../components/Mileage/filters";
 
-const Section = styled(Container)({
-  marginTop: 8,
-  padding: 24,
-  borderRadius: 8,
-});
-
 const Header = styled("div")({
   display: "flex",
   justifyContent: "space-between",
@@ -85,7 +79,7 @@ function MileageParticipant() {
     loadData();
   }, []);
   return (
-    <Section>
+    <Container>
       <Header>
         <Typography variant="h5">마일리지 참여 관리</Typography>
       </Header>
@@ -117,7 +111,7 @@ function MileageParticipant() {
           />
         </Box>
       </Modal>
-    </Section>
+    </Container>
   );
 }
 
