@@ -37,7 +37,7 @@ export const SelectColumnFilter = ({
     preFilteredRows.forEach((row) => {
       options.add(row.values[id]);
     });
-    return [...options.values()];
+    return [...options.values()].sort().reverse();
   }, [id, preFilteredRows]);
   return (
     <Select

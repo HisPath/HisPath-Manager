@@ -6,7 +6,13 @@ import { theme } from "./style/theme";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SnackbarProvider maxSnack={3}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+      >
         <CssBaseline />
         <Router />
       </SnackbarProvider>

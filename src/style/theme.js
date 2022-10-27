@@ -17,10 +17,6 @@ export const theme = createTheme({
       primary: "#222222",
       secondary: "#808080",
     },
-    background: {
-      default: "#F9FAFA",
-      paper: "#FFFFFF",
-    },
   },
   typography: {
     fontFamily: "Open Sans, sans-serif",
