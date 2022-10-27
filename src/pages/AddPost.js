@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect } from 'react';
-import Editor from '../components/notice/Editor';
-import { Link, useParams } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
+import React, { Component, useState, useEffect } from "react";
+import Editor from "../components/notice/Editor";
+import { Link, useParams } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 import {
   Backdrop,
   Box,
@@ -18,33 +18,28 @@ import {
   styled,
   Typography,
   ToggleButton,
-} from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
 
-const Section = styled(Container)({
-  marginTop: 40,
-  padding: 24,
-  borderRadius: 8,
-});
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingBottom: 24,
 });
 const Article = styled(Box)({
-  height: 'calc(100vh - 236.5px)',
+  height: "calc(100vh - 236.5px)",
 });
 function TestAdd() {
   const [noticeId, setNoticeId] = useState();
   const [saved, setSaved] = useState(false);
   const [managerId, setManagerId] = useState(6);
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   const [important, setImportant] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -60,7 +55,7 @@ function TestAdd() {
   };
 
   const viewNotice = () => {
-    if (saved) window.open(`/notice/${noticeId}`, '_self');
+    if (saved) window.open(`/notice/${noticeId}`, "_self");
   };
 
   const handleSaveClick = () => {
@@ -70,12 +65,12 @@ function TestAdd() {
 
   const saveNotice = () => {
     axios
-      .post('/api/notice/add', {
+      .post("/api/notice/add", {
         content: `${desc}`,
-        expDate: `${endDate.toISOString().split('T')[0]}`,
+        expDate: `${endDate.toISOString().split("T")[0]}`,
         managerId: `${managerId}`,
         importance: `${important}`,
-        pubDate: `${startDate.toISOString().split('T')[0]}`,
+        pubDate: `${startDate.toISOString().split("T")[0]}`,
         title: `${title}`,
         viewCnt: `${viewCnt}`,
       })
@@ -119,7 +114,7 @@ function TestAdd() {
           onChange={handleSelection}
           label="Duration"
           style={{
-            height: '100%',
+            height: "100%",
           }}
         >
           <MenuItem value={duration}>직접 입력</MenuItem>
@@ -128,7 +123,7 @@ function TestAdd() {
           <MenuItem value={30}>한 달</MenuItem>
           <MenuItem value={120}>한 학기</MenuItem>
         </Select>
-        <Stack direction="row" spacing={0.5} style={{ height: '100%' }}>
+        <Stack direction="row" spacing={0.5} style={{ height: "100%" }}>
           <TextField
             variant="standard"
             id="durationInput"
@@ -144,10 +139,10 @@ function TestAdd() {
         </Stack>
         <DatePicker
           label="게시일"
-          views={['year', 'month', 'day']}
-          inputFormat={'YYYY-MM-DD'}
+          views={["year", "month", "day"]}
+          inputFormat={"YYYY-MM-DD"}
           value={startDate}
-          mask={'____-__-__'}
+          mask={"____-__-__"}
           onChange={(newValue) => {
             setStartDate(newValue);
           }}
@@ -155,9 +150,9 @@ function TestAdd() {
         />
         <DatePicker
           label="만료일"
-          views={['year', 'month', 'day']}
-          inputFormat={'YYYY-MM-DD'}
-          mask={'____-__-__'}
+          views={["year", "month", "day"]}
+          inputFormat={"YYYY-MM-DD"}
+          mask={"____-__-__"}
           value={endDate}
           readOnly
           renderInput={(params) => <TextField {...params} />}
@@ -167,14 +162,14 @@ function TestAdd() {
   };
 
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
         <Typography paddingLeft={1} paddingRight={1} variant="h5">
           공지 수정
         </Typography>
       </Header>
       <Article>
-        <Box container width="100%" justifyContent={'center'}>
+        <Box container width="100%" justifyContent={"center"}>
           <Box paddingLeft={1} paddingRight={1} paddingBottom={2}>
             <TextField
               required
@@ -185,7 +180,7 @@ function TestAdd() {
             />
           </Box>
           <Box
-            justifyContent={'center'}
+            justifyContent={"center"}
             display="flex"
             gap={6}
             container
@@ -198,8 +193,8 @@ function TestAdd() {
               selected={important}
               onChange={importance}
               style={{
-                width: '100px',
-                height: '100%',
+                width: "100px",
+                height: "100%",
               }}
             >
               중요
@@ -211,22 +206,28 @@ function TestAdd() {
             container
             p={0}
             style={{
-              fontFamily: 'Noto Sans Korean,Malgun Gothic,sans-serif',
-              justifyContent: 'center',
+              fontFamily: "Noto Sans Korean,Malgun Gothic,sans-serif",
+              justifyContent: "center",
             }}
           >
-            <div style={{ padding: '10px', width: '100%' }}>
+            <div style={{ padding: "10px", width: "100%" }}>
               <div className="form-group"></div>
               <Editor value={desc} onChange={onEditorChange} />
-              <Box container gap={1} display="flex" justifyContent={'right'} paddingRight={2.5}>
+              <Box
+                container
+                gap={1}
+                display="flex"
+                justifyContent={"right"}
+                paddingRight={2.5}
+              >
                 <Button variant="contained" onClick={handleSaveClick}>
                   저장
                 </Button>
 
                 <Link
-                  to={{ pathname: '/notice' }}
+                  to={{ pathname: "/notice" }}
                   style={{
-                    textDecoration: 'none',
+                    textDecoration: "none",
                   }}
                 >
                   <Button variant="outlined" color="error">
@@ -238,7 +239,7 @@ function TestAdd() {
           </Box>
         </Box>
       </Article>
-    </Section>
+    </Container>
   );
 }
 export default TestAdd;
