@@ -169,8 +169,8 @@ function TestAdd() {
   return (
     <Section component={Paper}>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5">
-          공지 수정
+        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+          공지사항 &#62; 추가
         </Typography>
       </Header>
       <Article>
@@ -193,8 +193,8 @@ function TestAdd() {
             paddingRight={1}
           >
             <ToggleButton
-              value="Visible"
-              variant="outlined"
+              value="Important"
+              color="error"
               selected={important}
               onChange={importance}
               style={{

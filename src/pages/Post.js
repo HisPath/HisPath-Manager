@@ -61,7 +61,7 @@ function Article({
     <Section component={Paper}>
       <Header>
         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-          상세공지
+          공지사항 &#62; 상세
         </Typography>
       </Header>
       <hr />

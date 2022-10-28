@@ -90,29 +90,11 @@ function TestPost() {
         title: `${title}`,
         viewCnt: `${viewCnt}`,
       })
-      .then(function (response) {})
+      .then(function (response) {
+        window.open(`/notice/${noticeId}`, '_self');
+      })
       .catch(function (error) {});
   };
-
-  // useEffect(() => {
-  //   initialize();
-  // }, [loaded]);
-
-  // const initialize = () => {
-  //   //setTitle(notice.title);
-  //   //console.log(notice.title);
-  //   console.log(title);
-  //   //setDesc(notice.content);
-  //   //console.log(notice.content);
-  //   console.log(desc);
-  //   //setImportant(notice.importance);
-  //   //const s = new Date(notice.pubDate);
-  //   //const e = new Date(notice.expDate);
-  //   //const d = e - s;
-  //   //setStartDate(s);
-  //   //setDuration(d);
-  //   //setInit(true);
-  // };
 
   useEffect(() => {
     calculateEndDate();
@@ -191,8 +173,8 @@ function TestPost() {
   return (
     <Section component={Paper}>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5">
-          공지 수정
+        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+          공지사항 &#62; 상세 &#62; 수정
         </Typography>
       </Header>
       <Article>
@@ -243,11 +225,11 @@ function TestPost() {
                 <div className="form-group"></div>
                 <Editor value={desc} onChange={onEditorChange} />
                 <Box container gap={1} display="flex" justifyContent={'right'} paddingRight={2.5}>
-                  <Link id="notice_Detail_Link" to={{ pathname: `/notice/${noticeId}` }}>
-                    <Button variant="contained" onClick={editNotice}>
-                      저장
-                    </Button>
-                  </Link>
+                  {/* <Link id="notice_Detail_Link" to={{ pathname: `/notice/${noticeId}` }}> */}
+                  <Button variant="contained" onClick={editNotice}>
+                    저장
+                  </Button>
+                  {/* </Link> */}
                   <Link
                     to={{ pathname: '/notice' }}
                     style={{
