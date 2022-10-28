@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Main from "./pages/Main";
-import Mileage from "./pages/Mileage";
 import MileageActivity from "./pages/MileageActivity";
 import MileageParticipant from "./pages/MileageParticipant";
 import Sample from "./pages/Sample";

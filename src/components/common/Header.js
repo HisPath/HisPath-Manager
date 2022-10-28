@@ -19,7 +19,8 @@ const drawerWidth = 240;
 const navItems = [
   { title: "마일리지 항목 관리", to: "/mileage/activity" },
   { title: "마일리지 참여 관리", to: "/mileage/participant" },
-  { title: "학생 관리", to: "/" },
+  { title: "학생 관리", to: "/student" },
+  { title: "마일리지 장학금 신청자 관리", to: "/scholarship/management" },
   { title: "공지 관리", to: "/" },
 ];
 

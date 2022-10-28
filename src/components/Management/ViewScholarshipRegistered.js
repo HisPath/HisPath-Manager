@@ -1,6 +1,12 @@
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   Modal,
@@ -14,9 +20,11 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { studentState } from "../../atom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { mileageState } from "../../atom";
+import mileageStudentRegisterExcel from "../../assets/mileage_student_register.xlsx";
+import { height } from "@mui/system";
 
 const style = {
   display: "flex",
@@ -33,87 +41,116 @@ const style = {
   borderRadius: 4,
 };
 
-function ViewStudent({ id, handleClose }) {
+function ViewScholarshipRegistered({ id, handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [students, setStudents] = useState([]);
-  const student = useRecoilValue(studentState);
-  const target = student.filter((item) => item.id === id)[0];
+  const mileage = useRecoilValue(mileageState);
+  const target = mileage.filter((item) => item.id === id)[0];
   const { register } = useForm({
     defaultValues: target,
   });
   const loadStudents = () => {
-    axios.get(`/api/student/${id}`).then(function (response) {
-      setStudents(response.data.students);
+    axios.get(`/api/studentmileage/${id}`).then(function (response) {
+      setStudents(response.data.activities);
     });
   };
   useEffect(() => {
     loadStudents();
   }, []);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
   return (
-    <Box mt={3} mb={1}>
+    <Box mt={3} mb={8} sx={{ height: 600 }}>
       <Box mb={2}>
-        <InputLabel sx={{ mt: 1 }}></InputLabel>
-        <TextField
-          color="secondary"
-          InputProps={{ disableUnderline: true, readOnly: true }}
-          fullWidth
-          hiddenLabel
-          variant="filled"
-          size="small"
-          {...register("test")}
-        />
-        <InputLabel sx={{ mt: 1 }}></InputLabel>
-        <TextField
-          color="secondary"
-          InputProps={{ disableUnderline: true, readOnly: true }}
-          fullWidth
-          hiddenLabel
-          variant="filled"
-          size="small"
-          {...register("test")}
-        />
-        <InputLabel sx={{ mt: 1 }}></InputLabel>
-        <TextField
-          color="secondary"
-          InputProps={{ disableUnderline: true, readOnly: true }}
-          fullWidth
-          hiddenLabel
-          variant="filled"
-          size="small"
-          {...register("test")}
-        />
-        <InputLabel sx={{ mt: 1 }}></InputLabel>
-        <TextField
-          color="secondary"
-          InputProps={{ disableUnderline: true, readOnly: true }}
-          fullWidth
-          hiddenLabel
-          variant="filled"
-          size="small"
-          {...register("test")}
-        />
-        <InputLabel sx={{ mt: 1 }}></InputLabel>
-        <TextField
-          color="secondary"
-          InputProps={{ disableUnderline: true, readOnly: true }}
-          fullWidth
-          hiddenLabel
-          variant="filled"
-          size="small"
-          {...register("test")}
-        />
-      </Box>
-      <Box display="flex" justifyContent="flex-end">
-        <Box display="flex" gap={1}>
-          <Button color="secondary" onClick={handleClose}>
-            취소
-          </Button>
-          <Button color="secondary" type="submit" variant="contained">
-            추가
-          </Button>
+        <Box
+          my={2.5}
+          sx={{
+            overflow: "auto",
+            borderWidth: 1,
+            borderStyle: "solid",
+            borderColor: "divider",
+            height: 600,
+          }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ backgroundColor: "background.paper" }}>
+                  카테고리
+                </TableCell>
+                <TableCell sx={{ backgroundColor: "background.paper" }}>
+                  이름
+                </TableCell>
+                <TableCell sx={{ backgroundColor: "background.paper" }}>
+                  학기
+                </TableCell>
+                <TableCell sx={{ backgroundColor: "background.paper" }}>
+                  가중치
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {students.map((activity) => (
+                <TableRow
+                  key={activity.studentNum}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>{activity.categoryDto.name}</TableCell>
+                  <TableCell>{activity.name}</TableCell>
+                  <TableCell>{activity.semester}</TableCell>
+                  <TableCell>{activity.weight}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Box>
+        <Box mt="auto" display="flex" justifyContent="flex-end" gap={1.5}>
+          <Button color="secondary" variant="outlined" onClick={handleClose}>
+            닫기
+          </Button>
+          {/* <Button color="secondary" variant="contained">
+            마일리지 장학금 승인
+          </Button> */}
+        </Box>
+      </Box>
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" gap={1.5}>
+          {/* <Button
+            component="a"
+            href={mileageStudentRegisterExcel}
+            download="마일리지 항목 학생 등록 양식"
+            variant="outlined"
+            color="secondary"
+          >
+            학생 양식 다운
+          </Button>
+          <Button component="label" variant="outlined" color="secondary">
+            학생 업로드
+            <input
+              type="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              onChange={onChangeExcel}
+              hidden
+            />
+          </Button> */}
+        </Box>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>잘못된 파일</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{dialogContent}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} autoFocus>
+              닫기
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Box>
   );
 }
 
-export default ViewStudent;
+export default ViewScholarshipRegistered;

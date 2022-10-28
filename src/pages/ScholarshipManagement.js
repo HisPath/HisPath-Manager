@@ -47,22 +47,32 @@ const columns = [
   {
     field: "departmentName",
     headerName: "학부",
-    width: 350,
+    width: 200,
   },
   {
     field: "name",
     headerName: "이름",
-    width: 250,
+    width: 150,
   },
   {
     field: "studentNum",
     headerName: "학번",
-    width: 250,
+    width: 150,
   },
   {
     field: "semester",
     headerName: "학기",
+    width: 100,
+  },
+  {
+    field: "weight",
+    headerName: "가중치",
     width: 150,
+  },
+  {
+    field: "email",
+    headerName: "이메일",
+    width: 250,
   },
 ];
 
@@ -73,7 +83,7 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  width: 450,
+  width: 805,
   p: 3.5,
   borderRadius: 4,
 };
