@@ -1,3 +1,4 @@
+import { Box, Toolbar } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Main from "./pages/Main";
@@ -11,6 +12,8 @@ import EditPost from "./pages/EditPost";
 import AxiTest from "./AxiTest";
 import Student from "./pages/Student";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
+import { drawerWidth } from "./constants/commons";
+import Sidebar from "./components/common/Sidebar";
 
 function Router() {
   return (
@@ -32,6 +35,36 @@ function Router() {
           element={<ScholarshipManagement />}
         />
       </Routes>
+      <Box display="flex">
+        <Header />
+        <Sidebar />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            pt: 5,
+            width: `calc(100% - ${drawerWidth}px)`,
+          }}
+        >
+          <Toolbar />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/axitest" element={<AxiTest />} />
+            <Route path="/mileage/activity" element={<MileageActivity />} />
+            <Route
+              path="/mileage/participant"
+              element={<MileageParticipant />}
+            />
+            <Route path="/sample" element={<Sample />} />
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/addpost" element={<AddPost />} />
+            <Route path="/editpost/:noticeId" element={<EditPost />} />
+            <Route path="/notice/:noticeId" element={<Post />} />
+            <Route path="/student" element={<Student />} />
+          </Routes>
+        </Box>
+      </Box>
     </BrowserRouter>
   );
 }

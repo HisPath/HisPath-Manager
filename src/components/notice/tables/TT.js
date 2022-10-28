@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Backdrop,
   Box,
@@ -8,61 +8,55 @@ import {
   Paper,
   styled,
   Typography,
-} from '@mui/material';
-import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+} from "@mui/material";
+import CustomNoRowsOverlay from "../../Mileage/CustomNoRowsOverlay";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-const Section = styled(Container)({
-  marginTop: 40,
-  padding: 24,
-  borderRadius: 8,
-});
-
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: 'calc(100vh - 236.5px)',
+  height: "calc(100vh - 236.5px)",
 });
 
 const columns = [
   {
-    field: 'id',
+    field: "id",
     width: 100,
-    headerName: '공지번호',
+    headerName: "공지번호",
   },
   {
-    field: 'title',
+    field: "title",
     width: 300,
-    headerName: '제목',
+    headerName: "제목",
   },
   {
-    field: 'managerName',
+    field: "managerName",
     width: 100,
-    headerName: '작성자',
+    headerName: "작성자",
   },
   {
-    field: 'pubDate',
-    width: 100,
-    type: Date,
-    headerName: '게시일',
-  },
-  {
-    field: 'expDate',
+    field: "pubDate",
     width: 100,
     type: Date,
-    headerName: '만료일',
+    headerName: "게시일",
   },
   {
-    field: 'viewCnt',
+    field: "expDate",
     width: 100,
-    headerName: '조회수',
+    type: Date,
+    headerName: "만료일",
+  },
+  {
+    field: "viewCnt",
+    width: 100,
+    headerName: "조회수",
   },
 ];
 
@@ -80,7 +74,7 @@ function TT({ history }) {
       });
     } else if (noticeType === 2) {
       const d = new Date();
-      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         const pubD = new Date(data.pubDate);
@@ -90,7 +84,7 @@ function TT({ history }) {
     setNoticeList(arr);
   }
   const loadData = () => {
-    axios.get('/api/notice').then(function (response) {
+    axios.get("/api/notice").then(function (response) {
       noticeFilter(response.data);
       setInit(true);
     });
@@ -100,10 +94,10 @@ function TT({ history }) {
     loadData();
   }, [noticeType]);
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
         <Typography variant="h5">공지 사항</Typography>
-        <Box display="flex" gap={1.5} justifyContent={'right'}>
+        <Box display="flex" gap={1.5} justifyContent={"right"}>
           <Button variant="outlined" onClick={() => setNoticeType(0)}>
             전체 공지
           </Button>
@@ -114,9 +108,9 @@ function TT({ history }) {
             예약 공지
           </Button>
           <Link
-            to={'/addpost'}
+            to={"/addpost"}
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Button variant="contained">공지 추가</Button>
@@ -139,7 +133,7 @@ function TT({ history }) {
             }}
             rows={noticeList}
             columns={columns}
-            onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
+            onRowClick={({ id }) => window.open(`/notice/${id}`, "_self")}
             pageSize={20}
             rowsPerPageOptions={[20]}
             disableColumnMenu
@@ -147,12 +141,15 @@ function TT({ history }) {
             hideFooterSelectedRowCount
           />
         ) : (
-          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={true}>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
             <CircularProgress color="inherit" />
           </Backdrop>
         )}
       </Article>
-    </Section>
+    </Container>
   );
 }
 export default TT;
