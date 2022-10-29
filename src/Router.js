@@ -12,6 +12,8 @@ import EditPost from "./pages/EditPost";
 import AxiTest from "./AxiTest";
 import Student from "./pages/Student";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
+import AdminManagement from "./pages/AdminManagement";
+
 import { drawerWidth } from "./constants/commons";
 import Sidebar from "./components/common/Sidebar";
 
@@ -50,7 +52,8 @@ function Router() {
               path="/scholarship/management"
               element={<ScholarshipManagement />}
             />
-          </Routes>
+            <Route path="/admin/management" element={<AdminManagement />} />
+            </Routes>
         </Box>
       </Box>
     </BrowserRouter>

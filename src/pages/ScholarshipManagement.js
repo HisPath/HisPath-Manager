@@ -41,32 +41,47 @@ const columns = [
   {
     field: "departmentName",
     headerName: "학부",
-    width: 200,
+    width: 120,
+  },
+  {
+    field: "major1",
+    headerName: "1전공",
+    width: 120,
+  },
+  {
+    field: "major2",
+    headerName: "2전공",
+    width: 120,
   },
   {
     field: "name",
     headerName: "이름",
-    width: 150,
+    width: 100,
   },
   {
     field: "studentNum",
     headerName: "학번",
-    width: 150,
+    width: 90,
   },
   {
     field: "semester",
     headerName: "학기",
-    width: 100,
+    width: 40,
   },
   {
     field: "weight",
     headerName: "가중치",
-    width: 150,
+    width: 70,
+  },
+  {
+    field: "phone",
+    headerName: "전화번호",
+    width: 120,
   },
   {
     field: "email",
     headerName: "이메일",
-    width: 250,
+    width: 220,
   },
 ];
 
@@ -208,7 +223,7 @@ function Student() {
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            마일리지 등록 목록
+            현학기 마일리지 신청 목록
           </Typography>
           <ViewScholarshipRegistered
             id={currentId}
