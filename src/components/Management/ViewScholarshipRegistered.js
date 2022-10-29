@@ -108,9 +108,14 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
           </Table>
         </Box>
         <Box mt="auto" display="flex" justifyContent="flex-end" gap={1.5}>
+          <Box display="flex" gap={1}>
+            총 마일리지 가중치: 0
+          </Box>
+
           <Button color="secondary" variant="outlined" onClick={handleClose}>
             닫기
           </Button>
+
           {/* <Button color="secondary" variant="contained">
             마일리지 장학금 승인
           </Button> */}
