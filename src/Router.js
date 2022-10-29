@@ -19,22 +19,6 @@ function Router() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/axitest" element={<AxiTest />} />
-        <Route path="/mileage/activity" element={<MileageActivity />} />
-        <Route path="/mileage/participant" element={<MileageParticipant />} />
-        <Route path="/sample" element={<Sample />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/addpost" element={<AddPost />} />
-        <Route path="/editpost/:noticeId" element={<EditPost />} />
-        <Route path="/notice/:noticeId" element={<Post />} />
-        <Route path="/student" element={<Student />} />
-        <Route
-          path="/scholarship/management"
-          element={<ScholarshipManagement />}
-        />
-      </Routes>
       <Box display="flex">
         <Header />
         <Sidebar />
@@ -62,6 +46,10 @@ function Router() {
             <Route path="/editpost/:noticeId" element={<EditPost />} />
             <Route path="/notice/:noticeId" element={<Post />} />
             <Route path="/student" element={<Student />} />
+            <Route
+              path="/scholarship/management"
+              element={<ScholarshipManagement />}
+            />
           </Routes>
         </Box>
       </Box>

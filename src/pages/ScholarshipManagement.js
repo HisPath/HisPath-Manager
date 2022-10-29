@@ -20,17 +20,11 @@ import EditStudent from "../components/Student/EditStudent";
 import axios from "axios";
 import studentRegisterExcel from "../assets/student_register.xlsx";
 
-const Section = styled(Container)({
-  marginTop: 40,
-  padding: 24,
-  borderRadius: 8,
-});
-
 const Header = styled("div")({
   height: "15%",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "flex-end",
+  alignItems: "flex-start",
   paddingBottom: 24,
 });
 
@@ -142,7 +136,7 @@ function Student() {
     });
   }, []);
   return (
-    <Section>
+    <Container>
       <Header>
         <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
         {/* <Box display="flex" gap={2}>
@@ -222,7 +216,7 @@ function Student() {
           />
         </Box>
       </Modal>
-    </Section>
+    </Container>
   );
 }
 
