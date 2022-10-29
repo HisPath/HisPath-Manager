@@ -7,7 +7,7 @@ export const navItems = [
   { title: "마일리지 장학금 수혜자 목록", to: "/scholarship/list" },
   { title: "학생 관리", to: "/student" },
   { title: "공지 관리", to: "/notice" },
-  { title: "권한 관리", to: "/admin/management" },
+  { title: "관리자 권한 관리", to: "/admin/management" },
 ];
 
 export const mileageCategories = [
