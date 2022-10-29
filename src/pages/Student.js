@@ -41,12 +41,12 @@ const columns = [
   {
     field: "studentNum",
     headerName: "학번",
-    width: 250,
+    width: 150,
   },
   {
     field: "name",
     headerName: "이름",
-    width: 200,
+    width: 120,
   },
   {
     field: "departmentName",
@@ -54,9 +54,14 @@ const columns = [
     width: 200,
   },
   {
-    field: "major1",
-    headerName: "전공",
-    width: 200,
+    field: "major1Name",
+    headerName: "1전공",
+    width: 180,
+  },
+  {
+    field: "major2Name",
+    headerName: "2전공",
+    width: 180,
   },
   {
     field: "semester",

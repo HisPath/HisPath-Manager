@@ -117,7 +117,7 @@ function ViewStudent({ id, handleClose }) {
                 hiddenLabel
                 variant="filled"
                 size="small"
-                {...register("major1")}
+                {...register("major1Name")}
               />
             </Box>
             <Box width="50%">
@@ -129,7 +129,7 @@ function ViewStudent({ id, handleClose }) {
                 hiddenLabel
                 variant="filled"
                 size="small"
-                {...register("major2")}
+                {...register("major2Name")}
               />
             </Box>
           </Box>

@@ -4,9 +4,10 @@ export const navItems = [
   { title: "마일리지 항목 관리", to: "/mileage/activity" },
   { title: "마일리지 참여 관리", to: "/mileage/participant" },
   { title: "마일리지 장학금 신청자 관리", to: "/scholarship/management" },
+  { title: "마일리지 장학금 수혜자 목록", to: "/scholarship/list" },
   { title: "학생 관리", to: "/student" },
   { title: "공지 관리", to: "/notice" },
-  { title: "권한 관리", to: "/admin/management" },
+  { title: "관리자 권한 관리", to: "/admin/management" },
 ];
 
 export const mileageCategories = [
@@ -30,17 +31,19 @@ export const semesterList = [
 ];
 
 export const departmentList = [
-  "전산전자",
-  "국제어문",
-  "경영경제",
+  "전산전자공학부",
+  "국제어문학부",
+  "경영경제학부",
   "법학부",
-  "커뮤니케이션",
-  "상당복지",
-  "공간환경시스템",
-  "콘텐츠융합디자인",
-  "기계제어",
+  "커뮤니케이션학부",
+  "상담심리사회복지학부",
+  "공간환경시스템공학부",
+  "콘텐츠융합디자인공",
+  "기계제어공학부",
   "ICT창업학부",
-  "기계제어",
+  "AI 융합 교육원",
+  "창의융합교육원",
+  "생명과학부",
 ];
 
 export const major1List = [
@@ -75,7 +78,7 @@ export const major1List = [
   "상담심리학전공",
   "사회복지학전공",
   "공연영상학전공",
-  "언로정보학전공",
+  "언론정보학전공",
   "글로벌융합전공",
   "학생설계융합전공",
   "글로벌한국학전공",
