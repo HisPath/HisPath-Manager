@@ -30,18 +30,18 @@ function EditStudent({ id, handleClose, loadData }) {
   });
   const onValid = async (data) => {
     await axios.patch(`/api/student/${id}`, {
-      departmentId: data.departmentId,
+      name: data.name,
       studentNum: data.studentNum,
       semester: data.semester,
-      name: data.name,
       phone: data.phone,
       email: data.email,
       profile: data.profile,
+      departmentId: data.departmentId,
+      major1Id: data.major1Id,
+      major2Id: data.major2Id,
       blog: data.blog,
       githubId: data.githubId,
       readme: data.readme,
-      major1Id: data.major1Id,
-      major2Id: data.major1Id,
     });
     loadData();
     handleClose();
@@ -133,10 +133,10 @@ function EditStudent({ id, handleClose, loadData }) {
               <InputLabel>1전공</InputLabel>
               <FormControl fullWidth hiddenLabel variant="filled" size="small">
                 <Select
-                  {...register("major1", {
+                  {...register("major1Id", {
                     required: "필수 항목입니다.",
                   })}
-                  defaultValue={target.departmentId}
+                  defaultValue={target.major1Id}
                   disableUnderline
                 >
                   {major1List.map((item, index) => (
@@ -154,7 +154,7 @@ function EditStudent({ id, handleClose, loadData }) {
               <InputLabel>2전공</InputLabel>
               <FormControl fullWidth hiddenLabel variant="filled" size="small">
                 <Select
-                  {...register("major2", {
+                  {...register("major2Id", {
                     required: "필수 항목입니다.",
                   })}
                   defaultValue={target.major2Id}
@@ -190,7 +190,7 @@ function EditStudent({ id, handleClose, loadData }) {
           </Typography>
         </Box>
 
-        <Box display="flex" gap={2}>
+        {/* <Box display="flex" gap={2}>
           <Box width="50%">
             <InputLabel sx={{ mt: 1 }}>프로필</InputLabel>
             <TextField
@@ -205,27 +205,27 @@ function EditStudent({ id, handleClose, loadData }) {
             <Typography color="text.secondary" variant="caption" height={24}>
               {errors?.profile?.message}
             </Typography>
-          </Box>
-          <Box width="50%">
-            <InputLabel sx={{ mt: 1 }}>전화번호</InputLabel>
-            <TextField
-              {...register("phone", {
-                required: true,
-              })}
-              color="secondary"
-              InputProps={{ disableUnderline: true }}
-              fullWidth
-              hiddenLabel
-              variant="filled"
-              size="small"
-            />
-            <Typography color="text.secondary" variant="caption" height={24}>
-              {errors?.phone?.message}
-            </Typography>
-          </Box>
+          </Box> */}
+        <Box width="100%">
+          <InputLabel sx={{ mt: 1 }}>전화번호</InputLabel>
+          <TextField
+            {...register("phone", {
+              required: true,
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.phone?.message}
+          </Typography>
         </Box>
+      </Box>
 
-        <Box display="flex" gap={2}>
+      {/* <Box display="flex" gap={2}>
           <Box width="50%">
             <InputLabel sx={{ mt: 1 }}>블로그</InputLabel>
             <TextField
@@ -272,7 +272,7 @@ function EditStudent({ id, handleClose, loadData }) {
         <Typography color="text.secondary" variant="caption" height={24}>
           {errors?.readme?.message}
         </Typography>
-      </Box>
+      </Box> */}
       <Box display="flex" justifyContent="flex-end">
         <Box display="flex" gap={1}>
           <Button color="secondary" onClick={handleClose}>

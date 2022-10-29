@@ -36,7 +36,7 @@ function AddStudent({ handleClose, loadData }) {
       githubId: data.githubId,
       readme: data.readme,
       major1Id: data.major1Id,
-      major2Id: data.major1Id,
+      major2Id: data.major2Id,
     });
     loadData();
     handleClose();
@@ -227,7 +227,7 @@ function AddStudent({ handleClose, loadData }) {
           </Box>
 
           <Box display="flex" gap={2}>
-            <Box width="50%">
+            {/* <Box width="50%">
               <InputLabel sx={{ mt: 1 }}>프로필</InputLabel>
               <TextField
                 {...register("profile")}
@@ -241,8 +241,8 @@ function AddStudent({ handleClose, loadData }) {
               <Typography color="text.secondary" variant="caption" height={24}>
                 {errors?.profile?.message}
               </Typography>
-            </Box>
-            <Box width="50%">
+            </Box> */}
+            <Box width="100%">
               <InputLabel sx={{ mt: 1 }}>전화번호</InputLabel>
               <TextField
                 {...register("phone", {
@@ -261,7 +261,7 @@ function AddStudent({ handleClose, loadData }) {
             </Box>
           </Box>
 
-          <Box display="flex" gap={2}>
+          {/* <Box display="flex" gap={2}>
             <Box width="50%">
               <InputLabel sx={{ mt: 1 }}>블로그</InputLabel>
               <TextField
@@ -307,7 +307,7 @@ function AddStudent({ handleClose, loadData }) {
           />
           <Typography color="text.secondary" variant="caption" height={24}>
             {errors?.readme?.message}
-          </Typography>
+          </Typography> */}
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end">
