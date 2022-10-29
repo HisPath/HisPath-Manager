@@ -98,7 +98,7 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
                 <TableCell align="center" sx={{ padding: 0 }}>
                   <IconButton
                     onClick={() => handleOpenEdit(row.original.id)}
-                    size="small"
+                    size="big"
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>

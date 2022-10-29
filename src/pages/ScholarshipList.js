@@ -15,7 +15,6 @@ import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
 import { studentState } from "../atom";
-import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 import axios from "axios";
 import * as React from "react";
 
@@ -63,12 +62,7 @@ const columns = [
     width: 90,
   },
   {
-    field: "semester",
-    headerName: "학기",
-    width: 40,
-  },
-  {
-    field: "weight",
+    field: "totalWeight",
     headerName: "가중치",
     width: 60,
   },
@@ -102,33 +96,27 @@ function Student() {
 
   const [age, setAge] = React.useState("");
   const [currentId, setCurrentId] = useState(0);
+  const [scholarshipList, setScholarshipList] = useRecoilState(scholarshipList);
+
   const [openView, setOpenView] = useState(false);
   const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
 
   const loadData = () => {
-    axios.get().then(function (response) {
-      setStudent(response.data);
-      setInit(true);
-    });
+    axios
+      .get(`api/scholarships?approved=false&semester=2022-2`)
+      .then(function (response) {
+        setScholarshipList(response.data);
+        setInit(true);
+      });
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/students",
-      responseType: "json",
-    }).then(function (response) {
-      setStudent(
-        response.data.map((item) => {
-          return { ...item, id: item.studentId };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
   return (
     <Container>
       <Header>
@@ -193,7 +181,7 @@ function Student() {
           hideFooterSelectedRowCount
         />
       </Article>
-      <Modal open={openView} onClose={handleCloseView}>
+      {/* <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
             (현학기) 마일리지 신청 목록
@@ -204,7 +192,7 @@ function Student() {
             handleClose={handleCloseView}
           />
         </Box>
-      </Modal>
+      </Modal> */}
     </Container>
   );
 }

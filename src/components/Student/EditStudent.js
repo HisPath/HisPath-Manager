@@ -29,7 +29,7 @@ function EditStudent({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.patch(`/api/student/${id}`, {
+    await axios.put(`/api/student/${id}`, {
       name: data.name,
       studentNum: data.studentNum,
       semester: data.semester,
