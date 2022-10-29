@@ -18,12 +18,6 @@ import StarIcon from '@mui/icons-material/Grade';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import { getRowIdFromRowModel } from '@mui/x-data-grid/hooks/features/rows/gridRowsUtils';
 
-const Section = styled(Container)({
-  marginTop: 0,
-  padding: 24,
-  borderRadius: 8,
-});
-
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
@@ -190,7 +184,7 @@ function TT() {
     }
   };
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
           공지사항
@@ -250,7 +244,7 @@ function TT() {
           </Backdrop>
         )}
       </Article>
-    </Section>
+    </Container>
   );
 }
 export default TT;

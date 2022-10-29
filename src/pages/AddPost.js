@@ -25,11 +25,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from 'axios';
 
-const Section = styled(Container)({
-  marginTop: 0,
-  padding: 24,
-  borderRadius: 8,
-});
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
@@ -167,7 +162,7 @@ function TestAdd() {
   };
 
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
         <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
           공지사항 &#62; 추가
@@ -238,7 +233,7 @@ function TestAdd() {
           </Box>
         </Box>
       </Article>
-    </Section>
+    </Container>
   );
 }
 export default TestAdd;

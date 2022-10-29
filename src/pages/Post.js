@@ -29,7 +29,7 @@ const Section = styled(Container)({
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'flex-end',
+  alignItems: 'flex-start',
   paddingBottom: 10,
 });
 function Article({
@@ -58,7 +58,7 @@ function Article({
   }
   //
   return (
-    <Section component={Paper}>
+    <Container>
       <Header>
         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
           공지사항 &#62; 상세
@@ -89,7 +89,7 @@ function Article({
         <hr />
         <HtmlToString />
       </Box>
-    </Section>
+    </Container>
   );
 }
 function Buttons({ noticeId, history }) {
