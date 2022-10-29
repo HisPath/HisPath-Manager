@@ -15,6 +15,8 @@ import ScholarshipManagement from "./pages/ScholarshipManagement";
 import ScholarshipList from "./pages/ScholarshipList";
 import AdminManagement from "./pages/AdminManagement";
 
+import AdminManagement from "./pages/AdminManagement";
+
 import { drawerWidth } from "./constants/commons";
 import Sidebar from "./components/common/Sidebar";
 
@@ -55,7 +57,7 @@ function Router() {
             />
             <Route path="/scholarship/list" element={<ScholarshipList />} />
             <Route path="/admin/management" element={<AdminManagement />} />
-            </Routes>
+          </Routes>
         </Box>
       </Box>
     </BrowserRouter>

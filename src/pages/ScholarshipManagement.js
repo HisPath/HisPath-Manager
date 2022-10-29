@@ -44,7 +44,7 @@ const columns = [
   },
   {
     field: "major1Name",
-    headerName: "1전공",
+    headerName: "2전공",
     width: 120,
   },
   {

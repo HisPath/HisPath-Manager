@@ -110,7 +110,6 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
             박성진 학생의 (2022-2)학기 마일리지 항목은 (10)개, 가중치는 (100),
             장학금액은 (100)입니다.
           </InputLabel>
-
           <Button color="secondary" variant="outlined" onClick={handleClose}>
             닫기
           </Button>
