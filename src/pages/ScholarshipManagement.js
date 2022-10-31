@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   Box,
+  Backdrop,
+  CircularProgress,
   FormControl,
   Container,
   Modal,
@@ -14,10 +16,12 @@ import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
+import { scholarshipState } from "../atom";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 import axios from "axios";
 import * as React from "react";
+import LinkTabs from "../components/Scholarship/ScholarshipTabs";
+import ScholarshipTable from "../components/Scholarship/ScholarshipTable";
 
 const Header = styled("div")({
   height: "15%",
@@ -32,55 +36,55 @@ const Article = styled(Box)({
 });
 
 const columns = [
+  // {
+  //   field: "id",
+  //   headerName: "번호",
+  //   width: 30,
+  // },
   {
-    field: "id",
-    headerName: "번호",
-    width: 30,
-  },
-  {
-    field: "departmentName",
+    accessor: "departmentName",
     headerName: "학부",
-    width: 150,
+    // width: 150,
   },
   {
-    field: "major1Name",
+    accessor: "major1Name",
     headerName: "2전공",
-    width: 120,
+    // width: 120,
   },
   {
-    field: "major2Name",
+    accessor: "major2Name",
     headerName: "2전공",
-    width: 120,
+    // width: 120,
   },
   {
-    field: "name",
+    accessor: "name",
     headerName: "이름",
-    width: 70,
+    // width: 70,
   },
   {
-    field: "studentNum",
+    accessor: "studentNum",
     headerName: "학번",
-    width: 90,
+    // width: 90,
   },
   {
     field: "semester",
     headerName: "학기",
-    width: 40,
+    // width: 40,
   },
   {
-    field: "weight",
+    accessor: "weight",
     headerName: "가중치",
-    width: 60,
+    // width: 60,
   },
   {
-    field: "phone",
+    accessor: "phone",
     headerName: "전화번호",
-    width: 120,
+    // width: 120,
   },
   {
-    field: "email",
+    accessor: "email",
     headerName: "이메일",
-    width: 220,
+    // width: 220,
   },
 ];
 
@@ -96,36 +100,43 @@ const modalStyle = {
   borderRadius: 4,
 };
 
-function Student() {
-  const [students, setStudent] = useRecoilState(studentState);
+function ScholarshipManagement() {
   const [init, setInit] = useState(false);
+  const [scholarships, setScholarships] = useRecoilState(scholarshipState);
+  const [currentId, setCurrentId] = useState(0);
 
   const [age, setAge] = React.useState("");
-  const [currentId, setCurrentId] = useState(0);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
+  // const handleOpenView = () => setOpenView(true);
+  const handleOpenView = (id) => {
+    setCurrentId(id);
+    setOpenView(true);
+  };
   const handleCloseView = () => setOpenView(false);
 
   const loadData = () => {
-    axios.get().then(function (response) {
-      setStudent(response.data);
+    axios.get("/api/mileages").then(function (response) {
+      setScholarships(response.data);
       setInit(true);
     });
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/students",
-      responseType: "json",
-    }).then(function (response) {
-      setStudent(
-        response.data.map((item) => {
-          return { ...item, id: item.studentId };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "/api/students",
+  //     responseType: "json",
+  //   }).then(function (response) {
+  //     setScholarship(
+  //       response.data.map((item) => {
+  //         return { ...item, id: item.studentId };
+  //       })
+  //     );
+  //     console.log(response.data);
+  //   });
+  // }, []);
   const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -133,7 +144,6 @@ function Student() {
     <Container>
       <Header>
         <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
-
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
@@ -150,8 +160,24 @@ function Student() {
           </Select>
         </FormControl>
       </Header>
+      <LinkTabs></LinkTabs>
       <Article>
-        <DataGrid
+        {init ? (
+          <ScholarshipTable
+            columns={columns}
+            data={scholarships}
+            handleOpenView={handleOpenView}
+          />
+        ) : (
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        )}
+
+        {/* <DataGrid
           components={{
             Toolbar: GridToolbar,
             NoRowsOverlay: CustomNoRowsOverlay,
@@ -163,7 +189,7 @@ function Student() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={scholarships}
           columns={[
             ...columns,
             {
@@ -191,7 +217,7 @@ function Student() {
           disableColumnMenu
           disableDensitySelector
           hideFooterSelectedRowCount
-        />
+        /> */}
       </Article>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
@@ -209,4 +235,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default ScholarshipManagement;

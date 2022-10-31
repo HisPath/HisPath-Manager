@@ -90,7 +90,7 @@ const modalStyle = {
   borderRadius: 4,
 };
 
-function Student() {
+function ScholarshipList() {
   const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
 
@@ -104,7 +104,8 @@ function Student() {
 
   const loadData = () => {
     axios
-      .get(`api/scholarships?approved=false&semester=2022-2`)
+      .get("api/scholarships")
+      // ?approved=false&semester=2022-2`)
       .then(function (response) {
         setScholarshipList(response.data);
         setInit(true);
@@ -122,7 +123,7 @@ function Student() {
       <Header>
         <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
 
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
             labelId="semester_id"
@@ -136,7 +137,7 @@ function Student() {
             <MenuItem value={30}>2022-1</MenuItem>
             <MenuItem value={40}>2022-2</MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
       </Header>
       <Article>
         <DataGrid
@@ -197,4 +198,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default ScholarshipList;
