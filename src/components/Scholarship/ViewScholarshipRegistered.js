@@ -49,9 +49,14 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const loadStudents = () => {
-    axios.get(`/api/studentmileage/${id}`).then(function (response) {
-      setStudents(response.data.activities);
-    });
+    // axios.get(`/api/studentmileage/${id}`).then(function (response) {
+    //   setStudents(response.data.activities);
+    // });
+    axios
+      .get(`/api/scholarship/activities/?studentId=1&semester=2022-2`)
+      .then(function (response) {
+        setStudents(response.data.activities);
+      });
   };
   useEffect(() => {
     loadStudents();
@@ -97,7 +102,7 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
                   key={activity.studentNum}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell>{activity.categoryDto.name}</TableCell>
+                  <TableCell>{activity.categoryName}</TableCell>
                   <TableCell>{activity.name}</TableCell>
                   <TableCell>{activity.weight}</TableCell>
                 </TableRow>
@@ -106,7 +111,7 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
           </Table>
         </Box>
         <Box mt="auto" display="flex" justifyContent="flex-end" gap={1.5}>
-          <InputLabel variant="h6">
+          <InputLabel variant="h3">
             박성진 학생의 (2022-2)학기 마일리지 항목은 (10)개, 가중치는 (100),
             장학금액은 (100)입니다.
           </InputLabel>

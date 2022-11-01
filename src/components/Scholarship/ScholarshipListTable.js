@@ -15,7 +15,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const ScholarshipTable = ({ columns, data }) => {
+const ScholarshipListTable = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -95,17 +95,17 @@ const ScholarshipTable = ({ columns, data }) => {
                 })}
                 <TableCell align="center" sx={{ padding: 0 }}>
                   {/* <IconButton
-                    onClick={() => handleOpenEdit(row.original.id)}
-                    size="big"
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDeleteClick(row.original.id)}
-                    size="small"
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton> */}
+                      onClick={() => handleOpenEdit(row.original.id)}
+                      size="big"
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDeleteClick(row.original.id)}
+                      size="small"
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton> */}
                 </TableCell>
               </TableRow>
             );
@@ -116,4 +116,4 @@ const ScholarshipTable = ({ columns, data }) => {
   );
 };
 
-export default ScholarshipTable;
+export default ScholarshipListTable;
