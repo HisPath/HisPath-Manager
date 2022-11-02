@@ -3,8 +3,7 @@ export const drawerWidth = 280;
 export const navItems = [
   { title: "마일리지 항목 관리", to: "/mileage/activity" },
   { title: "마일리지 참여 관리", to: "/mileage/participant" },
-  { title: "마일리지 장학금 신청자 관리", to: "/scholarship/management" },
-  { title: "마일리지 장학금 수혜자 목록", to: "/scholarship/list" },
+  { title: "마일리지 장학금 관리", to: "/scholarship/management" },
   { title: "학생 관리", to: "/student" },
   { title: "공지 관리", to: "/notice" },
   { title: "관리자 권한 관리", to: "/admin/management" },

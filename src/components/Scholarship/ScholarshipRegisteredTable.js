@@ -15,6 +15,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import { FormControl } from "@mui/material";
+import { Select } from "@mui/material";
+import { MenuItem } from "@mui/material";
+import { InputLabel } from "@mui/material";
 
 const ScholarshipRegisteredTable = ({ columns, data, handleOpenView }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -40,6 +44,12 @@ const ScholarshipRegisteredTable = ({ columns, data, handleOpenView }) => {
     );
   };
 
+  const [age, setAge] = React.useState("");
+
+  const handleChanged = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
     <TableContainer
       sx={{
@@ -53,6 +63,21 @@ const ScholarshipRegisteredTable = ({ columns, data, handleOpenView }) => {
     >
       <Table {...getTableProps()} stickyHeader>
         <TableHead>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="semester_id">학기</InputLabel>
+            <Select
+              labelId="semester_id"
+              id="semester_id"
+              value={age}
+              label="학기"
+              onChange={handleChanged}
+            >
+              <MenuItem value={10}>2021-1</MenuItem>
+              <MenuItem value={20}>2021-2</MenuItem>
+              <MenuItem value={30}>2022-1</MenuItem>
+              <MenuItem value={40}>2022-2</MenuItem>
+            </Select>
+          </FormControl>
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               <TableCell>순번</TableCell>
