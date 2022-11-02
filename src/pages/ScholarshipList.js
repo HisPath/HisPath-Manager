@@ -14,7 +14,7 @@ import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
+import { scholarshipState, studentState } from "../atom";
 import axios from "axios";
 import * as React from "react";
 
@@ -96,7 +96,8 @@ function ScholarshipList() {
 
   const [age, setAge] = React.useState("");
   const [currentId, setCurrentId] = useState(0);
-  const [scholarshipList, setScholarshipList] = useRecoilState(scholarshipList);
+  const [scholarshipList, setScholarshipList] =
+    useRecoilState(scholarshipState);
 
   const [openView, setOpenView] = useState(false);
   const handleOpenView = () => setOpenView(true);
