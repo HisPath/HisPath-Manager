@@ -9,3 +9,13 @@ export const studentState = atom({
   key: "student",
   default: [],
 });
+
+export const scholarshipState = atom({
+  key: "scholarship",
+  default: [],
+});
+
+export const scholarshipListState = atom({
+  key: "scholarshipList",
+  default: [],
+});

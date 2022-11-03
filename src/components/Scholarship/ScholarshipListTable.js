@@ -14,10 +14,8 @@ import { DefaultColumnFilter, Filter } from "./filters";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutline";
 
-const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
+const ScholarshipListTable = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -75,7 +73,7 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
                   <Filter column={column} />
                 </TableCell>
               ))}
-              <TableCell align="center">수정 / 삭제</TableCell>
+              {/* <TableCell align="center">수정 / 삭제</TableCell> */}
             </TableRow>
           ))}
         </TableHead>
@@ -96,18 +94,18 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
                   );
                 })}
                 <TableCell align="center" sx={{ padding: 0 }}>
-                  <IconButton
-                    onClick={() => handleOpenEdit(row.original.id)}
-                    size="big"
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDeleteClick(row.original.id)}
-                    size="small"
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
+                  {/* <IconButton
+                      onClick={() => handleOpenEdit(row.original.id)}
+                      size="big"
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDeleteClick(row.original.id)}
+                      size="small"
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton> */}
                 </TableCell>
               </TableRow>
             );
@@ -118,4 +116,4 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
   );
 };
 
-export default MileageTable;
+export default ScholarshipListTable;

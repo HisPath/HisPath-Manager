@@ -24,7 +24,6 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import { mileageState } from "../../atom";
 import mileageStudentRegisterExcel from "../../assets/mileage_student_register.xlsx";
-import { height } from "@mui/system";
 
 const style = {
   display: "flex",
@@ -50,9 +49,14 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const loadStudents = () => {
-    axios.get(`/api/studentmileage/${id}`).then(function (response) {
-      setStudents(response.data.activities);
-    });
+    // axios.get(`/api/studentmileage/${id}`).then(function (response) {
+    //   setStudents(response.data.activities);
+    // });
+    axios
+      .get(`/api/scholarship/activities/?studentId=1&semester=2022-2`)
+      .then(function (response) {
+        setStudents(response.data.activities);
+      });
   };
   useEffect(() => {
     loadStudents();
@@ -84,9 +88,9 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
                 <TableCell sx={{ backgroundColor: "background.paper" }}>
                   이름
                 </TableCell>
-                <TableCell sx={{ backgroundColor: "background.paper" }}>
+                {/* <TableCell sx={{ backgroundColor: "background.paper" }}>
                   학기
-                </TableCell>
+                </TableCell> */}
                 <TableCell sx={{ backgroundColor: "background.paper" }}>
                   가중치
                 </TableCell>
@@ -98,9 +102,8 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
                   key={activity.studentNum}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell>{activity.categoryDto.name}</TableCell>
+                  <TableCell>{activity.categoryName}</TableCell>
                   <TableCell>{activity.name}</TableCell>
-                  <TableCell>{activity.semester}</TableCell>
                   <TableCell>{activity.weight}</TableCell>
                 </TableRow>
               ))}
@@ -108,10 +111,10 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
           </Table>
         </Box>
         <Box mt="auto" display="flex" justifyContent="flex-end" gap={1.5}>
-          <Box display="flex" gap={1}>
-            총 마일리지 가중치: 0
-          </Box>
-
+          <InputLabel variant="h3">
+            박성진 학생의 (2022-2)학기 마일리지 항목은 (10)개, 가중치는 (100),
+            장학금액은 (100)입니다.
+          </InputLabel>
           <Button color="secondary" variant="outlined" onClick={handleClose}>
             닫기
           </Button>
@@ -120,39 +123,6 @@ function ViewScholarshipRegistered({ id, handleClose, loadData }) {
             마일리지 장학금 승인
           </Button> */}
         </Box>
-      </Box>
-      <Box display="flex" justifyContent="space-between">
-        <Box display="flex" gap={1.5}>
-          {/* <Button
-            component="a"
-            href={mileageStudentRegisterExcel}
-            download="마일리지 항목 학생 등록 양식"
-            variant="outlined"
-            color="secondary"
-          >
-            학생 양식 다운
-          </Button>
-          <Button component="label" variant="outlined" color="secondary">
-            학생 업로드
-            <input
-              type="file"
-              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              onChange={onChangeExcel}
-              hidden
-            />
-          </Button> */}
-        </Box>
-        <Dialog open={dialogOpen} onClose={handleDialogClose}>
-          <DialogTitle>잘못된 파일</DialogTitle>
-          <DialogContent>
-            <DialogContentText>{dialogContent}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDialogClose} autoFocus>
-              닫기
-            </Button>
-          </DialogActions>
-        </Dialog>
       </Box>
     </Box>
   );
