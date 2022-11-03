@@ -68,7 +68,7 @@ function TestPost() {
       setStartDate(s);
       setDuration(d);
       setManagerId(result.managerId);
-      setViewCnt(result.viewCnt);
+      setViewCnt(result.viewCnt - 1);
       console.log(d);
     });
     setInit(true);
@@ -196,6 +196,7 @@ function TestPost() {
               <ToggleButton
                 value="Visible"
                 variant="outlined"
+                color="error"
                 selected={important}
                 onChange={importance}
                 style={{
