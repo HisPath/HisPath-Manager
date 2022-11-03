@@ -43,15 +43,13 @@ function Article({
   pubDate,
   expDate,
 }) {
-  function ImpIcon({ imp }) {
-    if (imp) return <ReportIcon style={{ height: 'inherit' }} />;
-    else return <p></p>;
+  function ImpChip({ imp }) {
+    if (imp) return <Chip label={'중요'} variant="outlined" color="error" />;
   }
-  function TimeIcon({ pubDate }) {
+  function TimeChip({ pubDate }) {
     const today = new Date();
     const pDate = new Date(pubDate);
-    if (pDate > today) return <AccessTimeIcon style={{ height: 'inherit' }} />;
-    else return <p></p>;
+    if (pDate > today) return <Chip label={'예약'} variant="outlined" color="success" />;
   }
   function HtmlToString() {
     return <div dangerouslySetInnerHTML={{ __html: content }}></div>;
@@ -64,29 +62,41 @@ function Article({
           공지사항 &#62; 상세
         </Typography>
       </Header>
-      <hr />
+
       <Box container>
         <br />
-        <Typography variant="h5" p={1}>
-          {title}
-        </Typography>
+        <Box container display="flex" justifyContent={'center'}>
+          <Typography variant="h3" p={1}>
+            {title}
+          </Typography>
+        </Box>
+        <br />
+        <hr />
         <Grid container spacing={2}>
           <Grid item xs="8">
-            <Stack direction="row" spacing={2} justifyContent="left">
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="left"
+              style={{
+                paddingTop: '3px',
+                paddingLeft: '0',
+              }}
+            >
+              <ImpChip imp={importance} label="Important Notice" />
+              <TimeChip pubDate={pubDate} label="Reserved Notice" />
               <Chip label={'작성자: ' + managerName} variant="outlined" color="primary" />
               <Chip label={'게시일: ' + pubDate} variant="outlined" color="primary" />
               <Chip label={'만료일: ' + expDate} variant="outlined" color="primary" />
               <Chip label={'조회수: ' + viewCnt} variant="outlined" color="primary" />
-              <ImpIcon imp={importance} label="Important Notice" />
-              <TimeIcon pubDate={pubDate} label="Reserved Notice" />
             </Stack>
           </Grid>
           <Grid item xs="4">
             <Buttons noticeId={id} />
           </Grid>
         </Grid>
-        <br />
         <hr />
+        <br />
         <HtmlToString />
       </Box>
     </Container>
@@ -103,41 +113,40 @@ function Buttons({ noticeId, history }) {
     enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
   };
   return (
-    <Box>
-      <ButtonGroup
-        gap={2}
-        style={{
-          float: 'right',
-          paddingTop: '8px',
-          display: 'flex',
+    <Box
+      container
+      display="flex"
+      justifyContents={'right'}
+      gap={0.5}
+      style={{
+        float: 'right',
+      }}
+    >
+      <Button
+        variant="outlined"
+        onClick={() => {
+          setOpenEdit(true);
         }}
       >
-        <Button
-          variant="outlined"
-          onClick={() => {
-            setOpenEdit(true);
-          }}
-        >
-          수정
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          삭제
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            window.open('/notice', '_self');
-          }}
-        >
-          돌아가기
-        </Button>
-      </ButtonGroup>
+        수정
+      </Button>
+      <Button
+        variant="outlined"
+        color="error"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        삭제
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          window.open('/notice', '_self');
+        }}
+      >
+        돌아가기
+      </Button>
       <Dialog open={open}>
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>

@@ -13,11 +13,10 @@ import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { PanoramaSharp } from '@mui/icons-material';
 import StarIcon from '@mui/icons-material/Grade';
-import AlarmIcon from '@mui/icons-material/Alarm';
-import { getRowIdFromRowModel } from '@mui/x-data-grid/hooks/features/rows/gridRowsUtils';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
+import AlarmIcon from '@mui/icons-material/Alarm';
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
@@ -62,12 +61,12 @@ const StatusIcons = ({ p }) => {
   if (p.row.importance) imp = true;
   if (imp) {
     return (
-      <StarIcon
+      <PriorityHighIcon
         fontSize="small"
         style={{
           width: 40,
           float: 'right',
-          color: '#ffcc00',
+          color: 'red',
         }}
       />
     );
@@ -230,7 +229,7 @@ function TT() {
             rows={noticeList}
             columns={columns}
             onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
-            pageSize={7}
+            pageSize={20}
             rowsPerPageOptions={[20]}
             getRowClassName={getRowStyle}
             AlternationCount="{ Binding MainData.ProjColl.Count}"
