@@ -14,3 +14,8 @@ export const scholarshipState = atom({
   key: "scholarship",
   default: [],
 });
+
+export const scholarshipListState = atom({
+  key: "scholarshipList",
+  default: [],
+});

@@ -52,6 +52,7 @@ function Router() {
               path="/scholarship/management"
               element={<ScholarshipManagement />}
             />
+            <Route path="/scholarship/list" element={<ScholarshipList />} />
             <Route path="/admin/management" element={<AdminManagement />} />
           </Routes>
         </Box>
