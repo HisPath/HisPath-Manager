@@ -1,82 +1,40 @@
 import { useEffect, useState } from "react";
 import {
+  Backdrop,
   Box,
-  FormControl,
+  CircularProgress,
   Container,
   Modal,
   styled,
   Typography,
-  InputLabel,
+  FormControl,
   Select,
   MenuItem,
 } from "@mui/material";
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import { useRecoilState } from "recoil";
-import { scholarshipState, studentState } from "../atom";
-import axios from "axios";
+import { scholarshipListState } from "../atom";
 import * as React from "react";
+import axios from "axios";
+import ScholarshipRegisteredTable from "../components/Scholarship/ScholarshipRegisteredTable";
+import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
+import { SelectColumnFilter } from "../components/Scholarship/filters";
+import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
+import { InputLabel } from "@mui/material";
+import BasicTabs from "../components/Scholarship/ScholarshipTabs";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "flex-start",
+  alignItems: "flex-end",
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 200px)",
 });
-
-const columns = [
-  {
-    field: "id",
-    headerName: "번호",
-    width: 30,
-  },
-  {
-    field: "departmentName",
-    headerName: "학부",
-    width: 150,
-  },
-  {
-    field: "major1Name",
-    headerName: "1전공",
-    width: 120,
-  },
-  {
-    field: "major2Name",
-    headerName: "2전공",
-    width: 120,
-  },
-  {
-    field: "name",
-    headerName: "이름",
-    width: 70,
-  },
-  {
-    field: "studentNum",
-    headerName: "학번",
-    width: 90,
-  },
-  {
-    field: "totalWeight",
-    headerName: "가중치",
-    width: 60,
-  },
-  {
-    field: "phone",
-    headerName: "전화번호",
-    width: 120,
-  },
-  {
-    field: "email",
-    headerName: "이메일",
-    width: 220,
-  },
-];
 
 const modalStyle = {
   position: "absolute",
@@ -85,108 +43,131 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  width: 805,
+  width: 800,
   p: 3.5,
   borderRadius: 4,
 };
 
+const columns = [
+  {
+    accessor: "departmentName",
+    Header: "학부",
+    Filter: SelectColumnFilter,
+  },
+  {
+    accessor: "major1Name",
+    Header: "1전공",
+    Filter: SelectColumnFilter,
+  },
+  {
+    accessor: "major2Name",
+    Header: "2전공",
+    Filter: SelectColumnFilter,
+  },
+  {
+    accessor: "name",
+    Header: "이름",
+  },
+  {
+    accessor: "studentNum",
+    Header: "학번",
+  },
+  {
+    accessor: "totalWeight",
+    Header: "총 가중치",
+  },
+  {
+    accessor: "phone",
+    Header: "전화번호",
+  },
+  {
+    accessor: "email",
+    Header: "이메일",
+  },
+];
+
 function ScholarshipList() {
-  const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
-
-  const [age, setAge] = React.useState("");
-  const [currentId, setCurrentId] = useState(0);
-  const [scholarshipList, setScholarshipList] =
-    useRecoilState(scholarshipState);
-
+  const [scholarshipLists, setScholarshipsList] =
+    useRecoilState(scholarshipListState);
+  const [currentId, setCurrentId] = useState();
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
+  const handleOpenView = (id) => {
+    setCurrentId(id);
+    setOpenView(true);
+  };
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleCloseView = () => setOpenView(false);
 
   const loadData = () => {
     axios
-      .get("api/scholarships")
-      // ?approved=false&semester=2022-2`)
+      .get(`/api/scholarships?approved=true&semester=2022-2`)
       .then(function (response) {
-        setScholarshipList(response.data);
+        setScholarshipsList(response.data);
         setInit(true);
       });
   };
+
   useEffect(() => {
     loadData();
   }, []);
-  const handleChange = (event) => {
-    setAge(event.target.value);
+
+  const [semester, setSemester] = React.useState("");
+  const handleChanges = (event) => {
+    setSemester(event.target.value);
   };
 
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
-
-        {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <Typography variant="h5">마일리지 장학금 수혜자 조회</Typography>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
             labelId="semester_id"
             id="semester_id"
-            value={age}
+            value={semester}
             label="학기"
-            onChange={handleChange}
+            onChange={handleChanges}
           >
             <MenuItem value={10}>2021-1</MenuItem>
             <MenuItem value={20}>2021-2</MenuItem>
             <MenuItem value={30}>2022-1</MenuItem>
             <MenuItem value={40}>2022-2</MenuItem>
           </Select>
-        </FormControl> */}
+        </FormControl>
       </Header>
       <Article>
-        <DataGrid
-          components={{
-            Toolbar: GridToolbar,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: { disableToolbarButton: true },
-            },
-          }}
-          rows={students}
-          columns={[
-            ...columns,
-            {
-              field: "actions",
-              type: "actions",
-              headerName: "기능",
-              width: 60,
-              cellClassName: "actions",
-              getActions: ({ id }) => {
-                return [
-                  <GridActionsCellItem
-                    icon={<OpenInFullIcon />}
-                    label="View"
-                    onClick={() => {
-                      setCurrentId(+id);
-                      handleOpenView();
-                    }}
-                  />,
-                ];
-              },
-            },
-          ]}
-          pageSize={20}
-          rowsPerPageOptions={[20]}
-          disableColumnMenu
-          disableDensitySelector
-          hideFooterSelectedRowCount
-        />
+        {init ? (
+          <ScholarshipListTable
+            columns={columns}
+            data={scholarshipLists}
+            initialState={{ showColumnFilters: true }}
+            muiTableHeadCellFilterTextFieldProps={{
+              sx: { m: "0.5rem 0", width: "100%" },
+              variant: "outlined",
+            }}
+            handleOpenView={handleOpenView}
+          />
+        ) : (
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        )}
       </Article>
-      {/* <Modal open={openView} onClose={handleCloseView}>
+      <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            (현학기) 마일리지 신청 목록
+            (2022-2) 마일리지 목록
           </Typography>
           <InputLabel>[전산전자] 박성진 (21700266)</InputLabel>
           <ViewScholarshipRegistered
@@ -194,7 +175,7 @@ function ScholarshipList() {
             handleClose={handleCloseView}
           />
         </Box>
-      </Modal> */}
+      </Modal>
     </Container>
   );
 }
