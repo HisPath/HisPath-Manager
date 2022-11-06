@@ -150,6 +150,7 @@ function Management() {
       managerId: currentId,
     });
     enqueueSnackbar("일반 관리자로 지정되었습니다!", { variant: "success" });
+
     loadData();
     handleCloseNormal();
   };

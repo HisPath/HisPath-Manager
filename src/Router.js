@@ -11,6 +11,9 @@ import AddPost from "./pages/AddPost";
 import EditPost from "./pages/EditPost";
 import AxiTest from "./AxiTest";
 import Student from "./pages/Student";
+import Department from "./pages/Department";
+import Major from "./pages/Major";
+import Category from "./pages/Category";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
 import ScholarshipList from "./pages/ScholarshipList";
 import AdminManagement from "./pages/AdminManagement";
@@ -48,10 +51,15 @@ function Router() {
             <Route path="/editpost/:noticeId" element={<EditPost />} />
             <Route path="/notice/:noticeId" element={<Post />} />
             <Route path="/student" element={<Student />} />
+            <Route path="/major" element={<Major />} />
+            <Route path="/department" element={<Department />} />
+            <Route path="/category" element={<Category />} />
+
             <Route
               path="/scholarship/management"
               element={<ScholarshipManagement />}
             />
+            <Route path="/scholarship/list" element={<ScholarshipList />} />
             <Route path="/admin/management" element={<AdminManagement />} />
           </Routes>
         </Box>
