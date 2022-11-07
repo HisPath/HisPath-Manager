@@ -1,5 +1,6 @@
-import { Paper, SvgIcon, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Paper, SvgIcon, Typography } from '@mui/material';
+import { Box, Container } from '@mui/system';
+
 
 export function Login() {
   const styles = {
@@ -8,33 +9,33 @@ export function Login() {
       // background:
       //   "linear-gradient(180.1deg,#dacdff -59.06%,rgba(20,44,105,0) 65.9%),#008081",
       background:
-        "linear-gradient(323.93deg,rgba(10,185,149,.7) -32.24%,rgba(10,185,149,0) 57.93%),#dacdff",
-      height: "calc(100vh)",
-      width: "calc(100vw)",
-      position: "absolute",
+        'linear-gradient(323.93deg,rgba(10,185,149,.7) -32.24%,rgba(10,185,149,0) 57.93%),#dacdff',
+      height: 'calc(100vh)',
+      width: 'calc(100vw)',
+      position: 'absolute',
       top: 0,
       zIndex: 1000,
     },
     titleStyle: {
       padding: 8,
       fontWeight: 800,
-      textShadow: "4px 4px #ddd",
-      fontFamily: "ubuntu",
+      textShadow: '4px 4px #ddd',
+      fontFamily: 'ubuntu',
     },
   };
 
   return (
     <Paper style={styles.paperContainer}>
-      <Container maxWidth="lg" sx={{ pt: "calc(15vh)" }}>
+      <Container maxWidth="lg" sx={{ pt: 'calc(15vh)' }}>
         <Box
-          height={"calc(70vh)"}
+          height={'calc(70vh)'}
           p={2}
-          sx={{ display: "flex", backgroundColor: "#fff", borderRadius: 5 }}
+          sx={{ display: 'flex', backgroundColor: '#fff', borderRadius: 5 }}
         >
           <Box
             sx={{
               p: 5,
-              width: "57%",
+              width: '57%',
             }}
           >
             <Typography variant="h3" style={styles.titleStyle}>
@@ -48,24 +49,24 @@ export function Login() {
             </Typography>
           </Box>
           <Box
-            display={"flex"}
+            display={'flex'}
             flexDirection="column"
             justifyContent="flex-start"
-            alignItems={"center"}
+            alignItems={'center'}
             sx={{
-              backgroundColor: "#FFF",
+              backgroundColor: '#FFF',
               p: 2,
               borderRadius: 3,
-              border: "none",
-              width: "calc(30vw)",
+              border: 'none',
+              width: 'calc(30vw)',
             }}
             gap={2}
           >
             <Typography
               sx={{
                 pt: 15,
-                textShadow: "2px 4px #ddd",
-                fontSize: "2.3rem",
+                textShadow: '2px 4px #ddd',
+                fontSize: '2.3rem',
                 fontWeight: 600,
               }}
             >
@@ -74,18 +75,18 @@ export function Login() {
             <Typography
               sx={{
                 pb: 15,
-                textShadow: "2px 4px #ddd",
-                fontSize: "2.3rem",
+                textShadow: '2px 4px #ddd',
+                fontSize: '2.3rem',
                 fontWeight: 600,
               }}
             >
               L o g i n
             </Typography>
             <Box
-              display={"flex"}
+              display={'flex'}
               sx={{
-                border: "1px solid #eaeaea",
-                boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+                border: '1px solid #eaeaea',
+                boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)',
                 borderRadius: 3,
                 p: 2,
                 pl: 5,
