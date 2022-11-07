@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Drawer,
   IconButton,
   List,
@@ -14,32 +13,44 @@ import { NavLink } from "react-router-dom";
 import { drawerWidth, navItems } from "../../constants/commons";
 import SettingsIcon from "@mui/icons-material/Settings";
 
+const activeStyle = {
+  color: "#5f63f2",
+  backgroundColor: "#f1f3ff",
+};
+
 export default function Sidebar() {
   const drawer = (
     <div>
-      <Toolbar sx={{ color: "primary.main" }}>
+      <Toolbar sx={{ boxShadow: 2 }}>
         <IconButton
           size="large"
           edge="start"
-          color="inherit"
+          color="primary"
           aria-label="menu"
-          sx={{ mr: 1 }}
+          sx={{ mx: 0.5 }}
         >
           <SettingsIcon />
         </IconButton>
         <Typography variant="h6">HisPath 관리자</Typography>
       </Toolbar>
-      <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem
             key={item.title}
             disablePadding
-            component={NavLink}
-            to={item.to}
-            sx={{ color: "text.primary" }}
+            sx={{ color: "text.primary", px: 2, py: 0.5 }}
           >
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton
+              component={NavLink}
+              to={item.to}
+              sx={{
+                borderRadius: 1,
+                height: 40,
+                pl: 4,
+                ":hover": { color: "primary.main", backgroundColor: "inherit" },
+              }}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
               <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
@@ -54,6 +65,7 @@ export default function Sidebar() {
       aria-label="mailbox folders"
     >
       <Drawer
+        PaperProps={{ style: { border: "none" } }}
         variant="permanent"
         sx={{
           "& .MuiDrawer-paper": {
