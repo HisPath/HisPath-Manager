@@ -44,7 +44,7 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
 
   return (
     <TableContainer
-      component={Paper}
+      // component={Paper}
       sx={{
         height: "100%",
         borderRadius: 1,
@@ -53,10 +53,7 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
       <Table {...getTableProps()} stickyHeader>
         <TableHead>
           {headerGroups.map((headerGroup) => (
-            <TableRow
-              {...headerGroup.getHeaderGroupProps()}
-              sx={{ "th, td": { backgroundColor: "background.paper" } }}
-            >
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
               <TableCell>순번</TableCell>
               {headerGroup.headers.map((column) => (
                 <TableCell {...column.getHeaderProps()}>
@@ -86,7 +83,12 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
             return (
               <TableRow
                 {...row.getRowProps()}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "td, th": { border: 0 },
+                  "&:nth-child(even) td, &:nth-child(even) th": {
+                    backgroundColor: "background.default",
+                  },
+                }}
               >
                 <TableCell>{index + 1}</TableCell>
                 {row.cells.map((cell) => {

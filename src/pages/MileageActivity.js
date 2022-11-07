@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Container,
   Modal,
+  Paper,
   styled,
   Typography,
 } from "@mui/material";
@@ -24,11 +25,13 @@ const Header = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 200px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -119,7 +122,7 @@ function MileageActivity() {
     loadData();
   }, []);
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           마일리지 항목 관리
