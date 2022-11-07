@@ -1,6 +1,7 @@
 import {
   Box,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -43,19 +44,19 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
 
   return (
     <TableContainer
+      component={Paper}
       sx={{
         height: "100%",
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "divider",
         borderRadius: 1,
-        backgroundColor: "background.paper",
       }}
     >
       <Table {...getTableProps()} stickyHeader>
         <TableHead>
           {headerGroups.map((headerGroup) => (
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
+            <TableRow
+              {...headerGroup.getHeaderGroupProps()}
+              sx={{ "th, td": { backgroundColor: "background.paper" } }}
+            >
               <TableCell>순번</TableCell>
               {headerGroup.headers.map((column) => (
                 <TableCell {...column.getHeaderProps()}>

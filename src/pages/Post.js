@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,23 +14,18 @@ import {
   styled,
   Stack,
   Typography,
-} from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { Link } from 'react-router-dom';
-import ReportIcon from '@mui/icons-material/Report';
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
-import '../style/image.css';
+} from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Link } from "react-router-dom";
+import ReportIcon from "@mui/icons-material/Report";
+import axios from "axios";
+import { useSnackbar } from "notistack";
+import "../style/image.css";
 
-const Section = styled(Container)({
-  marginTop: 0,
-  padding: 24,
-  borderRadius: 8,
-});
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingBottom: 10,
 });
 function Article({
@@ -82,14 +77,14 @@ function Article({
   return (
     <Container>
       <Header>
-        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600}>
           공지사항 &#62; 상세
         </Typography>
       </Header>
 
       <Box container>
         <br />
-        <Box container display="flex" justifyContent={'center'}>
+        <Box container display="flex" justifyContent={"center"}>
           <Typography variant="h3" p={1}>
             {title}
           </Typography>
@@ -103,8 +98,8 @@ function Article({
               spacing={2}
               justifyContent="right"
               style={{
-                paddingTop: '7px',
-                paddingLeft: '0',
+                paddingTop: "7px",
+                paddingLeft: "0",
               }}
             >
               <ImpChip imp={importance} label="Important Notice" />
@@ -135,17 +130,17 @@ function Buttons({ noticeId, history }) {
   const handleDelete = async (noticeId) => {
     setOpen(false);
     axios.delete(`/api/notice/${noticeId}`);
-    enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
+    enqueueSnackbar("삭제되었습니다.", { variant: "success" });
   };
 
   return (
     <Box
       container
       display="flex"
-      justifyContents={'right'}
+      justifyContents={"right"}
       gap={0.5}
       style={{
-        float: 'right',
+        float: "right",
       }}
     >
       <Button
@@ -168,7 +163,7 @@ function Buttons({ noticeId, history }) {
       <Button
         variant="outlined"
         onClick={() => {
-          window.open('/notice', '_self');
+          window.open("/notice", "_self");
         }}
       >
         돌아가기
@@ -177,9 +172,9 @@ function Buttons({ noticeId, history }) {
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
           <Link
-            to={'/notice'}
+            to={"/notice"}
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Button
@@ -206,12 +201,12 @@ function Buttons({ noticeId, history }) {
       <Dialog open={openEdit}>
         <DialogTitle>공지를 수정하겠습니까?</DialogTitle>
         <DialogActions>
-          <Box container display="flex" justifycontents={'right'} gap={1}>
+          <Box container display="flex" justifycontents={"right"} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {
                 setOpenEdit(false);
-                window.open(`/editpost/${noticeId}`, '_self');
+                window.open(`/editpost/${noticeId}`, "_self");
               }}
             >
               예

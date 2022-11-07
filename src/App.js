@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import Router from "./Router";
 import { theme } from "./style/theme";
@@ -14,6 +14,11 @@ function App() {
         }}
       >
         <CssBaseline />
+        <GlobalStyles
+          styles={{
+            "th, td": { whiteSpace: "nowrap" },
+          }}
+        />
         <Router />
       </SnackbarProvider>
     </ThemeProvider>

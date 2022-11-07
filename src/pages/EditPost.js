@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect } from 'react';
-import Editor from '../components/notice/Editor';
-import Editor2 from '../components/notice/Editor2';
-import { Link, useParams } from 'react-router-dom';
+import React, { Component, useState, useEffect } from "react";
+import Editor from "../components/notice/Editor";
+import Editor2 from "../components/notice/Editor2";
+import { Link, useParams } from "react-router-dom";
 import {
   Backdrop,
   Box,
@@ -16,21 +16,21 @@ import {
   styled,
   Typography,
   ToggleButton,
-} from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
 
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
   paddingBottom: 24,
 });
 const Article = styled(Box)({
-  height: 'calc(100vh - 236.5px)',
+  height: "calc(100vh - 236.5px)",
 });
 
 function TestPost() {
@@ -38,8 +38,8 @@ function TestPost() {
   const [notice, setNotice] = useState();
   const [init, setInit] = useState(false);
   const [managerId, setManagerId] = useState();
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   const [important, setImportant] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -82,15 +82,15 @@ function TestPost() {
     axios
       .patch(`/api/notice/${noticeId}`, {
         content: `${desc}`,
-        expDate: `${endDate.toISOString().split('T')[0]}`,
+        expDate: `${endDate.toISOString().split("T")[0]}`,
         managerId: `${managerId}`,
         importance: `${important}`,
-        pubDate: `${startDate.toISOString().split('T')[0]}`,
+        pubDate: `${startDate.toISOString().split("T")[0]}`,
         title: `${title}`,
         viewCnt: `${viewCnt}`,
       })
       .then(function (response) {
-        window.open(`/notice/${noticeId}`, '_self');
+        window.open(`/notice/${noticeId}`, "_self");
       })
       .catch(function (error) {});
   };
@@ -122,7 +122,7 @@ function TestPost() {
           onChange={handleSelection}
           label="Duration"
           style={{
-            height: '100%',
+            height: "100%",
           }}
         >
           <MenuItem value={duration}>직접 입력</MenuItem>
@@ -131,7 +131,7 @@ function TestPost() {
           <MenuItem value={30}>한 달</MenuItem>
           <MenuItem value={120}>한 학기</MenuItem>
         </Select>
-        <Stack direction="row" spacing={0.5} style={{ height: '100%' }}>
+        <Stack direction="row" spacing={0.5} style={{ height: "100%" }}>
           <TextField
             variant="standard"
             id="durationInput"
@@ -147,10 +147,10 @@ function TestPost() {
         </Stack>
         <DatePicker
           label="게시일"
-          views={['year', 'month', 'day']}
-          inputFormat={'YYYY-MM-DD'}
+          views={["year", "month", "day"]}
+          inputFormat={"YYYY-MM-DD"}
           value={startDate}
-          mask={'____-__-__'}
+          mask={"____-__-__"}
           onChange={(newValue) => {
             setStartDate(newValue);
           }}
@@ -158,9 +158,9 @@ function TestPost() {
         />
         <DatePicker
           label="만료일"
-          views={['year', 'month', 'day']}
-          inputFormat={'YYYY-MM-DD'}
-          mask={'____-__-__'}
+          views={["year", "month", "day"]}
+          inputFormat={"YYYY-MM-DD"}
+          mask={"____-__-__"}
           value={endDate}
           readOnly
           renderInput={(params) => <TextField {...params} />}
@@ -172,13 +172,13 @@ function TestPost() {
   return (
     <Container>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600} px={1}>
           공지사항 &#62; 상세 &#62; 수정
         </Typography>
       </Header>
       <Article>
         {init ? (
-          <Box container width="100%" justifyContent={'center'}>
+          <Box container width="100%" justifyContent={"center"}>
             <Box paddingLeft={1} paddingRight={1} paddingBottom={2}>
               <TextField
                 required
@@ -190,7 +190,7 @@ function TestPost() {
               />
             </Box>
             <Box
-              justifyContent={'center'}
+              justifyContent={"center"}
               display="flex"
               gap={6}
               container
@@ -204,8 +204,8 @@ function TestPost() {
                 selected={important}
                 onChange={importance}
                 style={{
-                  width: '100px',
-                  height: '100%',
+                  width: "100px",
+                  height: "100%",
                 }}
               >
                 중요
@@ -217,18 +217,25 @@ function TestPost() {
               container
               p={0}
               style={{
-                fontFamily: 'Noto Sans Korean,Malgun Gothic,sans-serif',
-                justifyContent: 'center',
+                fontFamily: "Noto Sans Korean,Malgun Gothic,sans-serif",
+                justifyContent: "center",
               }}
             >
-              <div style={{ padding: '10px', width: '100%' }}>
+              <div style={{ padding: "10px", width: "100%" }}>
                 <div className="form-group"></div>
-                <Editor2 value={desc} editorHandler={setDesc} setsave={setSave} />
+                <Editor2
+                  value={desc}
+                  editorHandler={setDesc}
+                  setsave={setSave}
+                />
               </div>
             </Box>
           </Box>
         ) : (
-          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={true}>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+          >
             <CircularProgress color="inherit" />
           </Backdrop>
         )}

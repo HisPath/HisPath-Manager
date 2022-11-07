@@ -45,7 +45,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 800,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 const columns = [
@@ -126,7 +126,9 @@ function ScholarshipList() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 장학금 수혜자 조회</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 장학금 수혜자 조회
+        </Typography>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select

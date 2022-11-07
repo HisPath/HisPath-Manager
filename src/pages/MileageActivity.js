@@ -65,7 +65,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function MileageActivity() {
@@ -121,7 +121,9 @@ function MileageActivity() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 항목 관리</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 항목 관리
+        </Typography>
         <Box display="flex" gap={1.5}>
           <Button
             component="a"
