@@ -38,7 +38,7 @@ const Article = styled(Box)({
 function TestAdd() {
   const [noticeId, setNoticeId] = useState();
   const [saved, setSaved] = useState(false);
-  const [managerId, setManagerId] = useState(6);
+  const [managerId, setManagerId] = useState(3);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [important, setImportant] = useState(false);
