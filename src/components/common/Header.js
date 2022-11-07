@@ -1,4 +1,5 @@
 import { AppBar, Box, Toolbar, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import { drawerWidth } from "../../constants/commons";
 
 export default function Header() {
@@ -14,7 +15,9 @@ export default function Header() {
     >
       <Toolbar>
         <Box sx={{ flexGrow: 1 }} />
-        <Button>로그아웃</Button>
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <Button>로그아웃</Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );

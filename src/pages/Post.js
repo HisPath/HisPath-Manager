@@ -171,31 +171,27 @@ function Buttons({ noticeId, history }) {
       <Dialog open={open}>
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
-          <Link
-            to={"/notice"}
-            style={{
-              textDecoration: "none",
-            }}
-          >
+          <Box container display="flex" justifycontents={"right"} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {
                 handleDelete(noticeId);
+                window.open("/notice", "_self");
               }}
             >
               예
             </Button>
-          </Link>
 
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            아니오
-          </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              아니오
+            </Button>
+          </Box>
         </DialogActions>
       </Dialog>
       <Dialog open={openEdit}>
