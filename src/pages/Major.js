@@ -9,16 +9,13 @@ import {
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
+import { majorState } from "../atom";
 import AddMajor from "../components/Major/AddMajor";
-import ViewStudent from "../components/Student/ViewStudent";
 import EditMajor from "../components/Major/EditMajor";
 import axios from "axios";
-import studentRegisterExcel from "../assets/student_register.xlsx";
 
 const Header = styled("div")({
   height: "15%",
@@ -57,30 +54,15 @@ const modalStyle = {
   borderRadius: 4,
 };
 
-function Student() {
-  const [students, setStudent] = useRecoilState(studentState);
+function Major() {
+  const [majors, setMajor] = useRecoilState(majorState);
   const [init, setInit] = useState(false);
-  const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
-    const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axios.post("/api/students", formData);
-    loadData();
-  };
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
-  const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
@@ -92,7 +74,7 @@ function Student() {
   };
   const loadData = () => {
     axios.get().then(function (response) {
-      setStudent(response.data);
+      setMajor(response.data);
       setInit(true);
     });
   };
@@ -102,7 +84,7 @@ function Student() {
       url: "/api/majors",
       responseType: "json",
     }).then(function (response) {
-      setStudent(
+      setMajor(
         response.data.map((item) => {
           return { ...item, id: item.id };
         })
@@ -133,7 +115,7 @@ function Student() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={majors}
           columns={[
             ...columns,
             {
@@ -144,14 +126,6 @@ function Student() {
               cellClassName: "actions",
               getActions: ({ id }) => {
                 return [
-                  //   <GridActionsCellItem
-                  //     icon={<OpenInFullIcon />}
-                  //     label="View"
-                  //     onClick={() => {
-                  //       setCurrentId(+id);
-                  //       handleOpenView();
-                  //     }}
-                  //   />,
                   <GridActionsCellItem
                     icon={<EditIcon />}
                     label="Edit"
@@ -184,6 +158,7 @@ function Student() {
           <AddMajor handleClose={handleCloseAdd} loadData={loadData} />
         </Box>
       </Modal>
+
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
@@ -200,4 +175,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default Major;

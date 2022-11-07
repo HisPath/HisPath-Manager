@@ -1,22 +1,8 @@
-import {
-  Box,
-  Button,
-  InputLabel,
-  TextField,
-  Typography,
-  MenuItem,
-  FormControl,
-  Select,
-} from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import {
-  departmentList,
-  major1List,
-  major2List,
-} from "../../constants/commons";
 
-function AddStudent({ handleClose, loadData }) {
+function AddDepartment({ handleClose, loadData }) {
   const {
     register,
     handleSubmit,
@@ -50,7 +36,7 @@ function AddStudent({ handleClose, loadData }) {
                 size="small"
               />
               <Typography color="text.secondary" variant="caption" height={24}>
-                {errors?.phone?.message}
+                {errors?.name?.message}
               </Typography>
             </Box>
           </Box>
@@ -70,4 +56,4 @@ function AddStudent({ handleClose, loadData }) {
   );
 }
 
-export default AddStudent;
+export default AddDepartment;

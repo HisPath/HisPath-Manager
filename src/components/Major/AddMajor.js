@@ -1,20 +1,6 @@
-import {
-  Box,
-  Button,
-  InputLabel,
-  TextField,
-  Typography,
-  MenuItem,
-  FormControl,
-  Select,
-} from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import {
-  departmentList,
-  major1List,
-  major2List,
-} from "../../constants/commons";
 
 function AddStudent({ handleClose, loadData }) {
   const {
@@ -24,19 +10,7 @@ function AddStudent({ handleClose, loadData }) {
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
     await axios.post("/api/major", {
-      categoryId: data.categoryId,
-      departmentId: data.departmentId,
-      studentNum: data.studentNum,
-      semester: data.semester,
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      profile: data.profile,
-      blog: data.blog,
-      githubId: data.githubId,
-      readme: data.readme,
-      major1Id: data.major1Id,
-      major2Id: data.major2Id,
+      majorName: data.name,
     });
     loadData();
     handleClose();
