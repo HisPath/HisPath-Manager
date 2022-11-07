@@ -1,26 +1,12 @@
-import {
-  Box,
-  Button,
-  InputLabel,
-  TextField,
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { studentState } from "../../atom";
+import { departmentState } from "../../atom";
 import axios from "axios";
-import {
-  departmentList,
-  major1List,
-  major2List,
-} from "../../constants/commons";
 
-function EditStudent({ id, handleClose, loadData }) {
-  const [student, setStudent] = useRecoilState(studentState);
-  const target = student.filter((item) => item.id === id)[0];
+function EditDepartment({ id, handleClose, loadData }) {
+  const [department, setDepartment] = useRecoilState(departmentState);
+  const target = department.filter((item) => item.id === id)[0];
   const {
     register,
     handleSubmit,
@@ -29,7 +15,8 @@ function EditStudent({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.put(`/api/department/${id}`, {
+    await axios.patch(`/api/department/${id}`, {
+      id: data.departmentId,
       name: data.name,
     });
     loadData();
@@ -52,7 +39,7 @@ function EditStudent({ id, handleClose, loadData }) {
             size="small"
           />
           <Typography color="text.secondary" variant="caption" height={24}>
-            {errors?.phone?.message}
+            {errors?.name?.message}
           </Typography>
         </Box>
       </Box>
@@ -71,4 +58,4 @@ function EditStudent({ id, handleClose, loadData }) {
   );
 }
 
-export default EditStudent;
+export default EditDepartment;

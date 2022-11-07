@@ -8,16 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import CustomNoRowsOverlay from "../components/Department/CustomNoRowsOverlay";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
+import { departmentState } from "../atom";
 import AddDepartment from "../components/Department/AddDepartment";
 import EditDepartment from "../components/Department/EditDepartment";
 import axios from "axios";
-import studentRegisterExcel from "../assets/student_register.xlsx";
 
 const Header = styled("div")({
   height: "15%",
@@ -39,7 +37,7 @@ const columns = [
   },
   {
     field: "name",
-    headerName: "이름",
+    headerName: "학부",
     width: 120,
   },
 ];
@@ -57,29 +55,14 @@ const modalStyle = {
 };
 
 function Department() {
-  const [students, setStudent] = useRecoilState(studentState);
+  const [departments, setDepartment] = useRecoilState(departmentState);
   const [init, setInit] = useState(false);
-  const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
-    const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axios.post("/api/students", formData);
-    loadData();
-  };
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
-  const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
@@ -91,7 +74,7 @@ function Department() {
   };
   const loadData = () => {
     axios.get().then(function (response) {
-      setStudent(response.data);
+      setDepartment(response.data);
       setInit(true);
     });
   };
@@ -101,7 +84,7 @@ function Department() {
       url: "/api/departments",
       responseType: "json",
     }).then(function (response) {
-      setStudent(
+      setDepartment(
         response.data.map((item) => {
           return { ...item, id: item.departmentId };
         })
@@ -132,7 +115,7 @@ function Department() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={departments}
           columns={[
             ...columns,
             {
@@ -175,9 +158,7 @@ function Department() {
           <AddDepartment handleClose={handleCloseAdd} loadData={loadData} />
         </Box>
       </Modal>
-      <Modal open={openView} onClose={handleCloseView}>
-        <Box sx={modalStyle}></Box>
-      </Modal>
+
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">

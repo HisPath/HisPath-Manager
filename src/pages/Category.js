@@ -8,12 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import CustomNoRowsOverlay from "../components/Category/CustomNoRowsOverlay";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
+import { categoryState } from "../atom";
 import AddCategory from "../components/Category/AddCategory";
 import EditCategory from "../components/Category/EditCategory";
 import axios from "axios";
@@ -55,30 +54,14 @@ const modalStyle = {
   borderRadius: 4,
 };
 
-function Student() {
-  const [students, setStudent] = useRecoilState(studentState);
+function Category() {
+  const [categories, setCategory] = useRecoilState(categoryState);
   const [init, setInit] = useState(false);
-  const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
-    const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axios.post("/api/category", formData);
-    loadData();
-  };
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
-  const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
-  const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
@@ -90,7 +73,7 @@ function Student() {
   };
   const loadData = () => {
     axios.get().then(function (response) {
-      setStudent(response.data);
+      setCategory(response.data);
       setInit(true);
     });
   };
@@ -100,7 +83,7 @@ function Student() {
       url: "/api/categories",
       responseType: "json",
     }).then(function (response) {
-      setStudent(
+      setCategory(
         response.data.map((item) => {
           return { ...item, id: item.categoryId };
         })
@@ -111,7 +94,7 @@ function Student() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">학생 관리 시스템</Typography>
+        <Typography variant="h5">카테고리 관리 시스템</Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             카테고리 추가
@@ -131,7 +114,7 @@ function Student() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={categories}
           columns={[
             ...columns,
             {
@@ -178,7 +161,7 @@ function Student() {
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생 정보 수정
+            카테고리 정보 수정
           </Typography>
           <EditCategory
             id={currentId}
@@ -191,4 +174,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default Category;

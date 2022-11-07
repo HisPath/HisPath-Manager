@@ -1,20 +1,6 @@
-import {
-  Box,
-  Button,
-  InputLabel,
-  TextField,
-  Typography,
-  MenuItem,
-  FormControl,
-  Select,
-} from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import {
-  departmentList,
-  major1List,
-  major2List,
-} from "../../constants/commons";
 
 function AddCategory({ handleClose, loadData }) {
   const {
@@ -39,7 +25,7 @@ function AddCategory({ handleClose, loadData }) {
             <Box width="100%">
               <InputLabel sx={{ mt: 1 }}>이름:</InputLabel>
               <TextField
-                {...register("phone", {
+                {...register("name", {
                   required: true,
                 })}
                 color="secondary"
@@ -50,7 +36,7 @@ function AddCategory({ handleClose, loadData }) {
                 size="small"
               />
               <Typography color="text.secondary" variant="caption" height={24}>
-                {errors?.phone?.message}
+                {errors?.name?.message}
               </Typography>
             </Box>
           </Box>

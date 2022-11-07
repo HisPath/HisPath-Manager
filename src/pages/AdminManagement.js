@@ -39,7 +39,7 @@ const columns = [
   },
   {
     field: "department",
-    headerName: "학부",
+    headerName: "소속",
     width: 200,
   },
   {
@@ -47,16 +47,6 @@ const columns = [
     headerName: "이메일",
     width: 300,
   },
-  // {
-  //   field: "power",
-  //   headerName: "등급",
-  //   width: 90,
-  // },
-  // {
-  //   field: "approved",
-  //   headerName: "권한 상태",
-  //   width: 100,
-  // },
 ];
 
 const modalStyle = {
@@ -195,7 +185,7 @@ function Management() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">관리자 페이지</Typography>
+        <Typography variant="h5">관리자 권한 관리 페이지</Typography>
       </Header>
       <Article>
         <DataGrid

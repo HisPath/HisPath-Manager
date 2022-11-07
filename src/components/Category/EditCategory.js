@@ -10,17 +10,12 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { studentState } from "../../atom";
+import { categoryState, studentState } from "../../atom";
 import axios from "axios";
-import {
-  departmentList,
-  major1List,
-  major2List,
-} from "../../constants/commons";
 
-function EditStudent({ id, handleClose, loadData }) {
-  const [student, setStudent] = useRecoilState(studentState);
-  const target = student.filter((item) => item.id === id)[0];
+function EditCategory({ id, handleClose, loadData }) {
+  const [category, setCategory] = useRecoilState(categoryState);
+  const target = category.filter((item) => item.id === id)[0];
   const {
     register,
     handleSubmit,
@@ -41,7 +36,7 @@ function EditStudent({ id, handleClose, loadData }) {
         <Box display="flex" gap={2}>
           <InputLabel sx={{ mt: 1 }}>카테고리 이름:</InputLabel>
           <TextField
-            {...register("phone", {
+            {...register("name", {
               required: true,
             })}
             color="secondary"
@@ -52,7 +47,7 @@ function EditStudent({ id, handleClose, loadData }) {
             size="small"
           />
           <Typography color="text.secondary" variant="caption" height={24}>
-            {errors?.phone?.message}
+            {errors?.name?.message}
           </Typography>
         </Box>
       </Box>
@@ -71,4 +66,4 @@ function EditStudent({ id, handleClose, loadData }) {
   );
 }
 
-export default EditStudent;
+export default EditCategory;
