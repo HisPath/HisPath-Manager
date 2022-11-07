@@ -19,6 +19,7 @@ import ScholarshipList from "./pages/ScholarshipList";
 import AdminManagement from "./pages/AdminManagement";
 import { drawerWidth } from "./constants/commons";
 import Sidebar from "./components/common/Sidebar";
+import { Login } from "./pages/Login";
 
 function Router() {
   return (
@@ -61,6 +62,7 @@ function Router() {
             />
             <Route path="/scholarship/list" element={<ScholarshipList />} />
             <Route path="/admin/management" element={<AdminManagement />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Box>
       </Box>
