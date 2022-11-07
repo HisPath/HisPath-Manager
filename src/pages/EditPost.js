@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import Editor from '../components/notice/Editor';
+import Editor2 from '../components/notice/Editor2';
 import { Link, useParams } from 'react-router-dom';
 import {
   Backdrop,
@@ -44,10 +45,13 @@ function TestPost() {
   const [endDate, setEndDate] = useState(new Date());
   const [duration, setDuration] = useState();
   const [viewCnt, setViewCnt] = useState();
+  const [save, setSave] = useState(false);
 
-  function onEditorChange(value) {
-    setDesc(value);
-  }
+  useEffect(() => {
+    if (save) {
+      editNotice();
+    }
+  }, [save]);
 
   const importance = () => {
     setImportant(!important);
@@ -219,24 +223,7 @@ function TestPost() {
             >
               <div style={{ padding: '10px', width: '100%' }}>
                 <div className="form-group"></div>
-                <Editor value={desc} onChange={onEditorChange} />
-                <Box container gap={1} display="flex" justifyContent={'right'} paddingRight={2.5}>
-                  {/* <Link id="notice_Detail_Link" to={{ pathname: `/notice/${noticeId}` }}> */}
-                  <Button variant="contained" onClick={editNotice}>
-                    저장
-                  </Button>
-                  {/* </Link> */}
-                  <Link
-                    to={{ pathname: '/notice' }}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <Button variant="outlined" color="error">
-                      뒤로가기
-                    </Button>
-                  </Link>
-                </Box>
+                <Editor2 value={desc} editorHandler={setDesc} setsave={setSave} />
               </div>
             </Box>
           </Box>
