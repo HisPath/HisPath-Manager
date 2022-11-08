@@ -68,13 +68,15 @@ function TestPost() {
       setImportant(result.importance);
       const s = new Date(result.pubDate);
       const e = new Date(result.expDate);
-      const d = e.getDate() - s.getDate();
-      setStartDate(s);
+      var d = Math.abs(e - s);
+      d = d / 1000 / 60 / 60 / 24;
       setDuration(d);
       setManagerId(result.managerId);
       setViewCnt(result.viewCnt - 1);
       console.log(d);
+      setStartDate(s);
     });
+
     setInit(true);
   }, []);
 
@@ -98,6 +100,9 @@ function TestPost() {
   useEffect(() => {
     calculateEndDate();
   }, [startDate]);
+  // useEffect(() => {
+  //   calculateEndDate();
+  // }, [endDate]);
   useEffect(() => {
     calculateEndDate();
   }, [duration]);

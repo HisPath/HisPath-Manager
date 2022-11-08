@@ -41,6 +41,7 @@ function Article({
   content,
   viewCnt,
   importance,
+  regDate,
   pubDate,
   expDate,
 }) {
@@ -97,7 +98,7 @@ function Article({
         <br />
         <hr />
         <Grid container spacing={2}>
-          <Grid item xs="8">
+          <Grid item xs="9">
             <Stack
               direction="row"
               spacing={2}
@@ -109,6 +110,7 @@ function Article({
             >
               <ImpChip imp={importance} label="Important Notice" />
               <TimeChip pubDate={pubDate} label="Reserved Notice" />
+              <Typography variant="p">등록일: {regDate}</Typography>
               <Typography variant="p">작성자: {managerName}</Typography>
               <Typography variant="p">
                 게시기간: {pubDate} ~ {expDate}
@@ -116,7 +118,7 @@ function Article({
               <Typography variant="p">조회수: {viewCnt}</Typography>
             </Stack>
           </Grid>
-          <Grid item xs="4">
+          <Grid item xs="3">
             <Buttons noticeId={id} />
           </Grid>
         </Grid>
