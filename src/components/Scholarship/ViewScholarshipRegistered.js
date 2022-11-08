@@ -36,16 +36,16 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 3.5,
-  borderRadius: 1,
+  borderRadius: 4,
 };
 
 function ViewScholarshipRegistered({ id, handleClose }) {
   const [students, setStudents] = useState([]);
-  console.log(id);
+
   const loadStudents = () => {
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=2022-2`
+        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
       )
       .then(function (response) {
         setStudents(response.data.activities);
@@ -60,7 +60,7 @@ function ViewScholarshipRegistered({ id, handleClose }) {
   const studentInfo = () => {
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=2022-2`
+        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
       )
       .then(function (response) {
         setInfo(response.data);
