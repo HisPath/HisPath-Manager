@@ -26,10 +26,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
     init();
   }, [value]);
   const editorChangeHandler = async () => {
-    await editorRef.current
-      ?.getInstance()
-      .setHTML(replaceImgTag(editorRef.current?.getInstance().getHTML()));
-    editorHandler(replaceATag(editorRef.current?.getInstance().getHTML()));
+    await editorHandler(replaceATag(replaceImgTag(editorRef.current?.getInstance().getHTML())));
   };
   const replaceImgTag = () => {
     var s = editorRef.current?.getInstance().getHTML();
@@ -38,8 +35,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
       "<img width='70%' height='auto' style='display: block; margin: 0 auto' ",
     );
   };
-  const replaceATag = () => {
-    var s = editorRef.current?.getInstance().getHTML();
+  const replaceATag = (s) => {
     return s.replace('<a ', "<a target='_blank' ");
   };
 
