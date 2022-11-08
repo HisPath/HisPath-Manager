@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Backdrop,
   Box,
@@ -8,30 +8,30 @@ import {
   Paper,
   styled,
   Typography,
-} from "@mui/material";
-import CustomNoRowsOverlay from "../../Mileage/CustomNoRowsOverlay";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import StarIcon from "@mui/icons-material/Grade";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+} from '@mui/material';
+import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import StarIcon from '@mui/icons-material/Grade';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
-import AlarmIcon from "@mui/icons-material/Alarm";
-const Header = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
+import AlarmIcon from '@mui/icons-material/Alarm';
+const Header = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-end',
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: 'calc(100vh - 236.5px)',
 });
 
 function AlarmIconCheck({ t }) {
   const p = new Date(t.row.pubDate);
   const d = new Date();
-  const s = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  const s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
   const today = new Date(s);
   if (p > today)
     return (
@@ -59,8 +59,8 @@ const StatusIcons = ({ p }) => {
         fontSize="small"
         style={{
           width: 40,
-          float: "right",
-          color: "red",
+          float: 'right',
+          color: 'red',
         }}
       />
     );
@@ -72,18 +72,28 @@ function TT() {
   const [init, setInit] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
 
+  const PublishDuration = ({ p }) => {
+    var pubD = p.row.pubDate;
+    var expD = p.row.expDate;
+    return (
+      <Typography variant="h7" fontWeight="normal">
+        {pubD} ~ {expD}
+      </Typography>
+    );
+  };
+
   const columns = [
     {
-      field: "importance",
+      field: 'importance',
       width: 30,
-      headerName: "",
+      headerName: '',
       type: Date,
       renderCell: (param) => (
         <strong>
           <Box
             style={{
-              textAlign: "center",
-              width: "inherit",
+              textAlign: 'center',
+              width: 'inherit',
             }}
           >
             <StatusIcons p={param} />
@@ -91,43 +101,49 @@ function TT() {
         </strong>
       ),
     },
-
     {
-      field: "id",
-      headerName: "No",
+      field: 'id',
+      headerName: 'No',
       width: 50,
       filterable: false,
-      renderCell: (index) =>
-        noticeList.length - index.api.getRowIndex(index.row.id),
-    },
-
-    {
-      field: "title",
-      width: 440,
-      headerName: "제목",
+      renderCell: (index) => noticeList.length - index.api.getRowIndex(index.row.id),
     },
     {
-      field: "managerName",
+      field: 'regDate',
       width: 100,
-      headerName: "작성자",
-    },
-    {
-      field: "pubDate",
-      width: 150,
       type: Date,
-      headerName: "게시일",
+      headerName: '등록일',
     },
-
     {
-      field: "expDate",
+      field: 'title',
+      width: 500,
+      headerName: '제목',
+    },
+    {
+      field: 'managerName',
       width: 150,
-      type: Date,
-      headerName: "만료일",
+      headerName: '작성자',
     },
     {
-      field: "viewCnt",
+      field: 'pubDate',
+      width: 200,
+      headerName: '게시기간',
+      renderCell: (param) => (
+        <strong>
+          <Box
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            <PublishDuration p={param} />
+          </Box>
+        </strong>
+      ),
+    },
+    {
+      field: 'viewCnt',
       width: 60,
-      headerName: "조회수",
+      headerName: '조회수',
       renderCell: (param) => (
         <strong>
           <AlarmIconCheck t={param} />
@@ -137,7 +153,7 @@ function TT() {
   ];
 
   const loadData = () => {
-    axios.get("/api/notice").then(function (response) {
+    axios.get('/api/notice').then(function (response) {
       noticeFilter(response.data);
       setInit(true);
     });
@@ -150,14 +166,14 @@ function TT() {
   const getRowStyle = (params) => {
     console.log(params);
     if (params.importance) {
-      return { background: "red" };
+      return { background: 'red' };
     }
   };
 
   function noticeFilter(arr) {
     if (!(noticeType === 0)) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         var expD = new Date(data.expDate);
@@ -166,7 +182,7 @@ function TT() {
     }
     if (noticeType === 1 || noticeType === 2) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         const pubD = new Date(data.pubDate);
@@ -176,7 +192,7 @@ function TT() {
       });
     } else if (noticeType === 3) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         const pubD = new Date(data.pubDate);
@@ -188,19 +204,6 @@ function TT() {
         return data.importance;
       });
     }
-    // } else if (noticeType === 3) {
-    // const d = new Date().now();
-    // const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-    // const today = new Date(t);
-    // const today = new Date();
-    // arr = arr.filter(function (data) {
-    // const pubD = new Date(data.pubDate);
-    // return pubD > today;
-    //   const pDate = new Date(data.pubDate);
-
-    //   return pDate > today;
-    // });
-
     setNoticeList(arr);
   }
 
@@ -210,7 +213,7 @@ function TT() {
         <Typography variant="h5" fontWeight={600}>
           공지사항
         </Typography>
-        <Box display="flex" gap={1.5} justifyContent={"right"}>
+        <Box display="flex" gap={1.5} justifyContent={'right'}>
           <Button variant="outlined" onClick={() => setNoticeType(0)}>
             전체 공지
           </Button>
@@ -225,9 +228,9 @@ function TT() {
           </Button>
 
           <Link
-            to={"/addpost"}
+            to={'/addpost'}
             style={{
-              textDecoration: "none",
+              textDecoration: 'none',
             }}
           >
             <Button variant="contained">공지 추가</Button>
@@ -250,9 +253,9 @@ function TT() {
             }}
             rows={noticeList}
             columns={columns}
-            onRowClick={({ id }) => window.open(`/notice/${id}`, "_self")}
-            pageSize={20}
-            rowsPerPageOptions={[20]}
+            onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
             getRowClassName={getRowStyle}
             AlternationCount="{ Binding MainData.ProjColl.Count}"
             disableColumnMenu
@@ -260,10 +263,7 @@ function TT() {
             hideFooterSelectedRowCount
           />
         ) : (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={true}
-          >
+          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={true}>
             <CircularProgress color="inherit" />
           </Backdrop>
         )}
