@@ -1,38 +1,44 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, Container, Modal, styled, Typography } from '@mui/material';
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
-import CustomNoRowsOverlay from '../components/Student/CustomNoRowsOverlay';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import { useRecoilState } from 'recoil';
-import { studentState } from '../atom';
-import AddStudent from '../components/Student/AddStudent';
-import ViewStudent from '../components/Student/ViewStudent';
-import EditStudent from '../components/Student/EditStudent';
-import axios from 'axios';
-import studentRegisterExcel from '../assets/student_register.xlsx';
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Modal,
+  styled,
+  Typography,
+} from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
+import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
+import { useRecoilState } from "recoil";
+import { studentState } from "../atom";
+import AddStudent from "../components/Student/AddStudent";
+import ViewStudent from "../components/Student/ViewStudent";
+import EditStudent from "../components/Student/EditStudent";
+import axios from "axios";
+import studentRegisterExcel from "../assets/student_register.xlsx";
 
-const Header = styled('div')({
-  height: '15%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
+const Header = styled("div")({
+  height: "15%",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: 'calc(100vh - 236.5px)',
+  height: "calc(100vh - 236.5px)",
 });
 
 const columns = [
   {
-    field: 'id',
-    headerName: '번호',
+    field: "id",
+    headerName: "번호",
     width: 60,
   },
   {
-
     field: "studentNum",
     headerName: "학번",
     width: 150,
@@ -41,15 +47,13 @@ const columns = [
     field: "name",
     headerName: "이름",
     width: 120,
-
   },
   {
-    field: 'departmentName',
-    headerName: '학부',
+    field: "departmentName",
+    headerName: "학부",
     width: 200,
   },
   {
-
     field: "major1Name",
     headerName: "1전공",
     width: 180,
@@ -58,41 +62,34 @@ const columns = [
     field: "major2Name",
     headerName: "2전공",
     width: 180,
-
   },
   {
-    field: 'semester',
-    headerName: '학기',
+    field: "semester",
+    headerName: "학기",
     width: 100,
   },
 ];
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Student() {
   const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
   const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
     const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
-    formData.append('file', files[0]);
-    await axios.post('/api/students', formData);
+    formData.append("file", files[0]);
+    await axios.post("/api/students", formData);
     loadData();
   };
 
@@ -120,14 +117,14 @@ function Student() {
   };
   useEffect(() => {
     axios({
-      method: 'get',
-      url: '/api/students',
-      responseType: 'json',
+      method: "get",
+      url: "/api/students",
+      responseType: "json",
     }).then(function (response) {
       setStudent(
         response.data.map((item) => {
           return { ...item, id: item.studentId };
-        }),
+        })
       );
       console.log(response.data);
     });
@@ -135,7 +132,9 @@ function Student() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">학생 관리 시스템</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          학생 관리 시스템
+        </Typography>
         <Box display="flex" gap={2}>
           <Button
             component="a"
@@ -176,11 +175,11 @@ function Student() {
           columns={[
             ...columns,
             {
-              field: 'actions',
-              type: 'actions',
-              headerName: '기능',
+              field: "actions",
+              type: "actions",
+              headerName: "기능",
               width: 128,
-              cellClassName: 'actions',
+              cellClassName: "actions",
               getActions: ({ id }) => {
                 return [
                   <GridActionsCellItem
@@ -236,7 +235,11 @@ function Student() {
           <Typography variant="h6" component="h2">
             학생 정보 수정
           </Typography>
-          <EditStudent id={currentId} handleClose={handleCloseEdit} loadData={loadData} />
+          <EditStudent
+            id={currentId}
+            handleClose={handleCloseEdit}
+            loadData={loadData}
+          />
         </Box>
       </Modal>
     </Container>

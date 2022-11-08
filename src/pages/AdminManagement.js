@@ -58,7 +58,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 805,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Management() {
@@ -67,15 +67,8 @@ function Management() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
-  const [openAdd, setOpenAdd] = useState(false);
-  const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
       await axios.delete(`/api/manager/${id}`).then(function (response) {});
@@ -185,7 +178,9 @@ function Management() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">관리자 권한 관리 페이지</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          관리자 권한 관리 페이지
+        </Typography>
       </Header>
       <Article>
         <DataGrid

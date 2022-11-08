@@ -33,12 +33,32 @@ const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
+    width: 80,
   },
   {
     field: "name",
     headerName: "학부",
-    width: 120,
+    width: 200,
+  },
+  {
+    field: "professor",
+    headerName: "지도교수",
+    width: 150,
+  },
+  {
+    field: "phone",
+    headerName: "사무실 번호",
+    width: 250,
+  },
+  {
+    field: "location",
+    headerName: "학부 위치",
+    width: 150,
+  },
+  {
+    field: "total",
+    headerName: "총 인원",
+    width: 150,
   },
 ];
 
@@ -51,7 +71,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Department() {
@@ -95,7 +115,9 @@ function Department() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">학부 관리 시스템</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          학부 관리 시스템
+        </Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             학부 추가

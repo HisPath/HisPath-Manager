@@ -1,6 +1,7 @@
 import {
   Box,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -43,13 +44,10 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
 
   return (
     <TableContainer
+      // component={Paper}
       sx={{
         height: "100%",
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "divider",
         borderRadius: 1,
-        backgroundColor: "background.paper",
       }}
     >
       <Table {...getTableProps()} stickyHeader>
@@ -85,7 +83,12 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
             return (
               <TableRow
                 {...row.getRowProps()}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "td, th": { border: 0 },
+                  "&:nth-child(even) td, &:nth-child(even) th": {
+                    backgroundColor: "background.default",
+                  },
+                }}
               >
                 <TableCell>{index + 1}</TableCell>
                 {row.cells.map((cell) => {

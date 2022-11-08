@@ -142,7 +142,7 @@ function TT() {
     },
     {
       field: 'viewCnt',
-      width: 100,
+      width: 60,
       headerName: '조회수',
       renderCell: (param) => (
         <strong>
@@ -210,7 +210,7 @@ function TT() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600}>
           공지사항
         </Typography>
         <Box display="flex" gap={1.5} justifyContent={'right'}>

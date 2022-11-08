@@ -177,7 +177,7 @@ function TestPost() {
   return (
     <Container>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600} px={1}>
           공지사항 &#62; 상세 &#62; 수정
         </Typography>
       </Header>

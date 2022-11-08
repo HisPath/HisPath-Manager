@@ -22,11 +22,6 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import '../style/image.css';
 
-const Section = styled(Container)({
-  marginTop: 0,
-  padding: 24,
-  borderRadius: 8,
-});
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
@@ -83,7 +78,7 @@ function Article({
   return (
     <Container>
       <Header>
-        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600}>
           공지사항 &#62; 상세
         </Typography>
       </Header>

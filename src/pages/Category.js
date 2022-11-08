@@ -33,12 +33,27 @@ const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
+    width: 80,
   },
   {
     field: "name",
     headerName: "이름",
-    width: 120,
+    width: 300,
+  },
+  {
+    field: "option",
+    headerName: "여부",
+    width: 150,
+  },
+  {
+    field: "weight",
+    headerName: "총 가중치",
+    width: 170,
+  },
+  {
+    field: "memo",
+    headerName: "비고",
+    width: 250,
   },
 ];
 
@@ -51,7 +66,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Category() {
@@ -94,7 +109,9 @@ function Category() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">카테고리 관리 시스템</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          카테고리 관리 시스템
+        </Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             카테고리 추가

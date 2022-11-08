@@ -38,7 +38,7 @@ const Article = styled(Box)({
 function TestAdd() {
   const [noticeId, setNoticeId] = useState();
   const [saved, setSaved] = useState(false);
-  const [managerId, setManagerId] = useState(3);
+  const [managerId, setManagerId] = useState(2);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [important, setImportant] = useState(false);
@@ -169,7 +169,7 @@ function TestAdd() {
   return (
     <Container>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600} px={1}>
           공지사항 &#62; 추가
         </Typography>
       </Header>

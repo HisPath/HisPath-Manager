@@ -10,9 +10,7 @@ export default function Header() {
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
         ml: `${drawerWidth}px`,
-        boxShadow: 0,
-        borderBottom: '1px solid',
-        borderColor: 'divider',
+        boxShadow: 1,
       }}
     >
       <Toolbar>

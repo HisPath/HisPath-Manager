@@ -115,6 +115,18 @@ function ScholarshipManagement() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const [info, setInfo] = React.useState([]);
+
+  const getInfo = async () => {
+    const info = await axios.get(`/api/scholarship/students`);
+    setInfo(info.data);
+  };
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -149,7 +161,7 @@ function ScholarshipManagement() {
                     label="View"
                     onClick={() => {
                       setCurrentId(+id);
-                      handleOpenView();
+                      handleOpenView(+id);
                     }}
                   />,
                 ];
@@ -166,9 +178,8 @@ function ScholarshipManagement() {
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            (현학기) 마일리지 신청 목록
+            마일리지 신청 목록
           </Typography>
-          <InputLabel>[전산전자] 박성진 (21700266)</InputLabel>
           <ViewScholarshipRegistered
             id={currentId}
             handleClose={handleCloseView}

@@ -33,11 +33,26 @@ const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
+    width: 80,
   },
   {
     field: "name",
     headerName: "전공",
+    width: 300,
+  },
+  {
+    field: "department",
+    headerName: "소속 학부",
+    width: 250,
+  },
+  {
+    field: "credit",
+    headerName: "총 학점",
+    width: 150,
+  },
+  {
+    field: "total",
+    headerName: "총 인원",
     width: 180,
   },
 ];
@@ -51,7 +66,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Major() {
@@ -95,7 +110,9 @@ function Major() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">전공 관리 페이지</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          전공 관리 페이지
+        </Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             전공 추가
