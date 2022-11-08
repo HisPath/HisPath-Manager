@@ -67,15 +67,8 @@ function Management() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
-  const [openAdd, setOpenAdd] = useState(false);
-  const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
       await axios.delete(`/api/manager/${id}`).then(function (response) {});

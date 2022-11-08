@@ -86,13 +86,7 @@ function Student() {
   const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
   const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
     const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
     await axios.post("/api/students", formData);
