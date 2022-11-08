@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { Box, Button } from '@mui/material';
-// Toast 에디터
 import { Editor } from '@toast-ui/react-editor';
 import { Link, useParams } from 'react-router-dom';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -27,7 +26,10 @@ export default function Editor2({ value, editorHandler, setsave }) {
     init();
   }, [value]);
   const editorChangeHandler = async () => {
-    await editorHandler(replaceImgTag(editorRef.current?.getInstance().getHTML()));
+    await editorRef.current
+      ?.getInstance()
+      .setHTML(replaceImgTag(editorRef.current?.getInstance().getHTML()));
+    editorHandler(replaceATag(editorRef.current?.getInstance().getHTML()));
   };
   const replaceImgTag = () => {
     var s = editorRef.current?.getInstance().getHTML();
@@ -35,6 +37,10 @@ export default function Editor2({ value, editorHandler, setsave }) {
       '<img ',
       "<img width='70%' height='auto' style='display: block; margin: 0 auto' ",
     );
+  };
+  const replaceATag = () => {
+    var s = editorRef.current?.getInstance().getHTML();
+    return s.replace('<a ', "<a target='_blank' ");
   };
 
   const saveHandler = async () => {
@@ -70,7 +76,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
           ['ul', 'ol', 'task', 'indent', 'outdent'],
-          ['image', 'link'],
+          ['image'],
         ]}
         hideModeSwitch={true}
         useCommandShortcut={true} // 키보드 입력 컨트롤
