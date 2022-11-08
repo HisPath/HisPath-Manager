@@ -26,7 +26,10 @@ export default function Editor2({ value, editorHandler, setsave }) {
     init();
   }, [value]);
   const editorChangeHandler = async () => {
-    await editorHandler(replaceATag(replaceImgTag(editorRef.current?.getInstance().getHTML())));
+    await editorRef.current
+      ?.getInstance()
+      .setHTML(replaceImgTag(editorRef.current?.getInstance().getHTML()));
+    editorHandler(replaceATag(editorRef.current?.getInstance().getHTML()));
   };
   const replaceImgTag = () => {
     var s = editorRef.current?.getInstance().getHTML();
