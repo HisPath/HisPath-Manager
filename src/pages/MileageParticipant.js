@@ -56,7 +56,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function MileageParticipant() {
@@ -81,7 +81,9 @@ function MileageParticipant() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 참여 관리</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 참여 관리
+        </Typography>
       </Header>
       <Article>
         {init ? (

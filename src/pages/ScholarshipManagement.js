@@ -85,7 +85,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 805,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function ScholarshipManagement() {
@@ -182,7 +182,9 @@ function ScholarshipManagement() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 장학금 신청자 관리
+        </Typography>
       </Header>
       <Article>
         <DataGrid

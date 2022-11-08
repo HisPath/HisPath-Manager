@@ -66,7 +66,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Major() {
@@ -110,7 +110,9 @@ function Major() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">전공 관리 페이지</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          전공 관리 페이지
+        </Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             전공 추가

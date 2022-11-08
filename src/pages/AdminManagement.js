@@ -58,7 +58,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 805,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Management() {
@@ -178,7 +178,9 @@ function Management() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">관리자 권한 관리 페이지</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          관리자 권한 관리 페이지
+        </Typography>
       </Header>
       <Article>
         <DataGrid

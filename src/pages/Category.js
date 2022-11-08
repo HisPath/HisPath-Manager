@@ -66,7 +66,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Category() {
@@ -109,7 +109,9 @@ function Category() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">카테고리 관리 시스템</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          카테고리 관리 시스템
+        </Typography>
         <Box display="flex" gap={2}>
           <Button onClick={handleOpenAdd} variant="outlined">
             카테고리 추가

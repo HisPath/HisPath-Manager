@@ -79,7 +79,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 450,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Student() {
@@ -132,7 +132,9 @@ function Student() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">학생 관리 시스템</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          학생 관리 시스템
+        </Typography>
         <Box display="flex" gap={2}>
           <Button
             component="a"
