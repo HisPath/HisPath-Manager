@@ -93,20 +93,7 @@ const ScholarshipListTable = ({ columns, data }) => {
                     </TableCell>
                   );
                 })}
-                <TableCell align="center" sx={{ padding: 0 }}>
-                  {/* <IconButton
-                      onClick={() => handleOpenEdit(row.original.id)}
-                      size="big"
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => handleDeleteClick(row.original.id)}
-                      size="small"
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton> */}
-                </TableCell>
+                <TableCell align="center" sx={{ padding: 0 }}></TableCell>
               </TableRow>
             );
           })}

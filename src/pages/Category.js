@@ -33,12 +33,27 @@ const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
+    width: 80,
   },
   {
     field: "name",
     headerName: "이름",
-    width: 120,
+    width: 300,
+  },
+  {
+    field: "option",
+    headerName: "여부",
+    width: 150,
+  },
+  {
+    field: "weight",
+    headerName: "총 가중치",
+    width: 170,
+  },
+  {
+    field: "memo",
+    headerName: "비고",
+    width: 250,
   },
 ];
 

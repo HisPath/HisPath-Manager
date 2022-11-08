@@ -91,7 +91,7 @@ const modalStyle = {
 function ScholarshipManagement() {
   const [init, setInit] = useState(false);
   const [scholarships, setScholarships] = useRecoilState(scholarshipState);
-  const [currentId, setCurrentId] = useState();
+  const [currentId, setCurrentId] = useState(0);
   const handleOpenView = (id) => {
     setCurrentId(id);
     setOpenView(true);
@@ -99,22 +99,86 @@ function ScholarshipManagement() {
 
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
+  const handleDeleteClick = async (id) => {
+    if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
+      await axios.delete(`/api/scholarship/${id}`).then(function (response) {});
+      loadData();
+    }
+  };
+
+  // const loadData = () => {
+  //   axios
+  //     .get(`/api/scholarships?approved=false&semester=2022-2`)
+  //     .then(function (response) {
+  //       setScholarships(
+  //         // const datas = response.data;
+  //         // datas.map((data, idx) => {
+  //         //   data.id = idx + 1;
+  //         // });
+  //         response.data.map((item) => {
+  //           return { ...item, id: item.studentId };
+  //         })
+  //       );
+  //       console.log("data: ", response.data);
+  //     });
+  // };
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
+
+  // const loadData = () => {
+  //   axios.get().then(function (response) {
+  //     setScholarships(response.data);
+  //     setInit(true);
+  //   });
+  // };
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "/api/scholarships?approved=false&semester=2022-2",
+  //     responseType: "json",
+  //   }).then(function (response) {
+  //     setScholarships(
+  //       response.data.map((item) => {
+  //         return { ...item, id: item.studentId };
+  //       })
+  //     );
+  //     console.log(response.data);
+  //   });
+  // }, []);
 
   const loadData = () => {
-    axios
-      .get(`/api/scholarships?approved=false&semester=2022-2`)
-      .then(function (response) {
-        const datas = response.data;
-        datas.map((data, idx) => {
-          data.id = idx + 1;
-        });
-        setScholarships(datas);
-        setInit(true);
-      });
+    axios.get().then(function (response) {
+      setScholarships(response.data);
+      setInit(true);
+    });
   };
   useEffect(() => {
-    loadData();
+    axios({
+      method: "get",
+      url: "/api/scholarships?approved=false&semester=2022-2",
+      responseType: "json",
+    }).then(function (response) {
+      setScholarships(
+        response.data.map((item) => {
+          return { ...item, id: item.studentId };
+        })
+      );
+      console.log(response.data);
+    });
   }, []);
+
+  const [info, setInfo] = React.useState([]);
+
+  const getInfo = async () => {
+    const info = await axios.get(`/api/scholarship/students`);
+    setInfo(info.data);
+  };
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -166,9 +230,8 @@ function ScholarshipManagement() {
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            (현학기) 마일리지 신청 목록
+            마일리지 신청 목록
           </Typography>
-          <InputLabel>[전산전자] 박성진 (21700266)</InputLabel>
           <ViewScholarshipRegistered
             id={currentId}
             handleClose={handleCloseView}
