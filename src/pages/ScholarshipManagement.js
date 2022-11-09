@@ -37,7 +37,7 @@ const columns = [
   {
     field: "departmentName",
     headerName: "학부",
-    width: 150,
+    width: 130,
   },
   {
     field: "major1Name",
@@ -151,8 +151,8 @@ function ScholarshipManagement() {
             {
               field: "actions",
               type: "actions",
-              headerName: "기능",
-              width: 60,
+              headerName: "신청 목록 조회",
+              width: 150,
               cellClassName: "actions",
               getActions: ({ id }) => {
                 return [
