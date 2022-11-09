@@ -72,14 +72,14 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  {
-    accessor: "phone",
-    Header: "전화번호",
-  },
-  {
-    accessor: "email",
-    Header: "이메일",
-  },
+  // {
+  //   accessor: "phone",
+  //   Header: "전화번호",
+  // },
+  // {
+  //   accessor: "email",
+  //   Header: "이메일",
+  // },
 ];
 
 function ScholarshipList() {
@@ -160,18 +160,6 @@ function ScholarshipList() {
               );
             })}
           </Select>
-
-          {/* <select
-            disabled={false}
-            value={select}
-            onChange={(e) => setSelected(e.currentTarget.value)}
-          >
-            {semesters.map((item) => (
-              <option key={item._id} value={item.name}>
-                {semesters.name}
-              </option>
-            ))}
-          </select> */}
         </FormControl>
       </Header>
       <Article>
