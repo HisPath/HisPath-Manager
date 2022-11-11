@@ -39,12 +39,6 @@ function AlarmIconCheck({ t }) {
         <Typography variant="h7" fontWeight="normal">
           {t.row.viewCnt}
         </Typography>
-        <AlarmIcon
-          fontSize="small"
-          style={{
-            float: 'right',
-          }}
-        />
       </Box>
     );
   else
@@ -78,6 +72,16 @@ function TT() {
   const [init, setInit] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
 
+  const PublishDuration = ({ p }) => {
+    var pubD = p.row.pubDate;
+    var expD = p.row.expDate;
+    return (
+      <Typography variant="h7" fontWeight="normal">
+        {pubD} ~ {expD}
+      </Typography>
+    );
+  };
+
   const columns = [
     {
       field: 'importance',
@@ -97,7 +101,6 @@ function TT() {
         </strong>
       ),
     },
-
     {
       field: 'id',
       headerName: 'No',
@@ -105,33 +108,41 @@ function TT() {
       filterable: false,
       renderCell: (index) => noticeList.length - index.api.getRowIndex(index.row.id),
     },
-
+    {
+      field: 'regDate',
+      width: 100,
+      type: Date,
+      headerName: '등록일',
+    },
     {
       field: 'title',
-      width: 447,
+      width: 500,
       headerName: '제목',
     },
     {
       field: 'managerName',
-      width: 100,
+      width: 150,
       headerName: '작성자',
     },
     {
       field: 'pubDate',
-      width: 150,
-      type: Date,
-      headerName: '게시일',
-    },
-
-    {
-      field: 'expDate',
-      width: 150,
-      type: Date,
-      headerName: '만료일',
+      width: 200,
+      headerName: '게시기간',
+      renderCell: (param) => (
+        <strong>
+          <Box
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            <PublishDuration p={param} />
+          </Box>
+        </strong>
+      ),
     },
     {
       field: 'viewCnt',
-      width: 100,
+      width: 60,
       headerName: '조회수',
       renderCell: (param) => (
         <strong>
@@ -140,31 +151,7 @@ function TT() {
       ),
     },
   ];
-  function noticeFilter(arr) {
-    if (!(noticeType === 0)) {
-      const d = new Date();
-      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      const today = new Date(t);
-      arr = arr.filter(function (data) {
-        const expD = new Date(data.expDate);
-        return expD >= today;
-      });
-    }
-    if (noticeType === 1) {
-      var arr = arr.filter(function (data) {
-        return data.importance;
-      });
-    } else if (noticeType === 2) {
-      const d = new Date();
-      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      const today = new Date(t);
-      arr = arr.filter(function (data) {
-        const pubD = new Date(data.pubDate);
-        return pubD > today;
-      });
-    }
-    setNoticeList(arr);
-  }
+
   const loadData = () => {
     axios.get('/api/notice').then(function (response) {
       noticeFilter(response.data);
@@ -182,23 +169,61 @@ function TT() {
       return { background: 'red' };
     }
   };
+
+  function noticeFilter(arr) {
+    if (!(noticeType === 0)) {
+      const d = new Date();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      const today = new Date(t);
+      arr = arr.filter(function (data) {
+        var expD = new Date(data.expDate);
+        return expD > today;
+      });
+    }
+    if (noticeType === 1 || noticeType === 2) {
+      const d = new Date();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      const today = new Date(t);
+      arr = arr.filter(function (data) {
+        const pubD = new Date(data.pubDate);
+        var expD = new Date(data.expDate);
+        expD.setDate(expD.getDate() + 1);
+        return pubD <= today && today < expD;
+      });
+    } else if (noticeType === 3) {
+      const d = new Date();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      const today = new Date(t);
+      arr = arr.filter(function (data) {
+        const pubD = new Date(data.pubDate);
+        return pubD > today;
+      });
+    }
+    if (noticeType === 2) {
+      var arr = arr.filter(function (data) {
+        return data.importance;
+      });
+    }
+    setNoticeList(arr);
+  }
+
   return (
     <Container>
       <Header>
-        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600}>
           공지사항
         </Typography>
         <Box display="flex" gap={1.5} justifyContent={'right'}>
           <Button variant="outlined" onClick={() => setNoticeType(0)}>
             전체 공지
           </Button>
-          <Button variant="outlined" onClick={() => setNoticeType(3)}>
+          <Button variant="outlined" onClick={() => setNoticeType(1)}>
             게시중
           </Button>
-          <Button variant="outlined" onClick={() => setNoticeType(1)}>
+          <Button variant="outlined" onClick={() => setNoticeType(2)}>
             중요 공지
           </Button>
-          <Button variant="outlined" onClick={() => setNoticeType(2)}>
+          <Button variant="outlined" onClick={() => setNoticeType(3)}>
             예약 공지
           </Button>
 
@@ -229,8 +254,8 @@ function TT() {
             rows={noticeList}
             columns={columns}
             onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
-            pageSize={20}
-            rowsPerPageOptions={[20]}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
             getRowClassName={getRowStyle}
             AlternationCount="{ Binding MainData.ProjColl.Count}"
             disableColumnMenu

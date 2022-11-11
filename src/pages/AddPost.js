@@ -1,5 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import Editor from '../components/notice/Editor';
+import Editor2 from '../components/notice/Editor2';
 import { Link, useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import {
@@ -37,7 +38,7 @@ const Article = styled(Box)({
 function TestAdd() {
   const [noticeId, setNoticeId] = useState();
   const [saved, setSaved] = useState(false);
-  const [managerId, setManagerId] = useState(6);
+  const [managerId, setManagerId] = useState(2);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [important, setImportant] = useState(false);
@@ -45,10 +46,13 @@ function TestAdd() {
   const [endDate, setEndDate] = useState(new Date());
   const [duration, setDuration] = useState(7);
   const [viewCnt, setViewCnt] = useState(0);
+  const [save, setSave] = useState(false);
 
-  function onEditorChange(value) {
-    setDesc(value);
-  }
+  useEffect(() => {
+    if (save) {
+      saveNotice();
+    }
+  }, [save]);
 
   const importance = () => {
     setImportant(!important);
@@ -59,6 +63,7 @@ function TestAdd() {
   };
 
   const handleSaveClick = () => {
+    // console.log({ desc });
     saveNotice();
     viewNotice();
   };
@@ -164,12 +169,12 @@ function TestAdd() {
   return (
     <Container>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600} px={1}>
           공지사항 &#62; 추가
         </Typography>
       </Header>
       <Article>
-        <Box container width="100%" justifyContent={'center'}>
+        <Box container width="100%" justifycontent={'center'}>
           <Box paddingLeft={1} paddingRight={1} paddingBottom={2}>
             <TextField
               required
@@ -212,23 +217,7 @@ function TestAdd() {
           >
             <div style={{ padding: '10px', width: '100%' }}>
               <div className="form-group"></div>
-              <Editor value={desc} onChange={onEditorChange} />
-              <Box container gap={1} display="flex" justifyContent={'right'} paddingRight={2.5}>
-                <Button variant="contained" onClick={handleSaveClick}>
-                  저장
-                </Button>
-
-                <Link
-                  to={{ pathname: '/notice' }}
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  <Button variant="outlined" color="error">
-                    뒤로가기
-                  </Button>
-                </Link>
-              </Box>
+              <Editor2 value={desc} editorHandler={setDesc} setsave={setSave} />
             </div>
           </Box>
         </Box>

@@ -1,6 +1,7 @@
 import {
   Box,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -41,19 +42,19 @@ const ScholarshipListTable = ({ columns, data }) => {
 
   return (
     <TableContainer
+      component={Paper}
       sx={{
         height: "100%",
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "divider",
         borderRadius: 1,
-        backgroundColor: "background.paper",
       }}
     >
       <Table {...getTableProps()} stickyHeader>
         <TableHead>
           {headerGroups.map((headerGroup) => (
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
+            <TableRow
+              {...headerGroup.getHeaderGroupProps()}
+              sx={{ "th, td": { backgroundColor: "background.paper" } }}
+            >
               <TableCell>순번</TableCell>
               {headerGroup.headers.map((column) => (
                 <TableCell {...column.getHeaderProps()}>
@@ -93,20 +94,7 @@ const ScholarshipListTable = ({ columns, data }) => {
                     </TableCell>
                   );
                 })}
-                <TableCell align="center" sx={{ padding: 0 }}>
-                  {/* <IconButton
-                      onClick={() => handleOpenEdit(row.original.id)}
-                      size="big"
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => handleDeleteClick(row.original.id)}
-                      size="small"
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton> */}
-                </TableCell>
+                <TableCell align="center" sx={{ padding: 0 }}></TableCell>
               </TableRow>
             );
           })}

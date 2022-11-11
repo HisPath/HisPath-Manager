@@ -30,7 +30,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 3.5,
-  borderRadius: 1,
+  borderRadius: 4,
 };
 
 function ViewStudent({ id, handleClose }) {

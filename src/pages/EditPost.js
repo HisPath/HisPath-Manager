@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import Editor from '../components/notice/Editor';
+import Editor2 from '../components/notice/Editor2';
 import { Link, useParams } from 'react-router-dom';
 import {
   Backdrop,
@@ -44,10 +45,13 @@ function TestPost() {
   const [endDate, setEndDate] = useState(new Date());
   const [duration, setDuration] = useState();
   const [viewCnt, setViewCnt] = useState();
+  const [save, setSave] = useState(false);
 
-  function onEditorChange(value) {
-    setDesc(value);
-  }
+  useEffect(() => {
+    if (save) {
+      editNotice();
+    }
+  }, [save]);
 
   const importance = () => {
     setImportant(!important);
@@ -64,13 +68,15 @@ function TestPost() {
       setImportant(result.importance);
       const s = new Date(result.pubDate);
       const e = new Date(result.expDate);
-      const d = e.getDate() - s.getDate();
-      setStartDate(s);
+      var d = Math.abs(e - s);
+      d = d / 1000 / 60 / 60 / 24;
       setDuration(d);
       setManagerId(result.managerId);
       setViewCnt(result.viewCnt - 1);
       console.log(d);
+      setStartDate(s);
     });
+
     setInit(true);
   }, []);
 
@@ -94,6 +100,9 @@ function TestPost() {
   useEffect(() => {
     calculateEndDate();
   }, [startDate]);
+  // useEffect(() => {
+  //   calculateEndDate();
+  // }, [endDate]);
   useEffect(() => {
     calculateEndDate();
   }, [duration]);
@@ -168,7 +177,7 @@ function TestPost() {
   return (
     <Container>
       <Header>
-        <Typography paddingLeft={1} paddingRight={1} variant="h5" style={{ fontWeight: 'bold' }}>
+        <Typography variant="h5" fontWeight={600} px={1}>
           공지사항 &#62; 상세 &#62; 수정
         </Typography>
       </Header>
@@ -219,24 +228,7 @@ function TestPost() {
             >
               <div style={{ padding: '10px', width: '100%' }}>
                 <div className="form-group"></div>
-                <Editor value={desc} onChange={onEditorChange} />
-                <Box container gap={1} display="flex" justifyContent={'right'} paddingRight={2.5}>
-                  {/* <Link id="notice_Detail_Link" to={{ pathname: `/notice/${noticeId}` }}> */}
-                  <Button variant="contained" onClick={editNotice}>
-                    저장
-                  </Button>
-                  {/* </Link> */}
-                  <Link
-                    to={{ pathname: '/notice' }}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <Button variant="outlined" color="error">
-                      뒤로가기
-                    </Button>
-                  </Link>
-                </Box>
+                <Editor2 value={desc} editorHandler={setDesc} setsave={setSave} />
               </div>
             </Box>
           </Box>

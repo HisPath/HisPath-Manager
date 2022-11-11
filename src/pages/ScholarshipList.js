@@ -11,19 +11,15 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+
 import { useRecoilState } from "recoil";
-import { scholarshipListState } from "../atom";
+import { scholarshipListState, semesterState } from "../atom";
 import * as React from "react";
 import axios from "axios";
-import ScholarshipRegisteredTable from "../components/Scholarship/ScholarshipRegisteredTable";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 import { SelectColumnFilter } from "../components/Scholarship/filters";
 import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
 import { InputLabel } from "@mui/material";
-import BasicTabs from "../components/Scholarship/ScholarshipTabs";
 
 const Header = styled("div")({
   display: "flex",
@@ -45,7 +41,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 800,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 const columns = [
@@ -76,20 +72,21 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  {
-    accessor: "phone",
-    Header: "전화번호",
-  },
-  {
-    accessor: "email",
-    Header: "이메일",
-  },
+  // {
+  //   accessor: "phone",
+  //   Header: "전화번호",
+  // },
+  // {
+  //   accessor: "email",
+  //   Header: "이메일",
+  // },
 ];
 
 function ScholarshipList() {
   const [init, setInit] = useState(false);
   const [scholarshipLists, setScholarshipsList] =
     useRecoilState(scholarshipListState);
+  const [semester, setSemester] = useRecoilState(semesterState);
   const [currentId, setCurrentId] = useState();
   const [openView, setOpenView] = useState(false);
   const handleOpenView = (id) => {
@@ -105,28 +102,47 @@ function ScholarshipList() {
 
   const handleCloseView = () => setOpenView(false);
 
-  const loadData = () => {
-    axios
-      .get(`/api/scholarships?approved=true&semester=2022-2`)
-      .then(function (response) {
-        setScholarshipsList(response.data);
-        setInit(true);
-      });
-  };
-
   useEffect(() => {
-    loadData();
-  }, []);
+    const fetchData = async () => {
+      console.log(semester);
+      axios
+        .get(`/api/scholarships?approved=true&semester=${semester}`)
+        .then(function (response) {
+          console.log(response.data);
+          setScholarshipsList(response.data);
+          setInit(true);
+        });
+    };
+    fetchData();
+  }, [semester]);
 
-  const [semester, setSemester] = React.useState("");
   const handleChanges = (event) => {
     setSemester(event.target.value);
   };
 
+  const [semesters, setSemesters] = React.useState([]);
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("/api/scholarship/students");
+      console.log(response.data);
+      const studentSet = new Set();
+      response.data?.forEach((item) => studentSet.add(item.semester));
+      console.log(studentSet);
+      setSemesters([...studentSet]);
+      setData(response.data);
+      setInit(true);
+    };
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <Header>
-        <Typography variant="h5">마일리지 장학금 수혜자 조회</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 장학금 수혜자 조회
+        </Typography>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
@@ -136,10 +152,13 @@ function ScholarshipList() {
             label="학기"
             onChange={handleChanges}
           >
-            <MenuItem value={10}>2021-1</MenuItem>
-            <MenuItem value={20}>2021-2</MenuItem>
-            <MenuItem value={30}>2022-1</MenuItem>
-            <MenuItem value={40}>2022-2</MenuItem>
+            {semesters.map((s, idx) => {
+              return (
+                <MenuItem key={idx} value={s}>
+                  {s}
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Header>
@@ -166,10 +185,7 @@ function ScholarshipList() {
       </Article>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
-            (2022-2) 마일리지 목록
-          </Typography>
-          <InputLabel>[전산전자] 박성진 (21700266)</InputLabel>
+          <Typography variant="h6" component="h2"></Typography>
           <ViewScholarshipRegistered
             id={currentId}
             handleClose={handleCloseView}

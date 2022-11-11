@@ -8,17 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import CustomNoRowsOverlay from "../components/Department/CustomNoRowsOverlay";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
-import AddStudent from "../components/Student/AddStudent";
-import ViewStudent from "../components/Student/ViewStudent";
-import EditStudent from "../components/Student/EditStudent";
+import { departmentState } from "../atom";
+import AddDepartment from "../components/Department/AddDepartment";
+import EditDepartment from "../components/Department/EditDepartment";
 import axios from "axios";
-import studentRegisterExcel from "../assets/student_register.xlsx";
 
 const Header = styled("div")({
   height: "15%",
@@ -36,37 +33,32 @@ const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
-  },
-  {
-    field: "studentNum",
-    headerName: "학번",
-    width: 150,
+    width: 80,
   },
   {
     field: "name",
-    headerName: "이름",
-    width: 120,
-  },
-  {
-    field: "departmentName",
     headerName: "학부",
     width: 200,
   },
   {
-    field: "major1Name",
-    headerName: "1전공",
-    width: 180,
+    field: "professor",
+    headerName: "지도교수",
+    width: 150,
   },
   {
-    field: "major2Name",
-    headerName: "2전공",
-    width: 180,
+    field: "phone",
+    headerName: "사무실 번호",
+    width: 250,
   },
   {
-    field: "semester",
-    headerName: "학기",
-    width: 100,
+    field: "location",
+    headerName: "학부 위치",
+    width: 150,
+  },
+  {
+    field: "total",
+    headerName: "총 인원",
+    width: 150,
   },
 ];
 
@@ -82,48 +74,39 @@ const modalStyle = {
   borderRadius: 1,
 };
 
-function Student() {
-  const [students, setStudent] = useRecoilState(studentState);
+function Department() {
+  const [departments, setDepartment] = useRecoilState(departmentState);
   const [init, setInit] = useState(false);
-  const onChangeExcel = async (event) => {
-    const { files } = event.target;
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    await axios.post("/api/students", formData);
-    loadData();
-  };
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
-  const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/student/${id}`).then(function (response) {});
+      await axios.delete(`/api/department/${id}`).then(function (response) {});
       loadData();
     }
   };
   const loadData = () => {
     axios.get().then(function (response) {
-      setStudent(response.data);
+      setDepartment(response.data);
       setInit(true);
     });
   };
   useEffect(() => {
     axios({
       method: "get",
-      url: "/api/students",
+      url: "/api/departments",
       responseType: "json",
     }).then(function (response) {
-      setStudent(
+      setDepartment(
         response.data.map((item) => {
-          return { ...item, id: item.studentId };
+          return { ...item, id: item.departmentId };
         })
       );
       console.log(response.data);
@@ -133,28 +116,11 @@ function Student() {
     <Container>
       <Header>
         <Typography variant="h5" fontWeight={600}>
-          학생 관리 시스템
+          학부 관리 시스템
         </Typography>
         <Box display="flex" gap={2}>
-          <Button
-            component="a"
-            href={studentRegisterExcel}
-            download="학생 추가 양식"
-            variant="outlined"
-          >
-            엑셀 양식 다운로드
-          </Button>
-          <Button component="label" variant="outlined">
-            엑셀 파일 업로드
-            <input
-              type="file"
-              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              onChange={onChangeExcel}
-              hidden
-            />
-          </Button>
           <Button onClick={handleOpenAdd} variant="outlined">
-            학생 추가
+            학부 추가
           </Button>
         </Box>
       </Header>
@@ -171,7 +137,7 @@ function Student() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={departments}
           columns={[
             ...columns,
             {
@@ -182,14 +148,6 @@ function Student() {
               cellClassName: "actions",
               getActions: ({ id }) => {
                 return [
-                  <GridActionsCellItem
-                    icon={<OpenInFullIcon />}
-                    label="View"
-                    onClick={() => {
-                      setCurrentId(+id);
-                      handleOpenView();
-                    }}
-                  />,
                   <GridActionsCellItem
                     icon={<EditIcon />}
                     label="Edit"
@@ -217,25 +175,18 @@ function Student() {
       <Modal open={openAdd} onClose={handleCloseAdd}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생 추가
+            학부 추가
           </Typography>
-          <AddStudent handleClose={handleCloseAdd} loadData={loadData} />
+          <AddDepartment handleClose={handleCloseAdd} loadData={loadData} />
         </Box>
       </Modal>
-      <Modal open={openView} onClose={handleCloseView}>
-        <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
-            학생 정보
-          </Typography>
-          <ViewStudent id={currentId} handleClose={handleCloseView} />
-        </Box>
-      </Modal>
+
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <Box sx={modalStyle}>
           <Typography variant="h6" component="h2">
-            학생 정보 수정
+            학부 정보 수정
           </Typography>
-          <EditStudent
+          <EditDepartment
             id={currentId}
             handleClose={handleCloseEdit}
             loadData={loadData}
@@ -246,4 +197,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default Department;

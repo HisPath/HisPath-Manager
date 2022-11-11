@@ -39,7 +39,7 @@ const columns = [
   },
   {
     field: "department",
-    headerName: "학부",
+    headerName: "소속",
     width: 200,
   },
   {
@@ -47,16 +47,6 @@ const columns = [
     headerName: "이메일",
     width: 300,
   },
-  // {
-  //   field: "power",
-  //   headerName: "등급",
-  //   width: 90,
-  // },
-  // {
-  //   field: "approved",
-  //   headerName: "권한 상태",
-  //   width: 100,
-  // },
 ];
 
 const modalStyle = {
@@ -68,7 +58,7 @@ const modalStyle = {
   boxShadow: 24,
   width: 805,
   p: 3.5,
-  borderRadius: 4,
+  borderRadius: 1,
 };
 
 function Management() {
@@ -77,15 +67,8 @@ function Management() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
-  const [openAdd, setOpenAdd] = useState(false);
-  const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
       await axios.delete(`/api/manager/${id}`).then(function (response) {});
@@ -150,6 +133,7 @@ function Management() {
       managerId: currentId,
     });
     enqueueSnackbar("일반 관리자로 지정되었습니다!", { variant: "success" });
+
     loadData();
     handleCloseNormal();
   };
@@ -194,7 +178,9 @@ function Management() {
   return (
     <Container>
       <Header>
-        <Typography variant="h5">관리자 페이지</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          관리자 권한 관리 페이지
+        </Typography>
       </Header>
       <Article>
         <DataGrid
