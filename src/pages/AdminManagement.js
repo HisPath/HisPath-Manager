@@ -18,17 +18,19 @@ import { useSnackbar } from "notistack";
 import { useRecoilState } from "recoil";
 import { studentState } from "../atom";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -176,7 +178,7 @@ function Management() {
   };
 
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           관리자 권한 관리 페이지

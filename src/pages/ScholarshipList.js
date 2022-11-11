@@ -20,16 +20,19 @@ import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarship
 import { SelectColumnFilter } from "../components/Scholarship/filters";
 import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
 import { InputLabel } from "@mui/material";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "flex-end",
+  alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 200px)",
+  height: "calc(100vh - 250px)",
+  paddingBottom: 24,
 });
 
 const modalStyle = {
@@ -121,7 +124,6 @@ function ScholarshipList() {
   };
 
   const [semesters, setSemesters] = React.useState([]);
-
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -138,12 +140,12 @@ function ScholarshipList() {
   }, []);
 
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           마일리지 장학금 수혜자 조회
         </Typography>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
             labelId="semester_id"

@@ -43,9 +43,10 @@ function ViewScholarshipRegistered({ id, handleClose }) {
   const [students, setStudents] = useState([]);
 
   const loadStudents = () => {
+    console.log("아이디: " + id);
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
+        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=2022-2`
       )
       .then(function (response) {
         setStudents(response.data.activities);
@@ -60,7 +61,7 @@ function ViewScholarshipRegistered({ id, handleClose }) {
   const studentInfo = () => {
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
+        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=2022-2`
       )
       .then(function (response) {
         setInfo(response.data);

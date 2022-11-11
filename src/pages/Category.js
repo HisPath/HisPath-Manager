@@ -16,17 +16,19 @@ import { categoryState } from "../atom";
 import AddCategory from "../components/Category/AddCategory";
 import EditCategory from "../components/Category/EditCategory";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -107,7 +109,7 @@ function Category() {
     });
   }, []);
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           카테고리 관리 시스템
