@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {
   Box,
   Container,
-  Modal,
   styled,
   Typography,
   FormControl,
@@ -62,7 +61,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function ScholarshipTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -73,9 +72,9 @@ export default function BasicTabs() {
   const handleChanges = (event) => {
     setSemester(event.target.value);
   };
-  const [init, setInit] = useState(false);
+  const [setInit] = useState(false);
 
-  const [data, setData] = useState([]);
+  const [setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/scholarship/students");
