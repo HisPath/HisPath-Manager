@@ -15,7 +15,6 @@ import Department from "./pages/Department";
 import Major from "./pages/Major";
 import Category from "./pages/Category";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
-import ScholarshipList from "./pages/ScholarshipList";
 import ScholarshipLists from "./pages/ScholarshipLists";
 import AdminManagement from "./pages/AdminManagement";
 import { drawerWidth } from "./constants/commons";

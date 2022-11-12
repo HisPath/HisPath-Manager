@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import ScholarshipList from "../../pages/ScholarshipList";
+import ScholarshipList from "./ScholarshipList";
 import { Paper } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { semesterState } from "../../atom";

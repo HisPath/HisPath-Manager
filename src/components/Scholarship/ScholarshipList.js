@@ -13,12 +13,12 @@ import {
 } from "@mui/material";
 
 import { useRecoilState } from "recoil";
-import { scholarshipListState, semesterState } from "../atom";
+import { scholarshipListState, semesterState } from "../../atom";
 import * as React from "react";
 import axios from "axios";
-import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
-import { SelectColumnFilter } from "../components/Scholarship/filters";
-import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
+import ViewScholarshipRegistered from "./ViewScholarshipRegistered";
+import { SelectColumnFilter } from "./filters";
+import ScholarshipListTable from "./ScholarshipListTable";
 import { InputLabel } from "@mui/material";
 import { Paper } from "@mui/material";
 
