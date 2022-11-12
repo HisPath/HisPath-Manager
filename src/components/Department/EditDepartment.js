@@ -5,7 +5,7 @@ import { departmentState } from "../../atom";
 import axios from "axios";
 
 function EditDepartment({ id, handleClose, loadData }) {
-  const [department, setDepartment] = useRecoilState(departmentState);
+  const [department] = useRecoilState(departmentState);
   const target = department.filter((item) => item.id === id)[0];
   const {
     register,
@@ -40,6 +40,79 @@ function EditDepartment({ id, handleClose, loadData }) {
           />
           <Typography color="text.secondary" variant="caption" height={24}>
             {errors?.name?.message}
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box mb={2} display="flex" gap={2}>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>지도 교수:</InputLabel>
+          <TextField
+            {...register("credit", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.name?.message}
+          </Typography>
+        </Box>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>사무실 번호:</InputLabel>
+          <TextField
+            {...register("total", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.studentNum?.message}
+          </Typography>
+        </Box>
+      </Box>
+      <Box mb={2} display="flex" gap={2}>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>학부 위치:</InputLabel>
+          <TextField
+            {...register("credit", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.name?.message}
+          </Typography>
+        </Box>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>총 인원:</InputLabel>
+          <TextField
+            {...register("total", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.studentNum?.message}
           </Typography>
         </Box>
       </Box>
