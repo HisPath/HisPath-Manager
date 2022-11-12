@@ -21,16 +21,21 @@ import { SelectColumnFilter } from "./filters";
 import ScholarshipListTable from "./ScholarshipListTable";
 import { InputLabel } from "@mui/material";
 import { Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
   paddingTop: 24,
+  alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
+  height: "calc(100vh - 250px)",
+  paddingBottom: 24,
   height: "calc(100vh - 250px)",
   paddingBottom: 24,
 });
