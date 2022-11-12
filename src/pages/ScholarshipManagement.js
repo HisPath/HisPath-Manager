@@ -6,31 +6,36 @@ import {
   styled,
   Typography,
   InputLabel,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
-import { scholarshipState, studentState } from "../atom";
+import { scholarshipState, semesterState, studentState } from "../atom";
 import axios from "axios";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 250px)",
+  paddingBottom: 24,
 });
 
 const columns = [
   {
-    field: "id",
+    field: "ids",
     headerName: "번호",
     width: 30,
   },
@@ -91,6 +96,7 @@ const modalStyle = {
 function ScholarshipManagement() {
   const [init, setInit] = useState(false);
   const [scholarships, setScholarships] = useRecoilState(scholarshipState);
+  const [semester, setSemester] = useRecoilState(semesterState);
   const [currentId, setCurrentId] = useState();
   const handleOpenView = (id) => {
     setCurrentId(id);
@@ -102,35 +108,79 @@ function ScholarshipManagement() {
 
   const loadData = () => {
     axios
-      .get(`/api/scholarships?approved=false&semester=2022-2`)
+      .get(`/api/scholarships?approved=false&semester=${semester}`)
       .then(function (response) {
         const datas = response.data;
         datas.map((data, idx) => {
-          data.id = idx + 1;
+          data.ids = idx + 1;
         });
-        setScholarships(datas);
+        // setScholarships(datas);
+        // setScholarships(response.data);
+        setScholarships(
+          response.data.map((item) => {
+            return { ...item, id: item.studentId };
+          })
+        );
+
         setInit(true);
       });
   };
   useEffect(() => {
     loadData();
+  }, [semester]);
+
+  const handleChanges = (event) => {
+    setSemester(event.target.value);
+  };
+  const [semesters, setSemesters] = React.useState([]);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("/api/scholarship/students");
+      console.log(response.data);
+      const studentSet = new Set();
+      response.data?.forEach((item) => studentSet.add(item.semester));
+      console.log(studentSet);
+      setSemesters([...studentSet]);
+      setData(response.data);
+      setInit(true);
+    };
+    fetchData();
   }, []);
 
   const [info, setInfo] = React.useState([]);
-
   const getInfo = async () => {
     const info = await axios.get(`/api/scholarship/students`);
     setInfo(info.data);
   };
-
   useEffect(() => {
     getInfo();
   }, []);
 
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
-        <Typography variant="h5">마일리지 장학금 신청자 관리</Typography>
+        <Typography variant="h5" fontWeight={600}>
+          마일리지 장학금 신청자 관리
+        </Typography>
+        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
+          <InputLabel id="semester_id">학기</InputLabel>
+          <Select
+            labelId="semester_id"
+            id="semester_id"
+            value={semester}
+            label="학기"
+            onChange={handleChanges}
+          >
+            {semesters.map((s, idx) => {
+              return (
+                <MenuItem key={idx} value={s}>
+                  {s}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Header>
       <Article>
         <DataGrid
