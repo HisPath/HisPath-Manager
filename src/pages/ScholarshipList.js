@@ -141,29 +141,6 @@ function ScholarshipList() {
 
   return (
     <Container component={Paper}>
-      <Header>
-        <Typography variant="h5" fontWeight={600}>
-          마일리지 장학금 수혜자 조회
-        </Typography>
-        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
-          <InputLabel id="semester_id">학기</InputLabel>
-          <Select
-            labelId="semester_id"
-            id="semester_id"
-            value={semester}
-            label="학기"
-            onChange={handleChanges}
-          >
-            {semesters.map((s, idx) => {
-              return (
-                <MenuItem key={idx} value={s}>
-                  {s}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Header>
       <Article>
         {init ? (
           <ScholarshipListTable
