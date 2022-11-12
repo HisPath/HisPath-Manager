@@ -9,6 +9,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
@@ -18,6 +19,7 @@ import { scholarshipState, semesterState, studentState } from "../atom";
 import axios from "axios";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
+import mileageRegisterExcel from "../assets/mileage_register.xlsx";
 import { Paper } from "@mui/material";
 
 const Header = styled("div")({
@@ -106,6 +108,20 @@ function ScholarshipManagement() {
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
 
+  const onChangeExcel = async (event) => {
+    // const fileReader = new FileReader();
+    // fileReader.onload = function () {
+    //   setNewExcelDir(fileReader.result);
+    // };
+    const { files } = event.target;
+    // setNewExcelFile(files ? files[0] : null);
+    // if (files) fileReader.readAsDataURL(files[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    await axios.post("/api/scholarship/approval", formData);
+    loadData();
+  };
+
   const loadData = () => {
     axios
       .get(`/api/scholarships?approved=false&semester=${semester}`)
@@ -163,6 +179,28 @@ function ScholarshipManagement() {
         <Typography variant="h5" fontWeight={600}>
           마일리지 장학금 신청자 관리
         </Typography>
+        <Box display="flex" gap={1.5}>
+          <Button
+            component="a"
+            href={mileageRegisterExcel}
+            download="마일리지 항목 추가 양식"
+            variant="outlined"
+          >
+            엑셀 양식 다운로드
+          </Button>
+          <Button component="label" variant="outlined">
+            엑셀로 항목 추가
+            <input
+              type="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              onChange={onChangeExcel}
+              hidden
+            />
+          </Button>
+          {/* <Button onClick={handleOpenAdd} variant="contained">
+            개별 항목 추가
+          </Button> */}
+        </Box>
         <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select

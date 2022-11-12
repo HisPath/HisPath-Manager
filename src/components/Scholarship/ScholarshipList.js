@@ -13,13 +13,14 @@ import {
 } from "@mui/material";
 
 import { useRecoilState } from "recoil";
-import { scholarshipListState, semesterState } from "../atom";
+import { scholarshipListState, semesterState } from "../../atom";
 import * as React from "react";
 import axios from "axios";
-import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
-import { SelectColumnFilter } from "../components/Scholarship/filters";
-import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
+import ViewScholarshipRegistered from "./ViewScholarshipRegistered";
+import { SelectColumnFilter } from "./filters";
+import ScholarshipListTable from "./ScholarshipListTable";
 import { InputLabel } from "@mui/material";
+import { Paper } from "@mui/material";
 import { Paper } from "@mui/material";
 
 const Header = styled("div")({
@@ -27,10 +28,14 @@ const Header = styled("div")({
   justifyContent: "space-between",
   alignItems: "flex-start",
   paddingTop: 24,
+  alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
+  height: "calc(100vh - 250px)",
+  paddingBottom: 24,
   height: "calc(100vh - 250px)",
   paddingBottom: 24,
 });
@@ -141,29 +146,6 @@ function ScholarshipList() {
 
   return (
     <Container component={Paper}>
-      <Header>
-        <Typography variant="h5" fontWeight={600}>
-          마일리지 장학금 수혜자 조회
-        </Typography>
-        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
-          <InputLabel id="semester_id">학기</InputLabel>
-          <Select
-            labelId="semester_id"
-            id="semester_id"
-            value={semester}
-            label="학기"
-            onChange={handleChanges}
-          >
-            {semesters.map((s, idx) => {
-              return (
-                <MenuItem key={idx} value={s}>
-                  {s}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Header>
       <Article>
         {init ? (
           <ScholarshipListTable
