@@ -18,28 +18,96 @@ function AddDepartment({ handleClose, loadData }) {
   };
   return (
     <form onSubmit={handleSubmit(onValid)}>
-      <Box mt={3} mb={8}>
-        <Box>
-          <Box display="flex" justifyContent="space-between"></Box>
-          <Box display="flex" gap={2}>
-            <Box width="100%">
-              <InputLabel sx={{ mt: 1 }}>학부</InputLabel>
-              <TextField
-                {...register("name", {
-                  required: true,
-                })}
-                color="secondary"
-                InputProps={{ disableUnderline: true }}
-                fullWidth
-                hiddenLabel
-                variant="filled"
-                size="small"
-              />
-              <Typography color="text.secondary" variant="caption" height={24}>
-                {errors?.name?.message}
-              </Typography>
-            </Box>
-          </Box>
+      <Box display="flex" gap={2}>
+        <Box width="100%">
+          <InputLabel sx={{ mt: 1 }}>학부 이름:</InputLabel>
+          <TextField
+            {...register("name", {
+              required: true,
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.name?.message}
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box mb={2} display="flex" gap={2}>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>지도 교수:</InputLabel>
+          <TextField
+            {...register("credit", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.name?.message}
+          </Typography>
+        </Box>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>사무실 번호:</InputLabel>
+          <TextField
+            {...register("total", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.studentNum?.message}
+          </Typography>
+        </Box>
+      </Box>
+      <Box mb={2} display="flex" gap={2}>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>학부 위치:</InputLabel>
+          <TextField
+            {...register("credit", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.name?.message}
+          </Typography>
+        </Box>
+        <Box width="50%">
+          <InputLabel sx={{ mt: 1 }}>총 인원:</InputLabel>
+          <TextField
+            {...register("total", {
+              required: "필수 항목입니다.",
+            })}
+            color="secondary"
+            InputProps={{ disableUnderline: true }}
+            fullWidth
+            hiddenLabel
+            variant="filled"
+            size="small"
+          />
+          <Typography color="text.secondary" variant="caption" height={24}>
+            {errors?.studentNum?.message}
+          </Typography>
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end">

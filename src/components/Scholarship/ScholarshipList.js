@@ -7,28 +7,16 @@ import {
   Modal,
   styled,
   Typography,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@mui/material";
 
 import { useRecoilState } from "recoil";
-import { scholarshipListState, semesterState } from "../atom";
+import { scholarshipListState, semesterState } from "../../atom";
 import * as React from "react";
 import axios from "axios";
-import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
-import { SelectColumnFilter } from "../components/Scholarship/filters";
-import ScholarshipListTable from "../components/Scholarship/ScholarshipListTable";
-import { InputLabel } from "@mui/material";
+import ViewScholarshipRegistered from "./ViewScholarshipRegistered";
+import { SelectColumnFilter } from "./filters";
+import ScholarshipListTable from "./ScholarshipListTable";
 import { Paper } from "@mui/material";
-
-const Header = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  paddingTop: 24,
-  paddingBottom: 24,
-});
 
 const Article = styled(Box)({
   height: "calc(100vh - 250px)",
@@ -58,11 +46,11 @@ const columns = [
     Header: "1전공",
     Filter: SelectColumnFilter,
   },
-  {
-    accessor: "major2Name",
-    Header: "2전공",
-    Filter: SelectColumnFilter,
-  },
+  // {
+  //   accessor: "major2Name",
+  //   Header: "2전공",
+  //   Filter: SelectColumnFilter,
+  // },
   {
     accessor: "name",
     Header: "이름",
@@ -75,34 +63,28 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  // {
-  //   accessor: "phone",
-  //   Header: "전화번호",
-  // },
-  // {
-  //   accessor: "email",
-  //   Header: "이메일",
-  // },
+  {
+    accessor: "phone",
+    Header: "전화번호",
+  },
+  {
+    accessor: "email",
+    Header: "이메일",
+  },
 ];
 
 function ScholarshipList() {
   const [init, setInit] = useState(false);
-  const [scholarshipLists, setScholarshipsList] =
+  const [scholarshipLists, setScholarshipLists] =
     useRecoilState(scholarshipListState);
-  const [semester, setSemester] = useRecoilState(semesterState);
+  const [semester] = useRecoilState(semesterState);
   const [currentId, setCurrentId] = useState();
+
   const [openView, setOpenView] = useState(false);
   const handleOpenView = (id) => {
     setCurrentId(id);
     setOpenView(true);
   };
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const handleCloseView = () => setOpenView(false);
 
   useEffect(() => {
@@ -112,19 +94,13 @@ function ScholarshipList() {
         .get(`/api/scholarships?approved=true&semester=${semester}`)
         .then(function (response) {
           console.log(response.data);
-          setScholarshipsList(response.data);
+          setScholarshipLists(response.data);
           setInit(true);
         });
     };
     fetchData();
   }, [semester]);
 
-  const handleChanges = (event) => {
-    setSemester(event.target.value);
-  };
-
-  const [semesters, setSemesters] = React.useState([]);
-  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/scholarship/students");
@@ -132,8 +108,6 @@ function ScholarshipList() {
       const studentSet = new Set();
       response.data?.forEach((item) => studentSet.add(item.semester));
       console.log(studentSet);
-      setSemesters([...studentSet]);
-      setData(response.data);
       setInit(true);
     };
     fetchData();
@@ -141,29 +115,6 @@ function ScholarshipList() {
 
   return (
     <Container component={Paper}>
-      <Header>
-        <Typography variant="h5" fontWeight={600}>
-          마일리지 장학금 수혜자 조회
-        </Typography>
-        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
-          <InputLabel id="semester_id">학기</InputLabel>
-          <Select
-            labelId="semester_id"
-            id="semester_id"
-            value={semester}
-            label="학기"
-            onChange={handleChanges}
-          >
-            {semesters.map((s, idx) => {
-              return (
-                <MenuItem key={idx} value={s}>
-                  {s}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Header>
       <Article>
         {init ? (
           <ScholarshipListTable

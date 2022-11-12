@@ -9,15 +9,17 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
-import { scholarshipState, semesterState, studentState } from "../atom";
+import { scholarshipState, semesterState } from "../atom";
 import axios from "axios";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
+import scholarshipApprovalExcel from "../assets/scholarship_approval.xlsx";
 import { Paper } from "@mui/material";
 
 const Header = styled("div")({
@@ -94,7 +96,7 @@ const modalStyle = {
 };
 
 function ScholarshipManagement() {
-  const [init, setInit] = useState(false);
+  const [setInit] = useState(false);
   const [scholarships, setScholarships] = useRecoilState(scholarshipState);
   const [semester, setSemester] = useRecoilState(semesterState);
   const [currentId, setCurrentId] = useState();
@@ -105,6 +107,20 @@ function ScholarshipManagement() {
 
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
+
+  const onChangeExcel = async (event) => {
+    // const fileReader = new FileReader();
+    // fileReader.onload = function () {
+    //   setNewExcelDir(fileReader.result);
+    // };
+    const { files } = event.target;
+    // setNewExcelFile(files ? files[0] : null);
+    // if (files) fileReader.readAsDataURL(files[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    await axios.post("/api/scholarship/approval", formData);
+    loadData();
+  };
 
   const loadData = () => {
     axios
@@ -133,7 +149,7 @@ function ScholarshipManagement() {
     setSemester(event.target.value);
   };
   const [semesters, setSemesters] = React.useState([]);
-  const [data, setData] = useState([]);
+  const [setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/scholarship/students");
@@ -148,7 +164,7 @@ function ScholarshipManagement() {
     fetchData();
   }, []);
 
-  const [info, setInfo] = React.useState([]);
+  const [setInfo] = React.useState([]);
   const getInfo = async () => {
     const info = await axios.get(`/api/scholarship/students`);
     setInfo(info.data);
@@ -163,6 +179,33 @@ function ScholarshipManagement() {
         <Typography variant="h5" fontWeight={600}>
           마일리지 장학금 신청자 관리
         </Typography>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          gap={1.5}
+        >
+          <Button
+            component="a"
+            href={scholarshipApprovalExcel}
+            download="마일리지 신청자 등록 양식"
+            variant="outlined"
+          >
+            엑셀 양식 다운로드
+          </Button>
+          <Button component="label" variant="outlined">
+            엑셀로 항목 추가
+            <input
+              type="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              onChange={onChangeExcel}
+              hidden
+            />
+          </Button>
+          {/* <Button onClick={handleOpenAdd} variant="contained">
+            개별 항목 추가
+          </Button> */}
+        </Box>
         <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
           <Select
@@ -233,6 +276,7 @@ function ScholarshipManagement() {
           <ViewScholarshipRegistered
             id={currentId}
             handleClose={handleCloseView}
+            semester={semester}
           />
         </Box>
       </Modal>

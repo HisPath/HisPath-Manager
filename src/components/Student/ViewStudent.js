@@ -1,37 +1,9 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  Modal,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, InputLabel, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { studentState } from "../../atom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-const style = {
-  display: "flex",
-  flexDirection: "column",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  height: 600,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 3.5,
-  borderRadius: 1,
-};
 
 function ViewStudent({ id, handleClose }) {
   const [students, setStudents] = useState([]);
