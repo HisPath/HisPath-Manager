@@ -1,11 +1,11 @@
-import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
+import GoogleLoginButton from "./components/common/GoogleLoginButton";
 import Router from "./Router";
-import { theme } from "./style/theme";
+import ThemeProvider from "./theme";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <SnackbarProvider
         maxSnack={3}
         anchorOrigin={{
@@ -13,12 +13,6 @@ function App() {
           horizontal: "right",
         }}
       >
-        <CssBaseline />
-        <GlobalStyles
-          styles={{
-            "th, td": { whiteSpace: "nowrap" },
-          }}
-        />
         <Router />
       </SnackbarProvider>
     </ThemeProvider>
