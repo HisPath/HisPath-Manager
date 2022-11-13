@@ -16,29 +16,51 @@ import { departmentState } from "../atom";
 import AddDepartment from "../components/Department/AddDepartment";
 import EditDepartment from "../components/Department/EditDepartment";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
   {
     field: "id",
     headerName: "번호",
-    width: 60,
+    width: 80,
   },
   {
     field: "name",
     headerName: "학부",
-    width: 120,
+    width: 200,
+  },
+  {
+    field: "professor",
+    headerName: "지도교수",
+    width: 150,
+  },
+  {
+    field: "phone",
+    headerName: "사무실 번호",
+    width: 250,
+  },
+  {
+    field: "location",
+    headerName: "학부 위치",
+    width: 150,
+  },
+  {
+    field: "total",
+    headerName: "총 인원",
+    width: 150,
   },
 ];
 
@@ -93,7 +115,7 @@ function Department() {
     });
   }, []);
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           학부 관리 시스템

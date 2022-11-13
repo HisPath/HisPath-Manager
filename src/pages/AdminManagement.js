@@ -21,15 +21,16 @@ import axios from "axios";
 import GoogleLoginButton from "../components/common/GoogleLoginButton";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -68,15 +69,8 @@ function Management() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
-  const [openAdd, setOpenAdd] = useState(false);
-  const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
       await axios.delete(`/api/manager/${id}`).then(function (response) {});

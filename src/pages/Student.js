@@ -19,17 +19,19 @@ import ViewStudent from "../components/Student/ViewStudent";
 import EditStudent from "../components/Student/EditStudent";
 import axios from "axios";
 import studentRegisterExcel from "../assets/student_register.xlsx";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -86,13 +88,7 @@ function Student() {
   const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
   const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
     const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
     await axios.post("/api/students", formData);
@@ -136,7 +132,7 @@ function Student() {
     });
   }, []);
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           학생 관리 시스템

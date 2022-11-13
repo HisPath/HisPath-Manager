@@ -10,6 +10,11 @@ export const studentState = atom({
   default: [],
 });
 
+export const semesterState = atom({
+  key: "semester",
+  default: "",
+});
+
 export const categoryState = atom({
   key: "category",
   default: [],
