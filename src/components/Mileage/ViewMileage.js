@@ -21,11 +21,16 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import axios from "axios";
 import { useSnackbar } from "notistack";
 import { mileageState } from "../../atom";
 import mileageStudentRegisterExcel from "../../assets/mileage_student_register.xlsx";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  addParticipant,
+  addParticipants,
+  deleteParticipant,
+  getMileage,
+} from "../../apis/milage";
 
 const style = {
   display: "flex",
@@ -61,12 +66,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
-    await axios
-      .post("/api/mileage/student", {
-        activityId: id,
-        name: newName,
-        studentNum: newstudentNum,
-      })
+    await addParticipant(id, newName, newstudentNum)
       .then(function (response) {
         enqueueSnackbar("학생을 등록했습니다.", { variant: "success" });
         loadStudents();
@@ -77,13 +77,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
       });
   };
   const onDelete = async (studentId) => {
-    await axios
-      .delete("/api/mileage/student", {
-        data: {
-          activityId: id,
-          studentId,
-        },
-      })
+    await deleteParticipant(id, studentId)
       .then(function (response) {
         enqueueSnackbar("학생을 삭제했습니다.", { variant: "success" });
         loadStudents();
@@ -230,8 +224,7 @@ function ViewMileage({ id, handleClose, loadData }) {
       new Blob([JSON.stringify(id)], { type: "application/json" })
     );
     formData.append("file", files[0]);
-    await axios
-      .post("/api/mileage/students", formData)
+    await addParticipants(formData)
       .then(function (response) {
         enqueueSnackbar("학생 목록을 등록했습니다.", { variant: "success" });
         loadStudents();
@@ -242,10 +235,9 @@ function ViewMileage({ id, handleClose, loadData }) {
         setDialogOpen(true);
       });
   };
-  const loadStudents = () => {
-    axios.get(`/api/mileage/${id}`).then(function (response) {
-      setStudents(response.data.students);
-    });
+  const loadStudents = async () => {
+    const data = await getMileage(id);
+    setStudents(data.students);
   };
   useEffect(() => {
     loadStudents();

@@ -2,7 +2,6 @@ import {
   Box,
   Divider,
   IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -46,7 +45,6 @@ const MileageTable = ({ columns, data, handleOpenEdit, handleDeleteClick }) => {
   return (
     <>
       <TableContainer
-        // component={Paper}
         sx={{
           height: "100%",
           borderRadius: 1,

@@ -8,10 +8,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { mileageCategories, semesterList } from "../../constants/commons";
+import { addMileage } from "../../apis/milage";
 
 function AddMileage({ handleClose, loadData }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -21,13 +21,13 @@ function AddMileage({ handleClose, loadData }) {
     formState: { errors },
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
-    await axios.post("/api/mileage", {
-      categoryId: data.categoryId,
-      name: data.name,
-      remark: data.remark,
-      weight: +data.weight,
-      semester: data.semester,
-    });
+    await addMileage(
+      data.categoryId,
+      data.name,
+      data.remark,
+      data.weight,
+      data.semester
+    );
     enqueueSnackbar("추가되었습니다!", { variant: "success" });
     loadData();
     handleClose();

@@ -11,9 +11,9 @@ import {
 import { useRecoilState } from "recoil";
 import { mileageState } from "../atom";
 import ViewMileage from "../components/Mileage/ViewMileage";
-import axios from "axios";
 import ParticipantTable from "../components/Mileage/ParticipantTable";
 import { SelectColumnFilter } from "../components/Mileage/filters";
+import { getMileages } from "../apis/milage";
 
 const Header = styled("div")({
   display: "flex",
@@ -69,11 +69,10 @@ function MileageParticipant() {
     setOpenView(true);
   };
   const handleCloseView = () => setOpenView(false);
-  const loadData = () => {
-    axios.get(`/api/mileages`).then(function (response) {
-      setMileages(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getMileages();
+    setMileages(data);
+    setInit(true);
   };
   useEffect(() => {
     loadData();
