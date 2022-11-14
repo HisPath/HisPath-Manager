@@ -5,6 +5,7 @@ export const navItems = [
   { title: "마일리지 참여 관리", to: "/mileage/participant" },
   { title: "마일리지 장학금 신청자 관리", to: "/scholarship/management" },
   { title: "마일리지 장학금 수혜자 조회", to: "/scholarship/lists" },
+  { title: "마일리지 장학금 수혜자 조회", to: "/scholarship/list" },
   { title: "학생 관리", to: "/student" },
   { title: "학부 관리", to: "/department" },
   { title: "전공 관리", to: "/major" },

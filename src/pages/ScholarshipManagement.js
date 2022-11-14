@@ -16,11 +16,13 @@ import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
 import { scholarshipState, semesterState } from "../atom";
-import axios from "axios";
-import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 import scholarshipApprovalExcel from "../assets/scholarship_approval.xlsx";
 import { Paper } from "@mui/material";
+import { scholarshipState, studentState } from "../atom";
+import axios from "axios";
+import * as React from "react";
+import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 
 const Header = styled("div")({
   display: "flex",
