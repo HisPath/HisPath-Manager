@@ -1,7 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
-import Editor from '../components/notice/Editor';
+import React, { useState, useEffect } from 'react';
 import Editor2 from '../components/notice/Editor2';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Backdrop,
   Box,
@@ -21,7 +20,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+import { editNotice, getNoticeById } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
@@ -47,9 +46,10 @@ function TestPost() {
   const [viewCnt, setViewCnt] = useState();
   const [save, setSave] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (save) {
-      editNotice();
+      await editNotice(noticeId, desc, endDate, managerId, important, startDate, title, viewCnt);
+      window.open(`/notice/${noticeId}`, '_self');
     }
   }, [save]);
 
@@ -59,7 +59,7 @@ function TestPost() {
 
   useEffect(() => {
     const getNotice = async () => {
-      const { data } = await axios.get(`/api/notice/${noticeId}`);
+      const data = getNoticeById(noticeId);
       return data;
     };
     getNotice().then((result) => {
@@ -80,29 +80,9 @@ function TestPost() {
     setInit(true);
   }, []);
 
-  const editNotice = () => {
-    axios
-      .patch(`/api/notice/${noticeId}`, {
-        content: `${desc}`,
-        expDate: `${endDate.toISOString().split('T')[0]}`,
-        managerId: `${managerId}`,
-        importance: `${important}`,
-        pubDate: `${startDate.toISOString().split('T')[0]}`,
-        title: `${title}`,
-        viewCnt: `${viewCnt}`,
-      })
-      .then(function (response) {
-        window.open(`/notice/${noticeId}`, '_self');
-      })
-      .catch(function (error) {});
-  };
-
   useEffect(() => {
     calculateEndDate();
   }, [startDate]);
-  // useEffect(() => {
-  //   calculateEndDate();
-  // }, [endDate]);
   useEffect(() => {
     calculateEndDate();
   }, [duration]);

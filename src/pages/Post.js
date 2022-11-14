@@ -18,9 +18,10 @@ import {
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Link } from 'react-router-dom';
 import ReportIcon from '@mui/icons-material/Report';
-import axios from 'axios';
+
 import { useSnackbar } from 'notistack';
 import '../style/image.css';
+import { deleteNotice, getNoticeById } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
@@ -131,7 +132,7 @@ function Buttons({ noticeId, history }) {
 
   const handleDelete = async (noticeId) => {
     setOpen(false);
-    axios.delete(`/api/notice/${noticeId}`);
+    deleteNotice(noticeId);
     enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
   };
 
@@ -230,8 +231,8 @@ function Post() {
   const [notice, setNotice] = useState();
 
   const loadData = () => {
-    axios.get(`/api/notice/${noticeId}`).then(function (response) {
-      setNotice(response.data);
+    getNoticeById(noticeId).then(function (data) {
+      setNotice(data);
     });
   };
   useEffect(() => {
