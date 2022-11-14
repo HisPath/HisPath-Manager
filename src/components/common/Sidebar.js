@@ -14,14 +14,19 @@ import { drawerWidth, navItems } from "../../constants/commons";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 const activeStyle = {
-  color: "#5f63f2",
-  backgroundColor: "#f1f3ff",
+  color: "#2065D1",
+  backgroundColor: "#D1E9FC",
 };
 
 export default function Sidebar() {
   const drawer = (
     <div>
-      <Toolbar sx={{ boxShadow: 2 }}>
+      <Toolbar
+        sx={{
+          borderBottom: "1px solid",
+          borderColor: "divider",
+        }}
+      >
         <IconButton
           size="large"
           edge="start"
@@ -65,7 +70,7 @@ export default function Sidebar() {
       aria-label="mailbox folders"
     >
       <Drawer
-        PaperProps={{ style: { border: "none" } }}
+        // PaperProps={{ style: { border: "none" } }}
         variant="permanent"
         sx={{
           "& .MuiDrawer-paper": {
