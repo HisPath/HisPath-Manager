@@ -19,12 +19,12 @@ export default function Editor2({ value, editorHandler, setsave }) {
   });
 
   const init = () => {
-    console.log(value);
     editorRef.current?.getInstance().setHTML(value || ' ');
   };
   useEffect(() => {
     init();
   }, [value]);
+
   const editorChangeHandler = async () => {
     await editorHandler(replaceATag(replaceImgTag(editorRef.current?.getInstance().getHTML())));
   };
