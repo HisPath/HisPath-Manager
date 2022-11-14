@@ -20,7 +20,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+import { editNotice } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
@@ -48,7 +48,11 @@ function TestPost() {
 
   useEffect(() => {
     if (save) {
-      editNotice();
+      editNotice(noticeId, desc, endDate, managerId, important, startDate, title, viewCnt)
+        .then(function (data) {
+          window.open(`/notice/${noticeId}`, '_self');
+        })
+        .catch(function (error) {});
     }
   }, [save]);
 
@@ -78,23 +82,6 @@ function TestPost() {
 
     setInit(true);
   }, []);
-
-  const editNotice = () => {
-    axios
-      .patch(`/api/notice/${noticeId}`, {
-        content: `${desc}`,
-        expDate: `${endDate.toISOString().split('T')[0]}`,
-        managerId: `${managerId}`,
-        importance: `${important}`,
-        pubDate: `${startDate.toISOString().split('T')[0]}`,
-        title: `${title}`,
-        viewCnt: `${viewCnt}`,
-      })
-      .then(function (response) {
-        window.open(`/notice/${noticeId}`, '_self');
-      })
-      .catch(function (error) {});
-  };
 
   useEffect(() => {
     calculateEndDate();
