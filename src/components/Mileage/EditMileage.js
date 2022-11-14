@@ -8,12 +8,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { useRecoilValue } from "recoil";
 import { mileageState } from "../../atom";
 import { mileageCategories, semesterList } from "../../constants/commons";
+import { updateMileage } from "../../apis/milage";
 
 function EditMileage({ id, handleClose, loadData }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -27,13 +27,14 @@ function EditMileage({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.patch(`/api/mileage/${id}`, {
-      categoryId: data.categoryId,
-      name: data.name,
-      remark: data.remark,
-      weight: +data.weight,
-      semester: data.semester,
-    });
+    await updateMileage(
+      id,
+      data.categoryId,
+      data.name,
+      data.remark,
+      data.weight,
+      data.semester
+    );
     enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();

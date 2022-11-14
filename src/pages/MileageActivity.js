@@ -15,11 +15,11 @@ import { mileageState } from "../atom";
 import AddMileage from "../components/Mileage/AddMileage";
 import ViewMileage from "../components/Mileage/ViewMileage";
 import EditMileage from "../components/Mileage/EditMileage";
-import axios from "axios";
 import { useSnackbar } from "notistack";
 import mileageRegisterExcel from "../assets/mileage_register.xlsx";
 import MileageTable from "../components/Mileage/AcitivityTable";
 import { SelectColumnFilter } from "../components/Mileage/filters";
+import { addMileages, deleteMileages, getMileages } from "../apis/milage";
 
 const Header = styled("div")({
   display: "flex",
@@ -89,14 +89,13 @@ function MileageActivity() {
     // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
-    await axios.post("/api/mileages", formData);
+    await addMileages(formData);
     loadData();
   };
   const [openAdd, setOpenAdd] = useState(false);
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = (id) => {
@@ -106,17 +105,15 @@ function MileageActivity() {
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/mileage/${id}`).then(function (response) {
-        enqueueSnackbar("삭제되었습니다.", { variant: "success" });
-      });
+      await deleteMileages(id);
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
-  const loadData = () => {
-    axios.get(`/api/mileages`).then(function (response) {
-      setMileages(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getMileages();
+    setMileages(data);
+    setInit(true);
   };
   useEffect(() => {
     loadData();
