@@ -1,8 +1,5 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-import Editor from '../components/notice/Editor';
 import Editor2 from '../components/notice/Editor2';
-import { Link, useParams } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
 import {
   Backdrop,
   Box,
@@ -63,7 +60,6 @@ function TestAdd() {
   };
 
   const handleSaveClick = () => {
-    // console.log({ desc });
     saveNotice();
     viewNotice();
   };
