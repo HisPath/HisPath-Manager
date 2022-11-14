@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const addNotice = (desc, endDate, managerId, important, startDate, title, viewCnt) => {
-  const response = axios.post(
+export const addNotice = async (desc, endDate, managerId, important, startDate, title, viewCnt) => {
+  const ret = await axios.post(
     `${process.env.REACT_APP_SERVER}/notice/add`,
     {
       content: `${desc}`,
@@ -16,7 +16,7 @@ export const addNotice = (desc, endDate, managerId, important, startDate, title,
       headers: { Authorization: localStorage.getItem('TOKEN') },
     },
   );
-  return response.data;
+  return ret.data;
 };
 
 export const editNotice = (

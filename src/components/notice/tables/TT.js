@@ -13,7 +13,7 @@ import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import { getNotices } from '../apis/notice';
+import { getNotices } from '../../../apis/notice';
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',

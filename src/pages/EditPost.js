@@ -20,7 +20,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { editNotice } from '../apis/notice';
+import { editNotice, getNoticeById } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
@@ -46,13 +46,10 @@ function TestPost() {
   const [viewCnt, setViewCnt] = useState();
   const [save, setSave] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (save) {
-      editNotice(noticeId, desc, endDate, managerId, important, startDate, title, viewCnt)
-        .then(function (data) {
-          window.open(`/notice/${noticeId}`, '_self');
-        })
-        .catch(function (error) {});
+      await editNotice(noticeId, desc, endDate, managerId, important, startDate, title, viewCnt);
+      window.open(`/notice/${noticeId}`, '_self');
     }
   }, [save]);
 
@@ -62,7 +59,7 @@ function TestPost() {
 
   useEffect(() => {
     const getNotice = async () => {
-      const { data } = await axios.get(`/api/notice/${noticeId}`);
+      const data = getNoticeById(noticeId);
       return data;
     };
     getNotice().then((result) => {

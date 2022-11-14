@@ -47,7 +47,10 @@ function TestAdd() {
 
   useEffect(() => {
     if (save) {
-      saveNotice();
+      addNotice(desc, endDate, managerId, important, startDate, title, viewCnt).then((data) => {
+        setNoticeId(data);
+        setSaved(true);
+      });
     }
   }, [save]);
 
@@ -58,21 +61,11 @@ function TestAdd() {
   const viewNotice = () => {
     if (saved) window.open(`/notice/${noticeId}`, '_self');
   };
-
-  const saveNotice = () => {
-    addNotice(desc, endDate, managerId, important, startDate, title, viewCnt)
-      .then(function (data) {
-        setNoticeId(data);
-        setSaved(true);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  const saveNotice = async () => {};
 
   useEffect(() => {
     viewNotice();
-  }, [saved]);
+  }, [noticeId]);
 
   useEffect(() => {
     calculateEndDate();
