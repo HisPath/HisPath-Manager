@@ -12,11 +12,8 @@ import {
 import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import StarIcon from '@mui/icons-material/Grade';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-
-import AlarmIcon from '@mui/icons-material/Alarm';
+import { getNotices } from '../../../apis/notice';
 const Header = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
@@ -153,8 +150,8 @@ function TT() {
   ];
 
   const loadData = () => {
-    axios.get('/api/notice').then(function (response) {
-      noticeFilter(response.data);
+    getNotices().then(function (data) {
+      noticeFilter(data);
       setInit(true);
     });
   };

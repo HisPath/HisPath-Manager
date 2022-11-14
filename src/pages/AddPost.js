@@ -21,7 +21,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+import { addNotice } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
@@ -47,7 +47,10 @@ function TestAdd() {
 
   useEffect(() => {
     if (save) {
-      saveNotice();
+      addNotice(desc, endDate, managerId, important, startDate, title, viewCnt).then((data) => {
+        setNoticeId(data);
+        setSaved(true);
+      });
     }
   }, [save]);
 
@@ -59,34 +62,9 @@ function TestAdd() {
     if (saved) window.open(`/notice/${noticeId}`, '_self');
   };
 
-  const handleSaveClick = () => {
-    saveNotice();
-    viewNotice();
-  };
-
-  const saveNotice = () => {
-    axios
-      .post('/api/notice/add', {
-        content: `${desc}`,
-        expDate: `${endDate.toISOString().split('T')[0]}`,
-        managerId: `${managerId}`,
-        importance: `${important}`,
-        pubDate: `${startDate.toISOString().split('T')[0]}`,
-        title: `${title}`,
-        viewCnt: `${viewCnt}`,
-      })
-      .then(function (response) {
-        setNoticeId(response.data);
-        setSaved(true);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
     viewNotice();
-  }, [saved]);
+  }, [noticeId]);
 
   useEffect(() => {
     calculateEndDate();
