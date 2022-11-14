@@ -68,7 +68,7 @@ const StatusIcons = ({ p }) => {
 };
 
 function TT() {
-  const [noticeType, setNoticeType] = useState(0);
+  const [noticeType, setNoticeType] = useState(1);
   const [init, setInit] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
 
@@ -240,6 +240,12 @@ function TT() {
       <Article>
         {init ? (
           <DataGrid
+            sx={{
+              '&:last-child td, &:last-child th': { border: 0 },
+              '&:nth-of-type(even) td, &:nth-of-type(even) th': {
+                backgroundColor: 'white',
+              },
+            }}
             components={{
               Toolbar: GridToolbar,
               NoRowsOverlay: CustomNoRowsOverlay,

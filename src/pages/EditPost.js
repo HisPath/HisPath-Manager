@@ -1,7 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
-import Editor from '../components/notice/Editor';
+import React, { useState, useEffect } from 'react';
 import Editor2 from '../components/notice/Editor2';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Backdrop,
   Box,
@@ -100,9 +99,6 @@ function TestPost() {
   useEffect(() => {
     calculateEndDate();
   }, [startDate]);
-  // useEffect(() => {
-  //   calculateEndDate();
-  // }, [endDate]);
   useEffect(() => {
     calculateEndDate();
   }, [duration]);
