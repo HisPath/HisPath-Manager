@@ -16,17 +16,19 @@ import { majorState } from "../atom";
 import AddMajor from "../components/Major/AddMajor";
 import EditMajor from "../components/Major/EditMajor";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 const Header = styled("div")({
-  height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 236.5px)",
+  height: "calc(100vh - 224px)",
+  paddingBottom: 24,
 });
 
 const columns = [
@@ -108,7 +110,7 @@ function Major() {
     });
   }, []);
   return (
-    <Container>
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           전공 관리 페이지

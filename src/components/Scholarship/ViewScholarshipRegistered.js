@@ -2,27 +2,14 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
   InputLabel,
-  Modal,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  TextField,
-  Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
 import axios from "axios";
-import { useSnackbar } from "notistack";
-import { mileageState } from "../../atom";
 
 const style = {
   display: "flex",
@@ -39,13 +26,15 @@ const style = {
   borderRadius: 4,
 };
 
-function ViewScholarshipRegistered({ id, handleClose }) {
+function ViewScholarshipRegistered({ id, handleClose, semester }) {
   const [students, setStudents] = useState([]);
 
   const loadStudents = () => {
+    console.log("아이디: " + id);
+    console.log("년도: " + semester);
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
+        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=${semester}`
       )
       .then(function (response) {
         setStudents(response.data.activities);
@@ -60,7 +49,7 @@ function ViewScholarshipRegistered({ id, handleClose }) {
   const studentInfo = () => {
     axios
       .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=51&semester=2022-1`
+        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=${semester}`
       )
       .then(function (response) {
         setInfo(response.data);
@@ -70,11 +59,6 @@ function ViewScholarshipRegistered({ id, handleClose }) {
     studentInfo();
   }, []);
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-  const [dialogContent, setDialogContent] = useState();
   return (
     <Box mt={3} mb={8} sx={{ height: 650 }}>
       <InputLabel>
