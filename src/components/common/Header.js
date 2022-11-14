@@ -1,6 +1,6 @@
-import { AppBar, Box, Toolbar, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { drawerWidth } from '../../constants/commons';
+import { AppBar, Box, Toolbar, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { drawerWidth } from "../../constants/commons";
 
 export default function Header() {
   return (
@@ -10,12 +10,12 @@ export default function Header() {
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
         ml: `${drawerWidth}px`,
-        boxShadow: 1,
+        boxShadow: 0,
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
         <Box sx={{ flexGrow: 1 }} />
-        <Link to="/login" style={{ textDecoration: 'none' }}>
+        <Link to="/login" style={{ textDecoration: "none" }}>
           <Button>로그아웃</Button>
         </Link>
       </Toolbar>

@@ -18,7 +18,7 @@ import { useSnackbar } from "notistack";
 import { useRecoilState } from "recoil";
 import { studentState } from "../atom";
 import axios from "axios";
-import { Paper } from "@mui/material";
+import GoogleLoginButton from "../components/common/GoogleLoginButton";
 
 const Header = styled("div")({
   display: "flex",
@@ -78,24 +78,28 @@ function Management() {
     }
   };
   const loadData = () => {
-    axios.get().then(function (response) {
-      setStudent(response.data);
-      setInit(true);
-    });
+    axios
+      .get("/api/managers", {
+        headers: { Authorization: localStorage.getItem("TOKEN") },
+      })
+      .then(function (response) {
+        setStudent(response.data);
+        setInit(true);
+      });
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/managers",
-      responseType: "json",
-    }).then(function (response) {
-      setStudent(
-        response.data.map((item) => {
-          return { ...item, id: item.id };
-        })
-      );
-      console.log(response.data);
-    });
+    axios
+      .get("/api/managers", {
+        headers: { Authorization: localStorage.getItem("TOKEN") },
+      })
+      .then(function (response) {
+        setStudent(
+          response.data.map((item) => {
+            return { ...item, id: item.id };
+          })
+        );
+        console.log(response.data);
+      });
   }, []);
 
   const [openSuper, setOpenSuper] = React.useState(false);
@@ -119,10 +123,14 @@ function Management() {
   };
 
   const setSuper = async () => {
-    await axios.put("/api/manager/approve", {
-      level: 2,
-      managerId: currentId,
-    });
+    await axios.put(
+      "/api/manager/approve",
+      {
+        level: 2,
+        managerId: currentId,
+      },
+      { headers: { Authorization: localStorage.getItem("TOKEN") } }
+    );
     enqueueSnackbar("슈퍼 관리자로 지정되었습니다!", { variant: "success" });
     loadData();
     handleCloseSuper();
@@ -130,10 +138,14 @@ function Management() {
 
   const setNormal = async () => {
     console.log(currentId);
-    await axios.put("/api/manager/approve", {
-      level: 1,
-      managerId: currentId,
-    });
+    await axios.put(
+      "/api/manager/approve",
+      {
+        level: 1,
+        managerId: currentId,
+      },
+      { headers: { Authorization: localStorage.getItem("TOKEN") } }
+    );
     enqueueSnackbar("일반 관리자로 지정되었습니다!", { variant: "success" });
 
     loadData();
@@ -178,7 +190,8 @@ function Management() {
   };
 
   return (
-    <Container component={Paper}>
+    <Container>
+      <GoogleLoginButton />
       <Header>
         <Typography variant="h5" fontWeight={600}>
           관리자 권한 관리 페이지
