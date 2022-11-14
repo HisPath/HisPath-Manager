@@ -61,7 +61,6 @@ function TestAdd() {
   const viewNotice = () => {
     if (saved) window.open(`/notice/${noticeId}`, '_self');
   };
-  const saveNotice = async () => {};
 
   useEffect(() => {
     viewNotice();
