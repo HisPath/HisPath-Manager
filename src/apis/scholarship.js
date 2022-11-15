@@ -43,7 +43,7 @@ export const getStudentInfo = async () => {
 
 export const getScholarshipStudentInfo = async (id, semester) => {
   const response = await axios.get(
-    `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=${semester}`,
+    `/api/scholarship/activities?studentId=${id}&semester=${semester}`,
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
     }
