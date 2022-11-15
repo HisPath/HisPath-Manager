@@ -55,16 +55,12 @@ export const getStudents = async () => {
 
 export const updateStudent = async (
   id,
-  departmentId,
+  name,
   studentNum,
   semester,
-  name,
   phone,
   email,
-  profile,
-  blog,
-  githubId,
-  readme,
+  departmentId,
   major1Id,
   major2Id
 ) => {
@@ -77,10 +73,6 @@ export const updateStudent = async (
       name: name,
       phone: phone,
       email: email,
-      profile: profile,
-      blog: blog,
-      githubId: githubId,
-      readme: readme,
       major1Id: major1Id,
       major2Id: major2Id,
     },
