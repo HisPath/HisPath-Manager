@@ -16,9 +16,13 @@ import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import Chip from "@mui/material/Chip";
 import { useSnackbar } from "notistack";
 import { useRecoilState } from "recoil";
-import { studentState } from "../atom";
-import axios from "axios";
+import { managerState } from "../atom";
 import GoogleLoginButton from "../components/common/GoogleLoginButton";
+import {
+  getManagers,
+  approveManagerSuper,
+  approveManagerNormal,
+} from "../apis/manager";
 
 const Header = styled("div")({
   display: "flex",
@@ -64,42 +68,38 @@ const modalStyle = {
 };
 
 function Management() {
-  const [students, setStudent] = useRecoilState(studentState);
+  const [managers, setManagers] = useRecoilState(managerState);
   const [init, setInit] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
-  const handleDeleteClick = async (id) => {
-    if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/manager/${id}`).then(function (response) {});
-      loadData();
-    }
-  };
-  const loadData = () => {
-    axios
-      .get("/api/managers", {
-        headers: { Authorization: localStorage.getItem("TOKEN") },
-      })
-      .then(function (response) {
-        setStudent(response.data);
-        setInit(true);
-      });
+  // const handleDeleteClick = async (id) => {
+  //   if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
+  //     await axios.delete(`/api/manager/${id}`).then(function (response) {});
+  //     loadData();
+  //   }
+  // };
+  const loadData = async () => {
+    const data = await getManagers();
+    setManagers(data);
+    setInit(true);
   };
   useEffect(() => {
-    axios
-      .get("/api/managers", {
-        headers: { Authorization: localStorage.getItem("TOKEN") },
-      })
-      .then(function (response) {
-        setStudent(
-          response.data.map((item) => {
-            return { ...item, id: item.id };
-          })
-        );
-        console.log(response.data);
-      });
+    loadData();
+    // axios
+    //   .get("/api/managers", {
+    //     headers: { Authorization: localStorage.getItem("TOKEN") },
+    //   })
+    //   .then(function (response) {
+    //     setManagers(
+    //       response.data.map((item) => {
+    //         return { ...item, id: item.id };
+    //       })
+    //     );
+    //     console.log(response.data);
+    //   });
   }, []);
 
   const [openSuper, setOpenSuper] = React.useState(false);
@@ -122,32 +122,16 @@ function Management() {
     setOpenNormal(false);
   };
 
-  const setSuper = async () => {
-    await axios.put(
-      "/api/manager/approve",
-      {
-        level: 2,
-        managerId: currentId,
-      },
-      { headers: { Authorization: localStorage.getItem("TOKEN") } }
-    );
+  const setSuper = async (data) => {
+    await approveManagerSuper(data.level, currentId);
     enqueueSnackbar("슈퍼 관리자로 지정되었습니다!", { variant: "success" });
     loadData();
     handleCloseSuper();
   };
 
-  const setNormal = async () => {
-    console.log(currentId);
-    await axios.put(
-      "/api/manager/approve",
-      {
-        level: 1,
-        managerId: currentId,
-      },
-      { headers: { Authorization: localStorage.getItem("TOKEN") } }
-    );
+  const setNormal = async (data) => {
+    await approveManagerNormal(data.level, currentId);
     enqueueSnackbar("일반 관리자로 지정되었습니다!", { variant: "success" });
-
     loadData();
     handleCloseNormal();
   };
@@ -210,7 +194,7 @@ function Management() {
               printOptions: { disableToolbarButton: true },
             },
           }}
-          rows={students}
+          rows={managers}
           columns={[
             ...columns,
             {

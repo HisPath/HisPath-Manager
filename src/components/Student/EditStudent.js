@@ -11,14 +11,16 @@ import {
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { studentState } from "../../atom";
-import axios from "axios";
+import { useSnackbar } from "notistack";
 import {
   departmentList,
   major1List,
   major2List,
 } from "../../constants/commons";
+import { updateStudent } from "../../apis/student";
 
 function EditStudent({ id, handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [student] = useRecoilState(studentState);
   const target = student.filter((item) => item.id === id)[0];
   const {
@@ -29,20 +31,18 @@ function EditStudent({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.put(`/api/student/${id}`, {
-      name: data.name,
-      studentNum: data.studentNum,
-      semester: data.semester,
-      phone: data.phone,
-      email: data.email,
-      profile: data.profile,
-      departmentId: data.departmentId,
-      major1Id: data.major1Id,
-      major2Id: data.major2Id,
-      blog: data.blog,
-      githubId: data.githubId,
-      readme: data.readme,
-    });
+    await updateStudent(
+      id,
+      data.name,
+      data.studentNum,
+      data.semester,
+      data.phone,
+      data.email,
+      data.departmentId,
+      data.major1Id,
+      data.major2Id
+    );
+    enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
   };
