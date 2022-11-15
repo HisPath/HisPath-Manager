@@ -1,6 +1,6 @@
 import { Paper, SvgIcon, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-
+import GoogleLoginButton from '../components/common/GoogleLoginButton';
 export function Login() {
   const styles = {
     paperContainer: {
@@ -112,6 +112,7 @@ export function Login() {
                 <path fill="none" d="M0 0h18v18H0z"></path>
               </SvgIcon>
               <Typography>구글 로그인</Typography>
+              <GoogleLoginButton />
             </Box>
           </Box>
         </Box>
