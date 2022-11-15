@@ -17,9 +17,10 @@ import { studentState } from "../atom";
 import AddStudent from "../components/Student/AddStudent";
 import ViewStudent from "../components/Student/ViewStudent";
 import EditStudent from "../components/Student/EditStudent";
-import axios from "axios";
 import studentRegisterExcel from "../assets/student_register.xlsx";
 import { Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { addStudents, deleteStudent, getStudents } from "../apis/student";
 
 const Header = styled("div")({
   display: "flex",
@@ -85,13 +86,14 @@ const modalStyle = {
 };
 
 function Student() {
+  const { enqueueSnackbar } = useSnackbar();
   const [students, setStudent] = useRecoilState(studentState);
   const [init, setInit] = useState(false);
   const onChangeExcel = async (event) => {
     const { files } = event.target;
     const formData = new FormData();
     formData.append("file", files[0]);
-    await axios.post("/api/students", formData);
+    await addStudents(formData);
     loadData();
   };
 
@@ -107,29 +109,22 @@ function Student() {
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/student/${id}`).then(function (response) {});
+      await deleteStudent(id);
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
-  const loadData = () => {
-    axios.get().then(function (response) {
-      setStudent(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getStudents();
+    setStudent(
+      data.map((item) => {
+        return { ...item, id: item.studentId };
+      })
+    );
+    setInit(true);
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/students",
-      responseType: "json",
-    }).then(function (response) {
-      setStudent(
-        response.data.map((item) => {
-          return { ...item, id: item.studentId };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
   return (
     <Container component={Paper}>

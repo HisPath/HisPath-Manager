@@ -8,36 +8,39 @@ import {
   FormControl,
   Select,
 } from "@mui/material";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import {
   departmentList,
   major1List,
   major2List,
 } from "../../constants/commons";
+import { useSnackbar } from "notistack";
+import { addStudent } from "../../apis/student";
 
 function AddStudent({ handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
-    await axios.post("/api/student", {
-      categoryId: data.categoryId,
-      departmentId: data.departmentId,
-      studentNum: data.studentNum,
-      semester: data.semester,
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      profile: data.profile,
-      blog: data.blog,
-      githubId: data.githubId,
-      readme: data.readme,
-      major1Id: data.major1Id,
-      major2Id: data.major2Id,
-    });
+    await addStudent(
+      data.categoryId,
+      data.departmentId,
+      data.studentNum,
+      data.semester,
+      data.name,
+      data.phone,
+      data.email,
+      data.profile,
+      data.blog,
+      data.githubId,
+      data.readme,
+      data.major1Id,
+      data.major2Id
+    );
+    enqueueSnackbar("추가되었습니다!", { variant: "success" });
     loadData();
     handleClose();
   };
