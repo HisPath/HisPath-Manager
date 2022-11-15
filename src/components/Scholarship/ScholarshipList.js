@@ -12,11 +12,11 @@ import {
 import { useRecoilState } from "recoil";
 import { scholarshipListState, semesterState } from "../../atom";
 import * as React from "react";
-import axios from "axios";
 import ViewScholarshipRegistered from "./ViewScholarshipRegistered";
 import { SelectColumnFilter } from "./filters";
 import ScholarshipListTable from "./ScholarshipListTable";
 import { Paper } from "@mui/material";
+import { getScholarshipList, getSemesters } from "../../apis/scholarship";
 
 const Article = styled(Box)({
   height: "calc(100vh - 250px)",
@@ -93,24 +93,19 @@ function ScholarshipList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(semester);
-      axios
-        .get(`/api/scholarships?approved=true&semester=${semester}`)
-        .then(function (response) {
-          console.log(response.data);
-          setScholarshipLists(response.data);
-          setInit(true);
-        });
+      const data = await getScholarshipList(semester);
+      setScholarshipLists(data);
+      setInit(true);
     };
     fetchData();
   }, [semester]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/scholarship/students");
-      console.log(response.data);
+      const response = await getSemesters();
+      console.log(response);
       const studentSet = new Set();
-      response.data?.forEach((item) => studentSet.add(item.semester));
+      response?.forEach((item) => studentSet.add(item.semester));
       console.log(studentSet);
       setInit(true);
     };
