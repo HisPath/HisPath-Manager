@@ -18,9 +18,14 @@ import { useRecoilState } from "recoil";
 import { scholarshipState, semesterState } from "../atom";
 import scholarshipApprovalExcel from "../assets/scholarship_approval.xlsx";
 import { Paper } from "@mui/material";
-import axios from "axios";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
+import {
+  approveScholarships,
+  getScholarshipRegistered,
+  getSemesters,
+  getStudentInfo,
+} from "../apis/scholarship";
 
 const Header = styled("div")({
   display: "flex",
@@ -107,39 +112,26 @@ function ScholarshipManagement() {
 
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
-
   const onChangeExcel = async (event) => {
-    // const fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   setNewExcelDir(fileReader.result);
-    // };
     const { files } = event.target;
-    // setNewExcelFile(files ? files[0] : null);
-    // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
-    await axios.post("/api/scholarship/approval", formData);
+    await approveScholarships(formData);
     loadData();
   };
 
-  const loadData = () => {
-    axios
-      .get(`/api/scholarships?approved=false&semester=${semester}`)
-      .then(function (response) {
-        const datas = response.data;
-        datas.map((data, idx) => {
-          data.ids = idx + 1;
-        });
-        // setScholarships(datas);
-        // setScholarships(response.data);
-        setScholarships(
-          response.data.map((item) => {
-            return { ...item, id: item.studentId };
-          })
-        );
-
-        setInit(true);
-      });
+  const loadData = async () => {
+    const data = await getScholarshipRegistered(semester);
+    const datas = data;
+    datas.map((data, idx) => {
+      data.ids = idx + 1;
+    });
+    setScholarships(
+      data.map((item) => {
+        return { ...item, id: item.studentId };
+      })
+    );
+    setInit(true);
   };
   useEffect(() => {
     loadData();
@@ -152,13 +144,13 @@ function ScholarshipManagement() {
   const [setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/scholarship/students");
-      console.log(response.data);
+      const response = await getSemesters();
+      console.log(response);
       const studentSet = new Set();
-      response.data?.forEach((item) => studentSet.add(item.semester));
+      response?.forEach((item) => studentSet.add(item.semester));
       console.log(studentSet);
       setSemesters([...studentSet]);
-      setData(response.data);
+      setData(response);
       setInit(true);
     };
     fetchData();
@@ -166,8 +158,8 @@ function ScholarshipManagement() {
 
   const [setInfo] = React.useState([]);
   const getInfo = async () => {
-    const info = await axios.get(`/api/scholarship/students`);
-    setInfo(info.data);
+    const info = await getStudentInfo();
+    setInfo(info);
   };
   useEffect(() => {
     getInfo();

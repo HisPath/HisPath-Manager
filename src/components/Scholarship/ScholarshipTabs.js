@@ -17,8 +17,8 @@ import { Paper } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { semesterState } from "../../atom";
 import { useRecoilState } from "recoil";
-import axios from "axios";
 import ScholarshipListChart from "./ScholarshipListChart";
+import { getSemesters } from "../../apis/scholarship";
 
 const Header = styled("div")({
   display: "flex",
@@ -77,13 +77,13 @@ export default function ScholarshipTabs() {
   const [setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/scholarship/students");
-      console.log(response.data);
+      const response = await getSemesters();
+      console.log(response);
       const studentSet = new Set();
-      response.data?.forEach((item) => studentSet.add(item.semester));
+      response?.forEach((item) => studentSet.add(item.semester));
       console.log(studentSet);
       setSemesters([...studentSet]);
-      setData(response.data);
+      setData(response);
       setInit(true);
     };
     fetchData();

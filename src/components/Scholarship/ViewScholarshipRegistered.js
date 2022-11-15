@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
+import { getScholarshipStudentInfo } from "../../apis/scholarship";
 
 const style = {
   display: "flex",
@@ -29,16 +30,9 @@ const style = {
 function ViewScholarshipRegistered({ id, handleClose, semester }) {
   const [students, setStudents] = useState([]);
 
-  const loadStudents = () => {
-    console.log("아이디: " + id);
-    console.log("년도: " + semester);
-    axios
-      .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=${semester}`
-      )
-      .then(function (response) {
-        setStudents(response.data.activities);
-      });
+  const loadStudents = async () => {
+    const data = await getScholarshipStudentInfo(id, semester);
+    setStudents(data.activities);
   };
   useEffect(() => {
     loadStudents();
@@ -46,14 +40,9 @@ function ViewScholarshipRegistered({ id, handleClose, semester }) {
 
   const [info, setInfo] = useState([]);
 
-  const studentInfo = () => {
-    axios
-      .get(
-        `http://localhost:8080/api/scholarship/activities?studentId=${id}&semester=${semester}`
-      )
-      .then(function (response) {
-        setInfo(response.data);
-      });
+  const studentInfo = async () => {
+    const data = await getScholarshipStudentInfo(id, semester);
+    setInfo(data);
   };
   useEffect(() => {
     studentInfo();
