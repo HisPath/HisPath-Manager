@@ -15,8 +15,9 @@ import { useRecoilState } from "recoil";
 import { categoryState } from "../atom";
 import AddCategory from "../components/Category/AddCategory";
 import EditCategory from "../components/Category/EditCategory";
-import axios from "axios";
 import { Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { addCategory, deleteCategory, getCategories } from "../apis/category";
 
 const Header = styled("div")({
   display: "flex",
@@ -72,6 +73,7 @@ const modalStyle = {
 };
 
 function Category() {
+  const { enqueueSnackbar } = useSnackbar();
   const [categories, setCategory] = useRecoilState(categoryState);
   const [init, setInit] = useState(false);
 
@@ -84,29 +86,18 @@ function Category() {
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/category/${id}`).then(function (response) {});
+      await deleteCategory(id);
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
-  const loadData = () => {
-    axios.get().then(function (response) {
-      setCategory(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getCategories();
+    setCategory(data);
+    setInit(true);
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/categories",
-      responseType: "json",
-    }).then(function (response) {
-      setCategory(
-        response.data.map((item) => {
-          return { ...item, id: item.categoryId };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
   return (
     <Container component={Paper}>

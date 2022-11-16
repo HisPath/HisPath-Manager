@@ -15,8 +15,9 @@ import { useRecoilState } from "recoil";
 import { majorState } from "../atom";
 import AddMajor from "../components/Major/AddMajor";
 import EditMajor from "../components/Major/EditMajor";
-import axios from "axios";
 import { Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { addMajor, deleteMajor, getMajors } from "../apis/major";
 
 const Header = styled("div")({
   display: "flex",
@@ -72,6 +73,7 @@ const modalStyle = {
 };
 
 function Major() {
+  const { enqueueSnackbar } = useSnackbar();
   const [majors, setMajor] = useRecoilState(majorState);
   const [init, setInit] = useState(false);
 
@@ -85,29 +87,23 @@ function Major() {
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/major/${id}`).then(function (response) {});
+      // await axios.delete(`/api/major/${id}`).then(function (response) {});
+      await deleteMajor(id);
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
-  const loadData = () => {
-    axios.get().then(function (response) {
-      setMajor(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getMajors();
+    setMajor(data);
+    // setInit(true);
+    // axios.get().then(function (response) {
+    //   setMajor(response.data);
+    //   setInit(true);
+    // });
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/majors",
-      responseType: "json",
-    }).then(function (response) {
-      setMajor(
-        response.data.map((item) => {
-          return { ...item, id: item.id };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
   return (
     <Container component={Paper}>

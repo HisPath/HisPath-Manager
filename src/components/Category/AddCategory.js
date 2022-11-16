@@ -1,18 +1,19 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import { addCategory } from "../../apis/category";
 
 function AddCategory({ handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
-    await axios.post("/api/category", {
-      categoryId: data.categoryId,
-      name: data.name,
-    });
+    await addCategory(data.categoryId, data.name);
+    enqueueSnackbar("추가되었습니다!", { variant: "success" });
     loadData();
     handleClose();
   };
