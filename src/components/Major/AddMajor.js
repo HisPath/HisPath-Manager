@@ -1,17 +1,18 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { useForm } from "react-hook-form";
+import { addMajor } from "../../apis/major";
+import { useSnackbar } from "notistack";
 
-function AddStudent({ handleClose, loadData }) {
+function AddMajor({ handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
-    await axios.post("/api/major", {
-      majorName: data.name,
-    });
+    await addMajor(data.majorName);
+    enqueueSnackbar("추가되었습니다!", { variant: "success" });
     loadData();
     handleClose();
   };
@@ -107,4 +108,4 @@ function AddStudent({ handleClose, loadData }) {
   );
 }
 
-export default AddStudent;
+export default AddMajor;

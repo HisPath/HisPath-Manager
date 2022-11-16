@@ -2,9 +2,11 @@ import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { departmentState } from "../../atom";
-import axios from "axios";
+import { useSnackbar } from "notistack";
+import { updateDepartment } from "../../apis/department";
 
 function EditDepartment({ id, handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [department] = useRecoilState(departmentState);
   const target = department.filter((item) => item.id === id)[0];
   const {
@@ -15,10 +17,8 @@ function EditDepartment({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.patch(`/api/department/${id}`, {
-      id: data.departmentId,
-      name: data.name,
-    });
+    await updateDepartment(data.departmentId, data.name);
+    enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
   };

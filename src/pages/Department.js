@@ -15,8 +15,13 @@ import { useRecoilState } from "recoil";
 import { departmentState } from "../atom";
 import AddDepartment from "../components/Department/AddDepartment";
 import EditDepartment from "../components/Department/EditDepartment";
-import axios from "axios";
 import { Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import {
+  addDepartment,
+  deleteDepartment,
+  getDepartments,
+} from "../apis/department";
 
 const Header = styled("div")({
   display: "flex",
@@ -77,6 +82,7 @@ const modalStyle = {
 };
 
 function Department() {
+  const { enqueueSnackbar } = useSnackbar();
   const [departments, setDepartment] = useRecoilState(departmentState);
   const [init, setInit] = useState(false);
 
@@ -90,29 +96,18 @@ function Department() {
   const handleCloseEdit = () => setOpenEdit(false);
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-      await axios.delete(`/api/department/${id}`).then(function (response) {});
+      await deleteDepartment(id);
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
-  const loadData = () => {
-    axios.get().then(function (response) {
-      setDepartment(response.data);
-      setInit(true);
-    });
+  const loadData = async () => {
+    const data = await getDepartments();
+    setDepartment(data);
+    setInit(true);
   };
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "/api/departments",
-      responseType: "json",
-    }).then(function (response) {
-      setDepartment(
-        response.data.map((item) => {
-          return { ...item, id: item.departmentId };
-        })
-      );
-      console.log(response.data);
-    });
+    loadData();
   }, []);
   return (
     <Container component={Paper}>
