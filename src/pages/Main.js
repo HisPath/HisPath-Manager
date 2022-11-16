@@ -1,5 +1,8 @@
+import GoogleLoginButton from "../components/common/GoogleLoginButton";
+
 function Main() {
-  return <div>Main</div>;
+    console.log(localStorage.getItem("TOKEN"));
+    return <GoogleLoginButton />;
 }
 
 export default Main;
