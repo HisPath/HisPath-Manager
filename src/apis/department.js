@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const addDepartment = async (id, majorName) => {
+export const addDepartment = async (departmentId, name) => {
   const response = await axios.post(
-    "/api/department",
+    `${process.env.REACT_APP_SERVER}/department`,
     {
-      id,
-      majorName,
+      departmentId,
+      name,
     },
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
@@ -15,17 +15,21 @@ export const addDepartment = async (id, majorName) => {
 };
 
 export const getDepartments = async () => {
-  const response = await axios.get("/api/departments", {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/departments`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response.data;
 };
 
-export const updateDepartment = async (id, majorName) => {
+export const updateDepartment = async (id, departmentId, name) => {
   const response = await axios.put(
-    `/api/department/${id}`,
+    `${process.env.REACT_APP_SERVER}/department/${id}`,
     {
-      majorName,
+      departmentId,
+      name,
     },
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
@@ -35,8 +39,11 @@ export const updateDepartment = async (id, majorName) => {
 };
 
 export const deleteDepartment = async (id) => {
-  const response = await axios.delete(`/api/department/${id}`, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.delete(
+    `${process.env.REACT_APP_SERVER}/department/${id}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };

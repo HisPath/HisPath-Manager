@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const addCategory = async (name) => {
   const response = await axios.post(
-    "/api/category",
+    `${process.env.REACT_APP_SERVER}/category`,
     {
       name,
     },
@@ -14,15 +14,18 @@ export const addCategory = async (name) => {
 };
 
 export const getCategories = async () => {
-  const response = await axios.get("/api/categories", {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/categories`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response.data;
 };
 
 export const updateCategory = async (id, name) => {
   const response = await axios.put(
-    `/api/category/${id}`,
+    `${process.env.REACT_APP_SERVER}/category/${id}`,
     {
       name,
     },
@@ -34,8 +37,11 @@ export const updateCategory = async (id, name) => {
 };
 
 export const deleteCategory = async (id) => {
-  const response = await axios.delete(`/api/category/${id}`, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.delete(
+    `${process.env.REACT_APP_SERVER}/category/${id}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };
