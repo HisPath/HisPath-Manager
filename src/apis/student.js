@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const addStudent = async (
-  categoryId,
+  id,
   departmentId,
   studentNum,
   semester,
@@ -18,7 +18,7 @@ export const addStudent = async (
   const response = await axios.post(
     "/api/student",
     {
-      categoryId: categoryId,
+      id: id,
       departmentId: departmentId,
       studentNum: studentNum,
       semester: semester,

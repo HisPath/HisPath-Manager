@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const addCategory = async (departmentId, name) => {
+export const addCategory = async (name) => {
   const response = await axios.post(
     "/api/category",
     {
@@ -20,7 +20,7 @@ export const getCategories = async () => {
   return response.data;
 };
 
-export const updateCategory = async (id, departmentId, name) => {
+export const updateCategory = async (id, name) => {
   const response = await axios.put(
     `/api/category/${id}`,
     {

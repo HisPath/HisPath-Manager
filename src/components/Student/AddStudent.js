@@ -26,7 +26,7 @@ function AddStudent({ handleClose, loadData }) {
   } = useForm({ defaultValues: { isListUpload: false } });
   const onValid = async (data) => {
     await addStudent(
-      data.categoryId,
+      data.id,
       data.departmentId,
       data.studentNum,
       data.semester,

@@ -17,7 +17,7 @@ import AddCategory from "../components/Category/AddCategory";
 import EditCategory from "../components/Category/EditCategory";
 import { Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { addCategory, deleteCategory, getCategories } from "../apis/category";
+import { deleteCategory, getCategories } from "../apis/category";
 
 const Header = styled("div")({
   display: "flex",
@@ -75,7 +75,6 @@ const modalStyle = {
 function Category() {
   const { enqueueSnackbar } = useSnackbar();
   const [categories, setCategory] = useRecoilState(categoryState);
-  const [init, setInit] = useState(false);
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
@@ -94,7 +93,6 @@ function Category() {
   const loadData = async () => {
     const data = await getCategories();
     setCategory(data);
-    setInit(true);
   };
   useEffect(() => {
     loadData();

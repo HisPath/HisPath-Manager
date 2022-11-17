@@ -17,11 +17,7 @@ import AddDepartment from "../components/Department/AddDepartment";
 import EditDepartment from "../components/Department/EditDepartment";
 import { Paper } from "@mui/material";
 import { useSnackbar } from "notistack";
-import {
-  addDepartment,
-  deleteDepartment,
-  getDepartments,
-} from "../apis/department";
+import { deleteDepartment, getDepartments } from "../apis/department";
 
 const Header = styled("div")({
   display: "flex",
@@ -84,7 +80,6 @@ const modalStyle = {
 function Department() {
   const { enqueueSnackbar } = useSnackbar();
   const [departments, setDepartment] = useRecoilState(departmentState);
-  const [init, setInit] = useState(false);
 
   const [currentId, setCurrentId] = useState(0);
   const [openAdd, setOpenAdd] = useState(false);
@@ -104,7 +99,6 @@ function Department() {
   const loadData = async () => {
     const data = await getDepartments();
     setDepartment(data);
-    setInit(true);
   };
   useEffect(() => {
     loadData();

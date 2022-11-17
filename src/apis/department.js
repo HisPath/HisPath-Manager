@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const addDepartment = async (departmentId, name) => {
+export const addDepartment = async (id, majorName) => {
   const response = await axios.post(
     "/api/department",
     {
-      departmentId,
-      name,
+      id,
+      majorName,
     },
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
@@ -21,12 +21,11 @@ export const getDepartments = async () => {
   return response.data;
 };
 
-export const updateDepartment = async (id, departmentId, name) => {
+export const updateDepartment = async (id, majorName) => {
   const response = await axios.put(
     `/api/department/${id}`,
     {
-      departmentId,
-      name,
+      majorName,
     },
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },

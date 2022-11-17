@@ -17,7 +17,7 @@ function EditMajor({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await updateMajor(data.majorName);
+    await updateMajor(id, data.majorName);
     enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
@@ -29,7 +29,7 @@ function EditMajor({ id, handleClose, loadData }) {
           <Box width="100%">
             <InputLabel sx={{ mt: 1 }}>전공 이름:</InputLabel>
             <TextField
-              {...register("name", {
+              {...register("majorName", {
                 required: "필수 항목입니다",
               })}
               color="secondary"
@@ -40,7 +40,7 @@ function EditMajor({ id, handleClose, loadData }) {
               size="small"
             />
             <Typography color="text.secondary" variant="caption" height={24}>
-              {errors?.name?.message}
+              {errors?.majorName?.message}
             </Typography>
           </Box>
         </Box>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const addMajor = async (majorName) => {
   const response = await axios.post(
-    "/api/student",
+    "/api/major",
     {
       majorName,
     },
@@ -21,10 +21,10 @@ export const getMajors = async () => {
 };
 
 export const updateMajor = async (id, majorName) => {
-  const response = await axios.put(
+  const response = await axios.patch(
     `/api/major/${id}`,
     {
-      majorName,
+      majorName: majorName,
     },
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
