@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const addStudent = async (
-  categoryId,
+  id,
   departmentId,
   studentNum,
   semester,
@@ -16,9 +16,9 @@ export const addStudent = async (
   major2Id
 ) => {
   const response = await axios.post(
-    "/api/student",
+    `${process.env.REACT_APP_SERVER}/student`,
     {
-      categoryId: categoryId,
+      id: id,
       departmentId: departmentId,
       studentNum: studentNum,
       semester: semester,
@@ -40,14 +40,18 @@ export const addStudent = async (
 };
 
 export const addStudents = async (formData) => {
-  const response = await axios.post("/api/students", formData, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.post(
+    `${process.env.REACT_APP_SERVER}/students`,
+    formData,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };
 
 export const getStudents = async () => {
-  const response = await axios.get("/api/students", {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER}/students`, {
     headers: { Authorization: localStorage.getItem("TOKEN") },
   });
   return response.data;
@@ -65,7 +69,7 @@ export const updateStudent = async (
   major2Id
 ) => {
   const response = await axios.put(
-    `/api/student/${id}`,
+    `${process.env.REACT_APP_SERVER}/student/${id}`,
     {
       departmentId: departmentId,
       studentNum: studentNum,
@@ -84,8 +88,11 @@ export const updateStudent = async (
 };
 
 export const deleteStudent = async (id) => {
-  const response = await axios.delete(`/api/student/${id}`, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.delete(
+    `${process.env.REACT_APP_SERVER}/student/${id}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };

@@ -23,7 +23,7 @@ function AddMajor({ handleClose, loadData }) {
           <Box width="100%">
             <InputLabel sx={{ mt: 1 }}>전공 이름:</InputLabel>
             <TextField
-              {...register("name", {
+              {...register("majorName", {
                 required: "필수 항목입니다",
               })}
               color="secondary"

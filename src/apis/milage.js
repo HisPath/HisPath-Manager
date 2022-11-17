@@ -8,7 +8,7 @@ export const addMileage = async (
   semester
 ) => {
   const response = await axios.post(
-    "/api/mileage",
+    `${process.env.REACT_APP_SERVER}/mileage`,
     {
       categoryId: categoryId,
       name: name,
@@ -24,21 +24,28 @@ export const addMileage = async (
 };
 
 export const addMileages = async (formData) => {
-  const response = await axios.post("/api/mileage", formData, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.post(
+    `${process.env.REACT_APP_SERVER}/mileage`,
+    formData,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };
 
 export const getMileage = async (id) => {
-  const response = await axios.get(`/api/mileage/${id}`, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/mileage/${id}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response.data;
 };
 
 export const getMileages = async () => {
-  const response = await axios.get("/api/mileages", {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER}/mileages`, {
     headers: { Authorization: localStorage.getItem("TOKEN") },
   });
   return response.data;
@@ -53,7 +60,7 @@ export const updateMileage = async (
   semester
 ) => {
   const response = await axios.patch(
-    `/api/mileage/${id}`,
+    `${process.env.REACT_APP_SERVER}/mileage/${id}`,
     {
       categoryId: categoryId,
       name: name,
@@ -69,15 +76,18 @@ export const updateMileage = async (
 };
 
 export const deleteMileages = async (id) => {
-  const response = await axios.delete(`/api/mileage/${id}`, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.delete(
+    `${process.env.REACT_APP_SERVER}/mileage/${id}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };
 
 export const addParticipant = async (activityId, name, studentNum) => {
   const response = await axios.post(
-    "/api/mileage/student",
+    `${process.env.REACT_APP_SERVER}/mileage/student`,
     {
       activityId,
       name,
@@ -91,15 +101,19 @@ export const addParticipant = async (activityId, name, studentNum) => {
 };
 
 export const addParticipants = async (formData) => {
-  const response = await axios.post("/api/mileage/students", formData, {
-    headers: { Authorization: localStorage.getItem("TOKEN") },
-  });
+  const response = await axios.post(
+    `${process.env.REACT_APP_SERVER}/mileage/students`,
+    formData,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
   return response;
 };
 
 export const deleteParticipant = async (activityId, studentId) => {
   const response = await axios.delete(
-    "/api/mileage/student",
+    `${process.env.REACT_APP_SERVER}/mileage/student`,
     {
       data: {
         activityId,
