@@ -11,6 +11,7 @@ export const navItems = [
   { title: "마일리지 카테고리 관리", to: "/category" },
   { title: "공지 관리", to: "/notice" },
   { title: "관리자 권한 관리", to: "/admin/management" },
+  { title: "신청자", to: "/scholarship/FileManagerPage" },
 ];
 
 export const mileageCategories = [

@@ -2,9 +2,11 @@ import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { majorState } from "../../atom";
-import axios from "axios";
+import { useSnackbar } from "notistack";
+import { updateMajor } from "../../apis/major";
 
 function EditMajor({ id, handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [major] = useRecoilState(majorState);
   const target = major.filter((item) => item.id === id)[0];
   const {
@@ -15,9 +17,8 @@ function EditMajor({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.patch(`/api/major/${id}`, {
-      majorName: data.name,
-    });
+    await updateMajor(data.majorName);
+    enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
   };

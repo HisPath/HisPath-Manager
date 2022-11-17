@@ -2,9 +2,11 @@ import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { categoryState } from "../../atom";
-import axios from "axios";
+import { useSnackbar } from "notistack";
+import { updateCategory } from "../../apis/category";
 
 function EditCategory({ id, handleClose, loadData }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [category] = useRecoilState(categoryState);
   const target = category.filter((item) => item.id === id)[0];
   const {
@@ -15,9 +17,8 @@ function EditCategory({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await axios.put(`/api/category/${id}`, {
-      name: data.name,
-    });
+    await updateCategory(data.name);
+    enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
   };
