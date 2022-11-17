@@ -92,7 +92,11 @@ function Category() {
   };
   const loadData = async () => {
     const data = await getCategories();
-    setCategory(data);
+    setCategory(
+      data.map((item) => {
+        return { ...item, id: item.categoryId };
+      })
+    );
   };
   useEffect(() => {
     loadData();

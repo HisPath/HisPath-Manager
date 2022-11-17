@@ -98,7 +98,11 @@ function Department() {
   };
   const loadData = async () => {
     const data = await getDepartments();
-    setDepartment(data);
+    setDepartment(
+      data.map((item) => {
+        return { ...item, id: item.departmentId };
+      })
+    );
   };
   useEffect(() => {
     loadData();
