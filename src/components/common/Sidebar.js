@@ -14,8 +14,8 @@ import { drawerWidth, navItems } from "../../constants/commons";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 const activeStyle = {
-  color: "#2065D1",
-  backgroundColor: "#D1E9FC",
+  // color: "#2065D1",
+  // backgroundColor: "#D1E9FC",
 };
 
 export default function Sidebar() {
