@@ -17,7 +17,7 @@ function EditDepartment({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await updateDepartment(data.departmentId, data.name);
+    await updateDepartment(id, data.departmentId, data.name);
     enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();

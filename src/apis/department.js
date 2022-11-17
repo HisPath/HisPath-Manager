@@ -25,7 +25,7 @@ export const getDepartments = async () => {
 };
 
 export const updateDepartment = async (id, departmentId, name) => {
-  const response = await axios.put(
+  const response = await axios.patch(
     `${process.env.REACT_APP_SERVER}/department/${id}`,
     {
       departmentId,

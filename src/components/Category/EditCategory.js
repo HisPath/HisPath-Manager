@@ -17,7 +17,7 @@ function EditCategory({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await updateCategory(data.name);
+    await updateCategory(id, data.categoryId, data.name);
     enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
