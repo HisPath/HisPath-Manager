@@ -88,7 +88,6 @@ const modalStyle = {
 function Student() {
   const { enqueueSnackbar } = useSnackbar();
   const [students, setStudent] = useRecoilState(studentState);
-  const [init, setInit] = useState(false);
   const onChangeExcel = async (event) => {
     const { files } = event.target;
     const formData = new FormData();
@@ -121,7 +120,6 @@ function Student() {
         return { ...item, id: item.studentId };
       })
     );
-    setInit(true);
   };
   useEffect(() => {
     loadData();
