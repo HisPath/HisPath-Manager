@@ -60,7 +60,7 @@ function StudentCard({ student, setCurrentId, handleOpenView, handleOpenEdit, ha
     name: 'github',
     icon: 'carbon:logo-github',
     color: '#000000',
-    path: `https://www.facebook.com/${githubId}`,
+    path: `https://www.github.com/${githubId}`,
   };
 
   const _blog = 'uil:blogger';
