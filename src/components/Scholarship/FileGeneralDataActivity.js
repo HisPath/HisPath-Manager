@@ -47,9 +47,7 @@ export default function FileGeneralDataActivity({
     },
     plotOptions: {
       bar: {
-        borderRadius:
-          (seriesData === "Week" && 8) || (seriesData === "Month" && 6) || 10,
-        columnWidth: "20%",
+        columnWidth: "45%",
       },
     },
     ...options,
