@@ -1,6 +1,7 @@
 export const drawerWidth = 280;
 
 export const navItems = [
+  { title: "대시보드", to: "/dashboard" },
   { title: "마일리지 항목 관리", to: "/mileage/activity" },
   { title: "마일리지 참여 관리", to: "/mileage/participant" },
   { title: "마일리지 장학금 신청자 관리", to: "/scholarship/management" },
