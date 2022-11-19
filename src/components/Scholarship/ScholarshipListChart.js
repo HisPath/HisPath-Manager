@@ -1,12 +1,4 @@
-import { useState } from "react";
-import { Line, Radar } from "react-chartjs-2";
-import Chart from "chart.js/auto";
-import { Paper, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { Bar } from "react-chartjs-2";
 import React from "react";
-import axios from "axios";
-import { useEffect } from "react";
 import { Grid } from "@mui/material";
 import AnalyticsCurrentVisits from "./AnalyticsCurrentVisitis";
 import { useTheme } from "@mui/material/styles";
@@ -15,42 +7,39 @@ import { Card } from "@mui/material";
 import { CardHeader } from "@mui/material";
 import { CardContent } from "@mui/material";
 import ChartBar from "./ChartBar";
+import { Container } from "@mui/material";
 
 const ScholarshipListChart = () => {
   const theme = useTheme();
 
   const TIME_LABELS = {
-    week: ["Mon", "Tue", "Web", "Thu", "Fri", "Sat", "Sun"],
-    month: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+    week: [
+      "전산전자",
+      "국제어문",
+      "경영경제",
+      "법학부",
+      "커뮤니케이션",
+      "상담복지",
+      "공간환경시스템",
+      "콘텐츠융합디자인",
+      "기계제어",
+      "ICT창업",
+      "생명과학",
     ],
-    year: ["2018", "2019", "2020", "2021", "2022"],
   };
 
   return (
-    <Box>
-      {/* <Box m={3} pb={3} display={"flex"}> */}
-      <Paper sx={{ width: "calc(30vw)" }}>
-        <Grid container spacing={3}>
+    <Container>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={5}>
           <AnalyticsCurrentVisits
             title="학년별 마일리지 수혜 인원"
             chart={{
               series: [
-                { label: "1학년", value: 4344 },
-                { label: "2학년", value: 5435 },
-                { label: "3학년", value: 1443 },
-                { label: "4힉년", value: 4443 },
+                { label: "1학년", value: 20 },
+                { label: "2학년", value: 43 },
+                { label: "3학년", value: 76 },
+                { label: "4힉년", value: 51 },
               ],
               colors: [
                 theme.palette.primary.main,
@@ -60,7 +49,9 @@ const ScholarshipListChart = () => {
               ],
             }}
           />
+        </Grid>
 
+        <Grid item xs={12} md={7}>
           <Card dir="ltr">
             <CardHeader title="마일리지 가중치 평균" />
             <CardContent>
@@ -68,71 +59,53 @@ const ScholarshipListChart = () => {
             </CardContent>
           </Card>
         </Grid>
-      </Paper>
-      <Grid item xs={12} md={6} lg={16}>
-        <FileGeneralDataActivity
-          title="학부/학년별 마일리지 수혜 인원"
-          chart={{
-            labels: TIME_LABELS,
-            colors: [
-              theme.palette.primary.main,
-              theme.palette.error.main,
-              theme.palette.warning.main,
-              theme.palette.text.disabled,
-            ],
-            series: [
-              {
-                type: "Week",
-                data: [
-                  { name: "Images", data: [20, 34, 48, 65, 37, 48] },
-                  { name: "Media", data: [10, 34, 13, 26, 27, 28] },
-                  { name: "Documents", data: [10, 14, 13, 16, 17, 18] },
-                  { name: "Other", data: [5, 12, 6, 7, 8, 9] },
-                ],
-              },
-              {
-                type: "Month",
-                data: [
-                  {
-                    name: "Images",
-                    data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
-                  },
-                  {
-                    name: "Media",
-                    data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
-                  },
-                  {
-                    name: "Documents",
-                    data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
-                  },
-                  {
-                    name: "Other",
-                    data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
-                  },
-                ],
-              },
-              {
-                type: "Year",
-                data: [
-                  { name: "Images", data: [10, 34, 13, 56, 77] },
-                  { name: "Media", data: [10, 34, 13, 56, 77] },
-                  { name: "Documents", data: [10, 34, 13, 56, 77] },
-                  { name: "Other", data: [10, 34, 13, 56, 77] },
-                ],
-              },
-            ],
-          }}
-        />
 
-        <div>
-          {/* <FilePanel
+        <Grid item xs={12} md={16}>
+          <FileGeneralDataActivity
+            title="학부/학년별 마일리지 수혜 인원"
+            chart={{
+              labels: TIME_LABELS,
+              colors: [
+                theme.palette.primary.main,
+                theme.palette.error.main,
+                theme.palette.warning.main,
+                theme.palette.text.disabled,
+              ],
+              series: [
+                {
+                  type: "Week",
+                  data: [
+                    {
+                      name: "1학년",
+                      data: [20, 1, 0, 1, 5, 0, 0, 5, 15, 18, 9],
+                    },
+                    {
+                      name: "2학년",
+                      data: [43, 5, 3, 2, 13, 2, 3, 10, 30, 65, 21],
+                    },
+                    {
+                      name: "3학년",
+                      data: [76, 14, 6, 2, 21, 1, 5, 21, 45, 65, 27],
+                    },
+                    {
+                      name: "4학년",
+                      data: [51, 13, 10, 1, 15, 2, 3, 17, 36, 65, 26],
+                    },
+                  ],
+                },
+              ],
+            }}
+          />
+
+          <div>
+            {/* <FilePanel
                 title="Folders"
                 link={PATH_DASHBOARD.fileManager}
                 onOpen={handleOpenNewFolder}
                 sx={{ mt: 5 }}
               /> */}
 
-          {/* <Scrollbar>
+            {/* <Scrollbar>
                 <Stack direction="row" spacing={3} sx={{ pb: 3 }}>
                   {_folders.map((folder) => (
                     <FileFolderCard
@@ -149,14 +122,14 @@ const ScholarshipListChart = () => {
                 </Stack>
               </Scrollbar> */}
 
-          {/* <FilePanel
+            {/* <FilePanel
                 title="Recent Files"
                 link={PATH_DASHBOARD.fileManager}
                 onOpen={handleOpenUploadFile}
                 sx={{ mt: 2 }}
               /> */}
 
-          {/* <Stack spacing={2}>
+            {/* <Stack spacing={2}>
                 {_files.slice(0, 5).map((file) => (
                   <FileGeneralRecentCard
                     key={file.id}
@@ -165,11 +138,10 @@ const ScholarshipListChart = () => {
                   />
                 ))}
               </Stack> */}
-        </div>
+          </div>
+        </Grid>
       </Grid>
-      {/* </Paper>
-      </Box> */}
-    </Box>
+    </Container>
   );
 };
 
