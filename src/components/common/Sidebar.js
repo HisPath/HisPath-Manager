@@ -14,8 +14,8 @@ import { drawerWidth, navItems } from "../../constants/commons";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 const activeStyle = {
-  // color: "#2065D1",
-  // backgroundColor: "#D1E9FC",
+  color: "#00AB55",
+  backgroundColor: "#e8f5e9",
 };
 
 export default function Sidebar() {
@@ -70,7 +70,6 @@ export default function Sidebar() {
       aria-label="mailbox folders"
     >
       <Drawer
-        // PaperProps={{ style: { border: "none" } }}
         variant="permanent"
         sx={{
           "& .MuiDrawer-paper": {

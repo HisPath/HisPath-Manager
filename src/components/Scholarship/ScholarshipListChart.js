@@ -41,37 +41,37 @@ const ScholarshipListChart = () => {
   return (
     <Box>
       {/* <Box m={3} pb={3} display={"flex"}> */}
-      {/* <Paper sx={{ width: "calc(30vw)", m: 2 }}> */}
-      <Grid item xs={12} md={6} lg={4}>
-        <AnalyticsCurrentVisits
-          title="학년별 마일리지 수혜 인원"
-          chart={{
-            series: [
-              { label: "1학년", value: 4344 },
-              { label: "2학년", value: 5435 },
-              { label: "3학년", value: 1443 },
-              { label: "4힉년", value: 4443 },
-            ],
-            colors: [
-              theme.palette.primary.main,
-              theme.palette.info.main,
-              theme.palette.error.main,
-              theme.palette.warning.main,
-            ],
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card dir="ltr">
-          <CardHeader title="마일리지 가중치 평균" />
-          <CardContent>
-            <ChartBar />
-          </CardContent>
-        </Card>
-      </Grid>
+      <Paper sx={{ width: "calc(30vw)" }}>
+        <Grid container spacing={3}>
+          <AnalyticsCurrentVisits
+            title="학년별 마일리지 수혜 인원"
+            chart={{
+              series: [
+                { label: "1학년", value: 4344 },
+                { label: "2학년", value: 5435 },
+                { label: "3학년", value: 1443 },
+                { label: "4힉년", value: 4443 },
+              ],
+              colors: [
+                theme.palette.primary.main,
+                theme.palette.info.main,
+                theme.palette.error.main,
+                theme.palette.warning.main,
+              ],
+            }}
+          />
+
+          <Card dir="ltr">
+            <CardHeader title="마일리지 가중치 평균" />
+            <CardContent>
+              <ChartBar />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Paper>
       <Grid item xs={12} md={6} lg={16}>
         <FileGeneralDataActivity
-          title="학부/학년별 마일리지 수헤 인원"
+          title="학부/학년별 마일리지 수혜 인원"
           chart={{
             labels: TIME_LABELS,
             colors: [

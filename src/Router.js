@@ -1,7 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
-import Main from "./pages/Main";
 import MileageActivity from "./pages/MileageActivity";
 import MileageParticipant from "./pages/MileageParticipant";
 import Sample from "./pages/Sample";
@@ -21,6 +20,7 @@ import AdminManagement from "./pages/AdminManagement";
 import { drawerWidth } from "./constants/commons";
 import Sidebar from "./components/common/Sidebar";
 import { Login } from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 function Router() {
   return (
@@ -40,7 +40,8 @@ function Router() {
         >
           <Toolbar />
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/axitest" element={<AxiTest />} />
             <Route path="/mileage/activity" element={<MileageActivity />} />
             <Route
@@ -56,15 +57,14 @@ function Router() {
             <Route path="/major" element={<Major />} />
             <Route path="/department" element={<Department />} />
             <Route path="/category" element={<Category />} />
-
             <Route
               path="/scholarship/management"
               element={<ScholarshipManagement />}
             />
-            <Route
+            {/* <Route
               path="/scholarship/management"
               element={<ScholarshipManagementTemplate />}
-            />
+            /> */}
             <Route
               path="/scholarship/lists"
               element={<ScholarshipListDirection />}
