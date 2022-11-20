@@ -1,8 +1,11 @@
 import { AppBar, Box, Toolbar, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { drawerWidth } from "../../constants/commons";
 
 export default function Header() {
+  const logout = () => {
+    localStorage.removeItem("TOKEN");
+    window.location.reload();
+  };
   return (
     <AppBar
       position="fixed"
@@ -15,9 +18,7 @@ export default function Header() {
     >
       <Toolbar sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
         <Box sx={{ flexGrow: 1 }} />
-        <Link to="/login" style={{ textDecoration: "none" }}>
-          <Button>로그아웃</Button>
-        </Link>
+        <Button onClick={logout}>로그아웃</Button>
       </Toolbar>
     </AppBar>
   );
