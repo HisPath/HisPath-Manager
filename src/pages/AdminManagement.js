@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Modal,
+  Paper,
   styled,
   Typography,
 } from "@mui/material";
@@ -75,12 +76,6 @@ function Management() {
   const [currentId, setCurrentId] = useState(0);
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
-  // const handleDeleteClick = async (id) => {
-  //   if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
-  //     await axios.delete(`/api/manager/${id}`).then(function (response) {});
-  //     loadData();
-  //   }
-  // };
   const loadData = async () => {
     const data = await getManagers();
     setManagers(data);
@@ -88,18 +83,6 @@ function Management() {
   };
   useEffect(() => {
     loadData();
-    // axios
-    //   .get("/api/managers", {
-    //     headers: { Authorization: localStorage.getItem("TOKEN") },
-    //   })
-    //   .then(function (response) {
-    //     setManagers(
-    //       response.data.map((item) => {
-    //         return { ...item, id: item.id };
-    //       })
-    //     );
-    //     console.log(response.data);
-    //   });
   }, []);
 
   const [openSuper, setOpenSuper] = React.useState(false);
@@ -174,8 +157,7 @@ function Management() {
   };
 
   return (
-    <Container>
-      <GoogleLoginButton />
+    <Container component={Paper}>
       <Header>
         <Typography variant="h5" fontWeight={600}>
           관리자 권한 관리 페이지
