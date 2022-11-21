@@ -17,7 +17,7 @@ export const managerState = atom({
 
 export const semesterState = atom({
   key: "semester",
-  default: "",
+  default: "2022-2",
 });
 
 export const categoryState = atom({
