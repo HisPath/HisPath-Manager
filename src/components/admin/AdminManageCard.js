@@ -5,15 +5,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import CustomNoRowsOverlay from '../components/Student/CustomNoRowsOverlay';
+import CustomNoRowsOverlay from '../Student/CustomNoRowsOverlay';
 import Chip from '@mui/material/Chip';
 import { useSnackbar } from 'notistack';
 import { useRecoilState } from 'recoil';
-import { managerState } from '../atom';
-import GoogleLoginButton from '../components/common/GoogleLoginButton';
-import ModeSwitch from '../components/common/ModeSwitch';
-
-import { getManagers, approveManagerSuper, approveManagerNormal } from '../apis/manager';
+import { managerState } from '../../atom';
+import GoogleLoginButton from '../common/GoogleLoginButton';
+import ModeSwitch from '../common/ModeSwitch';
+import { getManagers, approveManagerSuper, approveManagerNormal } from '../../apis/manager';
+import AdminCard from './AdminCard';
 
 const Header = styled('div')({
   display: 'flex',
@@ -24,7 +24,7 @@ const Header = styled('div')({
 });
 
 const Article = styled(Box)({
-  height: 'calc(100vh - 224px)',
+  height: 'auto',
   paddingBottom: 24,
 });
 
@@ -58,16 +58,13 @@ const modalStyle = {
   borderRadius: 1,
 };
 
-function Management() {
+export default function AdminManageCard({ card, setCard }) {
   const [managers, setManagers] = useRecoilState(managerState);
   const [init, setInit] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
   const [openView, setOpenView] = useState(false);
-
-  const [card, setCard] = useState(false);
-
   const handleCloseView = () => setOpenView(false);
   const loadData = async () => {
     const data = await getManagers();
@@ -111,44 +108,6 @@ function Management() {
     loadData();
     handleCloseNormal();
   };
-
-  const Chips = ({ params }) => {
-    const id = params.id;
-    const approved = params.row.approved;
-    const power = params.row.power;
-    return (
-      <Box sx={{ display: 'flex', gap: 1 }}>
-        <Chip
-          color="success"
-          onClick={() => {
-            handleClickOpenSuper();
-            setCurrentId(id);
-          }}
-          variant={power === 2 ? 'filled' : 'outlined'}
-          size="lg"
-          label="슈퍼"
-        />
-        <Chip
-          color="warning"
-          onClick={() => {
-            handleClickOpenNormal();
-            setCurrentId(id);
-          }}
-          size="lg"
-          variant={power === 1 ? 'filled' : 'outlined'}
-          label="일반"
-        />
-        <Chip
-          color="error"
-          onClick={function () {}}
-          size="lg"
-          variant={power === 0 ? 'filled' : 'outlined'}
-          label="미승인"
-        />
-      </Box>
-    );
-  };
-
   return (
     <Container component={Paper}>
       <Header>
@@ -164,34 +123,27 @@ function Management() {
         </Grid>
       </Header>
       <Article>
-        <DataGrid
-          components={{
-            Toolbar: GridToolbar,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: { disableToolbarButton: true },
-            },
-          }}
-          rows={managers}
-          columns={[
-            ...columns,
-            {
-              field: 'approved',
-              headerName: '권한',
-              width: 300,
-              renderCell: (params) => <Chips params={params} />,
-            },
-          ]}
-          pageSize={20}
-          rowsPerPageOptions={[20]}
-          disableColumnMenu
-          disableDensitySelector
-          hideFooterSelectedRowCount
-        />
+        <Container maxWidth={'lg'}>
+          <Box
+            gap={4}
+            display="grid"
+            gridTemplateColumns={{
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+            }}
+          >
+            {managers.map((manager) => (
+              <AdminCard
+                key={manager.id}
+                manager={manager}
+                setCurrentId={setCurrentId}
+                handleClickOpenSuper={handleClickOpenSuper}
+                handleClickOpenNormal={handleClickOpenNormal}
+              />
+            ))}
+          </Box>
+        </Container>
       </Article>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
@@ -222,5 +174,3 @@ function Management() {
     </Container>
   );
 }
-
-export default Management;

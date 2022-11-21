@@ -1,21 +1,11 @@
 import PropTypes from 'prop-types';
-// @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Card, Divider, Typography, Stack, IconButton } from '@mui/material';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-// student image
 import userImg from '../../assets/user.png';
 import SDB from '../../assets/SDB.jpeg';
-// utils
-// import { fShortenNumber } from '../../../../utils/formatNumber';
-// _mock
-// import { _socials } from '../../../../_mock/arrays';
-// components
 import Image from '../image';
 import Iconify from '../iconify';
-import SvgColor from '../svg-color';
 
 // ----------------------------------------------------------------------
 
@@ -55,8 +45,9 @@ function StudentCard({ student, setCurrentId, handleOpenView, handleOpenEdit, ha
     studentId,
     studentNum,
   } = student;
+
   const github = {
-    value: 'githubId',
+    value: 'github',
     name: 'github',
     icon: 'carbon:logo-github',
     color: '#000000',
@@ -64,12 +55,6 @@ function StudentCard({ student, setCurrentId, handleOpenView, handleOpenEdit, ha
   };
 
   const _blog = 'uil:blogger';
-
-  //   {
-  //     icon: 'uil:blogger',
-  //     color: 'green',
-  //     path: `${blog}`,
-  //   }
 
   return (
     <Card sx={{ textAlign: 'center' }}>
@@ -162,16 +147,3 @@ function StudentCard({ student, setCurrentId, handleOpenView, handleOpenEdit, ha
   );
 }
 export default StudentCard;
-
-// export function StudentCard({ student }) {
-//   const { blog, departmentId, departmentName, email, githubId, loginCnt, major1Id,
-//     major1Name, major2Id, major2Name, name, phone, profile, readme, semester, studentId
-//     , studentNum} = student;
-// return (
-// <div>
-//  <br />
-// {student.blog}
-// <br />
-// </div>
-//  );
-// }

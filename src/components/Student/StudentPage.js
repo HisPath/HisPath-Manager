@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Container, Modal, styled, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Modal, styled, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
@@ -10,6 +10,7 @@ import { studentState } from '../../atom';
 import AddStudent from './AddStudent';
 import ViewStudent from './ViewStudent';
 import EditStudent from './EditStudent';
+import ModeSwitch from '../common/ModeSwitch';
 import studentRegisterExcel from '../../assets/student_register.xlsx';
 import { Paper } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -78,7 +79,7 @@ const modalStyle = {
   borderRadius: 1,
 };
 
-export default function StudentPage() {
+export default function StudentPage({ card, setcard }) {
   const { enqueueSnackbar } = useSnackbar();
   const [students, setStudent] = useRecoilState(studentState);
   const onChangeExcel = async (event) => {
@@ -120,31 +121,42 @@ export default function StudentPage() {
   return (
     <Container component={Paper}>
       <Header>
-        <Typography variant="h5" fontWeight={600}>
-          학생 관리 시스템
-        </Typography>
-        <Box display="flex" gap={2}>
-          <Button
-            component="a"
-            href={studentRegisterExcel}
-            download="학생 추가 양식"
-            variant="outlined"
-          >
-            엑셀 양식 다운로드
-          </Button>
-          <Button component="label" variant="outlined">
-            엑셀 파일 업로드
-            <input
-              type="file"
-              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              onChange={onChangeExcel}
-              hidden
-            />
-          </Button>
-          <Button onClick={handleOpenAdd} variant="outlined">
-            학생 추가
-          </Button>
-        </Box>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography variant="h5" fontWeight={600}>
+              학생 관리 시스템
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Box display="flex" justifyContent={'right'} gap={2}>
+              <ModeSwitch card={card} setCard={setcard} />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" gap={2} justifyContent={'right'}>
+              <Button
+                component="a"
+                href={studentRegisterExcel}
+                download="학생 추가 양식"
+                variant="outlined"
+              >
+                엑셀 양식 다운로드
+              </Button>
+              <Button component="label" variant="outlined">
+                엑셀 파일 업로드
+                <input
+                  type="file"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  onChange={onChangeExcel}
+                  hidden
+                />
+              </Button>
+              <Button onClick={handleOpenAdd} variant="outlined">
+                학생 추가
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       </Header>
       <Article>
         <DataGrid

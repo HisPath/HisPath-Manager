@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 
 function ModeSwitch({ card, setCard }) {
   return (
@@ -6,8 +6,8 @@ function ModeSwitch({ card, setCard }) {
       <FormControlLabel
         control={
           <Switch
-            color={card ? "primary" : "secondary"}
-            componentsProps={{ input: { "aria-label": "card mode" } }}
+            color={card ? 'primary' : 'secondary'}
+            componentsProps={{ input: { 'aria-label': 'card mode' } }}
             checked={card}
             label="View Mode"
             onChange={(event) => {
@@ -16,7 +16,7 @@ function ModeSwitch({ card, setCard }) {
           />
         }
         labelPlacement="start"
-        label={`Select View Mode: ${card ? "Card Mode" : "Table Mode"}`}
+        label={`Select View Mode: ${card ? 'Card Mode' : 'Table Mode'}`}
       />
     </FormGroup>
   );
