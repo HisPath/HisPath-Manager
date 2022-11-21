@@ -14,13 +14,14 @@ export default function ChartPie() {
   const semester = useRecoilValue(semesterState);
   const [gradeTotal, setGradeTotal] = useState([]);
 
-  const series = [{ data: gradeTotal }];
+  const series = [{ name: "총 인원", data: gradeTotal }];
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getScholarshipByGrade(semester);
       setDatas(data);
       setGradeTotal(datas.map((item) => item.cnt));
+      console.log("gradesss: " + gradeTotal);
     };
     fetchData();
   }, [semester]);
