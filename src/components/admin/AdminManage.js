@@ -5,15 +5,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import CustomNoRowsOverlay from '../components/Student/CustomNoRowsOverlay';
+import CustomNoRowsOverlay from '../Student/CustomNoRowsOverlay';
 import Chip from '@mui/material/Chip';
 import { useSnackbar } from 'notistack';
 import { useRecoilState } from 'recoil';
-import { managerState } from '../atom';
-import GoogleLoginButton from '../components/common/GoogleLoginButton';
-import ModeSwitch from '../components/common/ModeSwitch';
-
-import { getManagers, approveManagerSuper, approveManagerNormal } from '../apis/manager';
+import { managerState } from '../../atom';
+import GoogleLoginButton from '../common/GoogleLoginButton';
+import ModeSwitch from '../common/ModeSwitch';
+import { getManagers, approveManagerSuper, approveManagerNormal } from '../../apis/manager';
 
 const Header = styled('div')({
   display: 'flex',
@@ -58,15 +57,13 @@ const modalStyle = {
   borderRadius: 1,
 };
 
-function Management() {
+export default function AdminManage({ card, setCard }) {
   const [managers, setManagers] = useRecoilState(managerState);
   const [init, setInit] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentId, setCurrentId] = useState(0);
   const [openView, setOpenView] = useState(false);
-
-  const [card, setCard] = useState(false);
 
   const handleCloseView = () => setOpenView(false);
   const loadData = async () => {
@@ -222,5 +219,3 @@ function Management() {
     </Container>
   );
 }
-
-export default Management;
