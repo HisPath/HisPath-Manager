@@ -63,7 +63,7 @@ export const getScholarshipStudentInfo = async (id, semester) => {
 
 export const getScholarshipByGrade = async (semester) => {
   const response = await axios.get(
-    `${process.env.REACT_APP_SERVER}?semester=${semester}`,
+    `${process.env.REACT_APP_SERVER}/chart/grade?semester=${semester}`,
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
     }

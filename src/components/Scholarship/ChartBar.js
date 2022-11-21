@@ -13,7 +13,7 @@ export default function ChartBar() {
   const [datas, setDatas] = useState([]);
   const semester = useRecoilValue(semesterState);
 
-  const series = [{ data: datas }];
+  const series = [{ name: "총 인원", data: datas }];
 
   useEffect(() => {
     const fetchData = async () => {
