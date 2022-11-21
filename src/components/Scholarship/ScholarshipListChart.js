@@ -30,7 +30,7 @@ const ScholarshipListChart = () => {
   return (
     <Container>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={5.5}>
           <Card dir="ltr">
             <CardHeader title="학년별 마일리지 수혜 인원" />
             <CardContent
@@ -46,7 +46,7 @@ const ScholarshipListChart = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6.5}>
           <Card dir="ltr">
             <CardHeader title="마일리지 가중치 평균" />
             <CardContent>

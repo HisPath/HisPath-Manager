@@ -1,5 +1,4 @@
 // components
-
 import Chart, { useChart } from "./chart";
 
 import { useEffect } from "react";
@@ -14,13 +13,14 @@ export default function ChartColumnSingle() {
   const [departmentTotal, setDepartmentTotal] = useState([]);
   const semester = useRecoilValue(semesterState);
 
-  const series = [{ data: departmentTotal }];
+  const series = [{ name: "총 인원", data: departmentTotal }];
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getScholarshipByDepartment(semester);
       setDatas(data);
       setDepartmentTotal(datas.map((item) => item.cnt));
+      console.log("department: " + departmentTotal);
     };
     fetchData();
   }, [semester]);
@@ -42,17 +42,12 @@ export default function ChartColumnSingle() {
         "법학부",
         "커뮤니케이션",
         "상담복지",
-        "공간환경시스템",
-        "콘텐츠융합디자인",
         "기계제어",
+        "공간환경시스템",
         "ICT창업",
         "생명과학",
+        "콘텐츠융합디자인",
       ],
-    },
-    tooltip: {
-      y: {
-        formatter: (value) => `총 인원: ${value} `,
-      },
     },
   });
 
