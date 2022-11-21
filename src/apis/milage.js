@@ -59,7 +59,7 @@ export const updateMileage = async (
   weight,
   semester
 ) => {
-  const response = await axios.patch(
+  const response = await axios.put(
     `${process.env.REACT_APP_SERVER}/mileage/${id}`,
     {
       categoryId: categoryId,
