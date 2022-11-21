@@ -16,6 +16,7 @@ import Category from "./pages/Category";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
 import ScholarshipListDirection from "./pages/ScholarshipListDirection";
 import AdminManagement from "./pages/AdminManagement";
+import ActivityManagement from "./pages/ActivityManagement";
 import { drawerWidth } from "./constants/commons";
 import Sidebar from "./components/common/Sidebar";
 import { Login } from "./pages/Login";
@@ -69,6 +70,10 @@ function Router() {
                 <Route path="/major" element={<Major />} />
                 <Route path="/department" element={<Department />} />
                 <Route path="/category" element={<Category />} />
+                <Route
+                  path="/scholarship/actmanagement"
+                  element={<ActivityManagement />}
+                />
                 <Route
                   path="/scholarship/management"
                   element={<ScholarshipManagement />}
