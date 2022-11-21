@@ -14,7 +14,6 @@ import Department from "./pages/Department";
 import Major from "./pages/Major";
 import Category from "./pages/Category";
 import ScholarshipManagement from "./pages/ScholarshipManagement";
-import ScholarshipManagementTemplate from "./pages/ScholarshipManangementTemplate";
 import ScholarshipListDirection from "./pages/ScholarshipListDirection";
 import AdminManagement from "./pages/AdminManagement";
 import ActivityManagement from "./pages/ActivityManagement";
@@ -79,10 +78,6 @@ function Router() {
                   path="/scholarship/management"
                   element={<ScholarshipManagement />}
                 />
-                {/* <Route
-              path="/scholarship/management"
-              element={<ScholarshipManagementTemplate />}
-            /> */}
                 <Route
                   path="/scholarship/lists"
                   element={<ScholarshipListDirection />}

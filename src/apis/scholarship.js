@@ -60,3 +60,37 @@ export const getScholarshipStudentInfo = async (id, semester) => {
   );
   return response.data;
 };
+
+export const getScholarshipByGrade = async (semester) => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}?semester=${semester}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response.data;
+};
+
+export const getScholarshipByDepartment = async (
+  semester,
+  grade,
+  department
+) => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/chart/department?semester=${semester}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response.data;
+};
+
+export const getScholarshipAverage = async (semester) => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/chart/weight?semester=${semester}`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response.data;
+};

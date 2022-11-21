@@ -9,7 +9,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import axios from "axios";
 import { getScholarshipStudentInfo } from "../../apis/scholarship";
 
 const style = {
