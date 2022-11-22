@@ -78,10 +78,8 @@ export default function ScholarshipTabs() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getSemesters();
-      console.log(response);
       const studentSet = new Set();
       response?.forEach((item) => studentSet.add(item.semester));
-      console.log(studentSet);
       setSemesters([...studentSet]);
       setData(response);
       setInit(true);

@@ -103,10 +103,8 @@ function ScholarshipList() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getSemesters();
-      console.log(response);
       const studentSet = new Set();
       response?.forEach((item) => studentSet.add(item.semester));
-      console.log(studentSet);
       setInit(true);
     };
     fetchData();
