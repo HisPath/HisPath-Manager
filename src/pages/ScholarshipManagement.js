@@ -145,10 +145,8 @@ function ScholarshipManagement() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getSemesters();
-      console.log(response);
       const studentSet = new Set();
       response?.forEach((item) => studentSet.add(item.semester));
-      console.log(studentSet);
       setSemesters([...studentSet]);
       setData(response);
       setInit(true);
@@ -194,9 +192,6 @@ function ScholarshipManagement() {
               hidden
             />
           </Button>
-          {/* <Button onClick={handleOpenAdd} variant="contained">
-            개별 항목 추가
-          </Button> */}
         </Box>
         <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
           <InputLabel id="semester_id">학기</InputLabel>
