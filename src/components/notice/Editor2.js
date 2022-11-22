@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { Box, Button } from '@mui/material';
 import { Editor } from '@toast-ui/react-editor';
 import { Link, useParams } from 'react-router-dom';
-import '@toast-ui/editor/dist/toastui-editor.css';
+// import '@toast-ui/editor/dist/toastui-editor.css';
+import '../../style/editor.css';
 import AWS from 'aws-sdk';
 
 export default function Editor2({ value, editorHandler, setsave }) {

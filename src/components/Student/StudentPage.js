@@ -128,7 +128,7 @@ export default function StudentPage({ card, setcard }) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Box display="flex" justifyContent={'right'} gap={2}>
+            <Box display="flex" justifyContent={'right'}>
               <ModeSwitch card={card} setCard={setcard} />
             </Box>
           </Grid>
