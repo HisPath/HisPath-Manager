@@ -1,6 +1,7 @@
-import MajorCard from './MajorCard';
-import { Box, Container, Typography } from '@mui/material';
-export default function MajorCardPage({ majors, setCurrentId, handleOpenEdit, handleDeleteClick }) {
+import DeptCard from './DeptCard';
+import { Box, Container } from '@mui/material';
+
+function DeptCardPage({ departments, setCurrentId, handleOpenEdit, handleDeleteClick }) {
   return (
     <>
       <Container maxWidth={'lg'}>
@@ -13,10 +14,10 @@ export default function MajorCardPage({ majors, setCurrentId, handleOpenEdit, ha
             md: 'repeat(3, 1fr)',
           }}
         >
-          {majors.map((major) => (
-            <MajorCard
-              key={major.id}
-              major={major}
+          {departments.map((dept) => (
+            <DeptCard
+              key={dept.id}
+              dept={dept}
               setCurrentId={setCurrentId}
               handleOpenEdit={handleOpenEdit}
               handleDeleteClick={handleDeleteClick}
@@ -27,3 +28,4 @@ export default function MajorCardPage({ majors, setCurrentId, handleOpenEdit, ha
     </>
   );
 }
+export default DeptCardPage;
