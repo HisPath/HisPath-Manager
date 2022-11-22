@@ -4,9 +4,7 @@ import Image from '../image';
 import Iconify from '../iconify';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-
 // ----------------------------------------------------------------------
-
 function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
   return (
     <Card sx={{ textAlign: 'center' }}>
