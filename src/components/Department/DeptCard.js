@@ -4,25 +4,25 @@ import Image from '../image';
 import Iconify from '../iconify';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-// ----------------------------------------------------------------------
-function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
+
+function DeptCard({ dept, setCurrentId, handleOpenEdit, handleDeleteClick }) {
   return (
     <Card sx={{ textAlign: 'center' }}>
       <Box sx={{ position: 'relative' }}>
         <Image src={UserImg} ratio="16/9" />
       </Box>
       <Typography variant="subtitle1" sx={{ mt: 5, mb: 5, color: 'black' }}>
-        {major.name}
+        {dept.name}
       </Typography>
       {/* <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
-        {major.department}
-      </Typography>
-      <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
-        {major.totalcredits}
-      </Typography>
-      <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
-        {major.studentCnt}
-      </Typography> */}
+          {major.department}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
+          {major.totalcredits}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
+          {major.studentCnt}
+        </Typography> */}
 
       <Divider sx={{ borderStyle: 'dashed' }} />
       <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" sx={{ py: 2 }}>
@@ -36,7 +36,7 @@ function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
               icon={<EditIcon />}
               color="success"
               onClick={() => {
-                setCurrentId(+major.id);
+                setCurrentId(+dept.id);
                 handleOpenEdit();
               }}
             >
@@ -47,7 +47,7 @@ function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
               icon={<DeleteIcon />}
               label="Delete"
               color="error"
-              onClick={() => handleDeleteClick(+major.id)}
+              onClick={() => handleDeleteClick(+dept.id)}
             >
               <Iconify icon={'material-symbols:delete-outline'} />
             </IconButton>
@@ -57,4 +57,4 @@ function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
     </Card>
   );
 }
-export default MajorCard;
+export default DeptCard;
