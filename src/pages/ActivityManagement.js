@@ -72,6 +72,10 @@ function MileageParticipant() {
   const [currentId, setCurrentId] = useState();
   const [openView, setOpenView] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [apply, setApply] = useState(false);
+  const [flag, setFlag] = useState(true);
+  const [cancel, setCancel] = useState(false);
+
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
@@ -80,20 +84,47 @@ function MileageParticipant() {
     setCurrentId(id);
     setOpenView(true);
   };
-  const handleCloseView = () => setOpenView(false);
+  const handleCloseView = () => {
+    // setCancel(cancel);
+    setOpenView(false);
+  };
+
+  const handleCancelCloseView = () => {
+    setCancel(false);
+    setOpenView(false);
+  };
+
+  const approveAndClose = () => {
+    setApply(true);
+    setFlag(false);
+    console.log(cancel);
+    setCancel(!cancel);
+    console.log(cancel);
+    setOpenView(false);
+  };
+
+  const cancelApproveAndClose = () => {
+    setApply(false);
+    setFlag(true);
+    setCancel(!cancel);
+    setOpenView(false);
+  };
+
   const loadData = async () => {
     const data = await getMileages();
     setMileages(data);
     setInit(true);
   };
+
   useEffect(() => {
     loadData();
   }, []);
+
   return (
     <Container>
       <Header>
         <Typography variant="h5" fontWeight={600}>
-          마일리지 참여 관리
+          마일리지 활동인정 신청자 관리
         </Typography>
       </Header>
       <Article>
@@ -102,33 +133,41 @@ function MileageParticipant() {
             columns={columns}
             data={mileages}
             handleOpenView={handleOpenView}
+            cancel={cancel}
           />
         ) : (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={true}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+          ""
         )}
       </Article>
       <Modal open={openView} onClose={handleCloseView}>
         <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
-            정말 허가하시겠습니까?
-          </Typography>
+          {flag ? (
+            <>
+              <Typography variant="h6" component="h2">
+                정말 허가하시겠습니까?
+              </Typography>
+              <Button onClick={handleCloseView} autoFocus>
+                닫기
+              </Button>
+              <Button onClick={approveAndClose}>허가</Button>
+            </>
+          ) : (
+            <>
+              <Typography variant="h6" component="h2">
+                정말 허가를 취소하시겠습니까?
+              </Typography>
+              <Button onClick={handleCloseView} autoFocus>
+                닫기
+              </Button>
+              <Button onClick={cancelApproveAndClose}>허가 취소</Button>
+            </>
+          )}
+
           {/* <ViewMileage
             id={currentId}
             handleClose={handleCloseView}
             loadData={loadData}
           /> */}
-
-          <Button onClick={handleDialogClose} autoFocus>
-            닫기
-          </Button>
-          <Button onClick={handleDialogClose} autoFocus>
-            허가
-          </Button>
         </Box>
       </Modal>
     </Container>

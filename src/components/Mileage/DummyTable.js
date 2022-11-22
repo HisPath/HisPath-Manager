@@ -16,7 +16,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import { CheckBox } from "@mui/icons-material";
+import { Checkbox } from "@mui/material";
+import ApplyButton from "./ApplyButton";
 
 const dummyData = [
   {
@@ -69,7 +70,7 @@ const dummyData = [
   },
 ];
 
-const DummyTable = ({ columns, data, handleOpenView }) => {
+const DummyTable = ({ columns, data, handleOpenView, cancel }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -80,6 +81,8 @@ const DummyTable = ({ columns, data, handleOpenView }) => {
       useFilters,
       useSortBy
     );
+
+  // console.log(cancel);
 
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (
@@ -173,7 +176,13 @@ const DummyTable = ({ columns, data, handleOpenView }) => {
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.remark}</TableCell>
                 <TableCell>
-                  <CheckBox></CheckBox>
+                  {/* <Checkbox onClick={handleOpenView} checked={cancel} /> */}
+                  <ApplyButton id={row.id}></ApplyButton>
+                  {/* {cancel ? (
+                    <Checkbox onClick={handleOpenView} defaultChecked />
+                  ) : (
+                    <Checkbox onClick={handleOpenView} />
+                  )} */}
                 </TableCell>
                 {/* {row.cells.map((cell) => {
                   return (
