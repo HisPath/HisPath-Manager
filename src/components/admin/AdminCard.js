@@ -1,8 +1,5 @@
-import { Box, Chip, Card, Divider, Typography, Stack, IconButton } from '@mui/material';
-import PropTypes from 'prop-types';
-import { alpha, styled } from '@mui/material/styles';
+import { Box, Chip, Card, Divider, Typography } from '@mui/material';
 import UserImg from '../../assets/user.png';
-import Iconify from '../iconify';
 import Image from '../image';
 
 function AdminCard({ manager, setCurrentId, handleClickOpenSuper, handleClickOpenNormal }) {
