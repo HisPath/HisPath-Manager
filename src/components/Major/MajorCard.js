@@ -1,8 +1,5 @@
-import PropTypes from 'prop-types';
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Divider, Typography, Stack, IconButton } from '@mui/material';
+import { Box, Card, Divider, Typography, IconButton } from '@mui/material';
 import UserImg from '../../assets/user.png';
-import SDB from '../../assets/SDB.jpeg';
 import Image from '../image';
 import Iconify from '../iconify';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/DeleteOutline';
 // ----------------------------------------------------------------------
 
 function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
-  const _blog = 'uil:blogger';
   return (
     <Card sx={{ textAlign: 'center' }}>
       <Box sx={{ position: 'relative' }}>
@@ -40,6 +36,7 @@ function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
             <IconButton
               label="Edit"
               icon={<EditIcon />}
+              color="success"
               onClick={() => {
                 setCurrentId(+major.id);
                 handleOpenEdit();
@@ -51,6 +48,7 @@ function MajorCard({ major, setCurrentId, handleOpenEdit, handleDeleteClick }) {
             <IconButton
               icon={<DeleteIcon />}
               label="Delete"
+              color="error"
               onClick={() => handleDeleteClick(+major.id)}
             >
               <Iconify icon={'material-symbols:delete-outline'} />
