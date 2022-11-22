@@ -14,18 +14,20 @@ export default function ChartPie() {
   const semester = useRecoilValue(semesterState);
   const [gradeTotal, setGradeTotal] = useState([]);
 
-  const series = [{ name: "총 인원", data: gradeTotal }];
+  const series = gradeTotal;
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getScholarshipByGrade(semester);
       setDatas(data);
-      setGradeTotal(datas.map((item) => item.cnt));
-      console.log("gradesss: " + gradeTotal);
     };
     fetchData();
   }, [semester]);
 
+  useEffect(() => {
+    setGradeTotal(datas.map((item) => item.cnt));
+  }, [datas]);
+  console.log("gradesss: " + gradeTotal);
   const chartOptions = useChart({
     labels: ["1학년", "2학년", "3학년", "4학년"],
     legend: {

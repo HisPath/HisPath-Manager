@@ -19,11 +19,14 @@ export default function ChartColumnSingle() {
     const fetchData = async () => {
       const data = await getScholarshipByDepartment(semester);
       setDatas(data);
-      setDepartmentTotal(datas.map((item) => item.cnt));
-      console.log("department: " + departmentTotal);
     };
     fetchData();
   }, [semester]);
+
+  useEffect(() => {
+    setDepartmentTotal(datas.map((item) => item.cnt));
+    console.log("department: " + departmentTotal);
+  }, [datas]);
 
   const chartOptions = useChart({
     plotOptions: {

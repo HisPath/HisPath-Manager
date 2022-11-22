@@ -186,7 +186,7 @@ function ScholarshipManagement() {
             마일리지 신청자 목록 다운로드
           </Button>
           <Button component="label" variant="outlined">
-            목록 업로드
+            승인 목록 업로드
             <input
               type="file"
               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

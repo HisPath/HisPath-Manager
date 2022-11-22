@@ -156,7 +156,9 @@ export default function AdminManage({ card, setCard }) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <ModeSwitch card={card} setCard={setCard} />
+            <Box display="flex" justifyContent={'right'}>
+              <ModeSwitch card={card} setCard={setCard} />
+            </Box>
           </Grid>
         </Grid>
       </Header>
