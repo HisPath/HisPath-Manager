@@ -11,7 +11,7 @@ import EditPost from './pages/EditPost';
 import AxiTest from './AxiTest';
 import Student from './pages/Student';
 import Department from './pages/Department';
-import Major from './pages/Major2';
+import Major from './pages/Major';
 import Category from './pages/Category';
 import ScholarshipManagement from './pages/ScholarshipManagement';
 import ScholarshipListDirection from './pages/ScholarshipListDirection';
