@@ -3,7 +3,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Card, Divider, Typography, Stack, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import userImg from '../../assets/user.png';
-import SDB from '../../assets/SDB.jpeg';
+import SDB from '../../assets/user.jpeg';
 import Image from '../image';
 import Iconify from '../iconify';
 
