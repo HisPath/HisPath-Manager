@@ -112,7 +112,7 @@ function EditProfileModal({ dashboardInfo, loadData }) {
                 <TextField
                   type="email"
                   color="secondary"
-                  InputProps={{ disableUnderline: true }}
+                  InputProps={{ disableUnderline: true, readOnly: true }}
                   fullWidth
                   hiddenLabel
                   variant="filled"

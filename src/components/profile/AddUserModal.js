@@ -95,7 +95,7 @@ function AddUserModal({ isLogin, isRegisted }) {
               <TextField
                 type="email"
                 color="secondary"
-                InputProps={{ disableUnderline: true }}
+                InputProps={{ disableUnderline: true, readOnly: true }}
                 fullWidth
                 hiddenLabel
                 variant="filled"
