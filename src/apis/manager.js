@@ -35,6 +35,17 @@ export const approveManagerNormal = async (level, currentId) => {
   return response;
 };
 
+export const addManager = async (data) => {
+  const response = await axios.post(
+    `${process.env.REACT_APP_SERVER}/manager`,
+    data,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response;
+};
+
 export const updateManager = async (id, data) => {
   const response = await axios.put(
     `${process.env.REACT_APP_SERVER}/manager/${id}`,

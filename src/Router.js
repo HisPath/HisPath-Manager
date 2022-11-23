@@ -1,4 +1,4 @@
-import { Box, Toolbar } from "@mui/material";
+import { Box, Modal, Toolbar, Typography } from "@mui/material";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
 import MileageActivity from "./pages/MileageActivity";
@@ -23,11 +23,30 @@ import { Login } from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import { useEffect, useState } from "react";
 import Page404 from "./pages/Page404";
+import { getDashboardInfo } from "./apis/dashboard";
+import AddUserModal from "./components/profile/AddUserModal";
+
+const style = {
+  display: "flex",
+  flexDirection: "column",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  height: 500,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 3.5,
+  borderRadius: 1,
+};
 
 function Router() {
   const [isLogin, setIsLogin] = useState(false);
+  const [isRegisted, setIsRegisted] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
+    getDashboardInfo().then((data) => setIsRegisted(Boolean(data.id)));
     if (token) {
       setIsLogin(true);
     }
@@ -92,6 +111,7 @@ function Router() {
           </Routes>
         </Box>
       </Box>
+      <AddUserModal isLogin={isLogin} isRegisted={isRegisted} />
     </BrowserRouter>
   );
 }
