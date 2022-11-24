@@ -51,7 +51,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
       ACL: "public-read",
       Body: file,
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: "upload/" + file.name,
+      Key: "upload/notice/" + file.name,
       ContentType: "image/jpeg",
     };
 
