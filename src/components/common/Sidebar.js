@@ -9,9 +9,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { drawerWidth, navItems } from "../../constants/commons";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Logo from "../../assets/Logo.png";
 
 const activeStyle = {
   color: "#00AB55",
@@ -27,15 +28,19 @@ export default function Sidebar() {
           borderColor: "divider",
         }}
       >
-        <IconButton
-          size="large"
-          edge="start"
-          color="primary"
-          aria-label="menu"
-          sx={{ mx: 0.5 }}
+        <Box
+          component={Link}
+          to="/"
+          sx={{ display: "flex", alignItems: "center" }}
         >
-          <SettingsIcon />
-        </IconButton>
+          <Box
+            component="img"
+            src={Logo}
+            alt="logo"
+            height={36}
+            sx={{ mx: 2 }}
+          />
+        </Box>
         <Typography variant="h6">HisPath 관리자</Typography>
       </Toolbar>
       <List>

@@ -1,11 +1,8 @@
 import { AppBar, Box, Toolbar, Button } from "@mui/material";
 import { drawerWidth } from "../../constants/commons";
+import { logout } from "../../services/auth";
 
 export default function Header() {
-  const logout = () => {
-    localStorage.removeItem("TOKEN");
-    window.location.reload();
-  };
   return (
     <AppBar
       position="fixed"
