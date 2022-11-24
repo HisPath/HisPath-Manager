@@ -26,24 +26,9 @@ import Page404 from "./pages/Page404";
 import { getDashboardInfo } from "./apis/dashboard";
 import AddUserModal from "./components/profile/AddUserModal";
 
-const style = {
-  display: "flex",
-  flexDirection: "column",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 500,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 3.5,
-  borderRadius: 1,
-};
-
 function Router() {
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegisted, setIsRegisted] = useState(false);
+  const [isRegisted, setIsRegisted] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
     getDashboardInfo().then((data) => setIsRegisted(Boolean(data.id)));

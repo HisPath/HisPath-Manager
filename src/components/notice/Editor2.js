@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { Box, Button } from '@mui/material';
-import { Editor } from '@toast-ui/react-editor';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import { Box, Button } from "@mui/material";
+import { Editor } from "@toast-ui/react-editor";
+import { Link, useParams } from "react-router-dom";
 // import '@toast-ui/editor/dist/toastui-editor.css';
-import '../../style/editor.css';
-import AWS from 'aws-sdk';
+import "../../style/editor.css";
+import AWS from "aws-sdk";
 
 export default function Editor2({ value, editorHandler, setsave }) {
   const editorRef = useRef();
@@ -20,24 +20,26 @@ export default function Editor2({ value, editorHandler, setsave }) {
   });
 
   const init = () => {
-    editorRef.current?.getInstance().setHTML(value || ' ');
+    editorRef.current?.getInstance().setHTML(value || " ");
   };
   useEffect(() => {
     init();
   }, [value]);
 
   const editorChangeHandler = async () => {
-    await editorHandler(replaceATag(replaceImgTag(editorRef.current?.getInstance().getHTML())));
+    await editorHandler(
+      replaceATag(replaceImgTag(editorRef.current?.getInstance().getHTML()))
+    );
   };
   const replaceImgTag = () => {
     var s = editorRef.current?.getInstance().getHTML();
     return s.replace(
-      '<img ',
-      "<img width='70%' height='auto' style='display: block; margin: 0 auto' ",
+      "<img ",
+      "<img width='70%' height='auto' style='display: block; margin: 0 auto' "
     );
   };
   const replaceATag = (s) => {
-    return s.replace('<a ', "<a target='_blank' ");
+    return s.replace("<a ", "<a target='_blank' ");
   };
 
   const saveHandler = async () => {
@@ -46,11 +48,11 @@ export default function Editor2({ value, editorHandler, setsave }) {
   };
   const uploadFile = (file) => {
     const params = {
-      ACL: 'public-read',
+      ACL: "public-read",
       Body: file,
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: 'upload/' + file.name,
-      ContentType: 'image/jpeg',
+      Key: "upload/" + file.name,
+      ContentType: "image/jpeg",
     };
 
     uploadBucket.putObject(params).send((err) => {
@@ -63,17 +65,17 @@ export default function Editor2({ value, editorHandler, setsave }) {
       <Editor
         ref={editorRef} // DOM 선택용 useRef
         placeholder="내용을 입력해주세요."
-        previewStyle={window.innerWidth > 1000 ? 'vertical' : 'tab'} // 미리보기 스타일 지정
+        previewStyle={window.innerWidth > 1000 ? "vertical" : "tab"} // 미리보기 스타일 지정
         height="calc(100vh - 350.5px)" // 에디터 창 높이
         initialEditType="wysiwyg"
-        initialValue={value || ' '}
+        initialValue={value || " "}
         value={value}
         toolbarItems={[
           // 툴바 옵션 설정
-          ['heading', 'bold', 'italic', 'strike'],
-          ['hr', 'quote'],
-          ['ul', 'ol', 'task', 'indent', 'outdent'],
-          ['image'],
+          ["heading", "bold", "italic", "strike"],
+          ["hr", "quote"],
+          ["ul", "ol", "task", "indent", "outdent"],
+          ["image"],
         ]}
         hideModeSwitch={true}
         useCommandShortcut={true} // 키보드 입력 컨트롤
@@ -81,20 +83,25 @@ export default function Editor2({ value, editorHandler, setsave }) {
           addImageBlobHook: async (blob, callback) => {
             console.log(blob);
             uploadFile(blob);
-            callback(
-              `https://shine-jung-test-bucket.s3.ap-northeast-2.amazonaws.com/upload/${blob.name}`,
-            );
+            callback(`${process.env.REACT_APP_S3_STORAGE}/notice/${blob.name}`);
           },
         }}
       />
-      <Box container gap={1} display="flex" justifyContent={'right'} pt={1} paddingRight={0}>
+      <Box
+        container
+        gap={1}
+        display="flex"
+        justifyContent={"right"}
+        pt={1}
+        paddingRight={0}
+      >
         <Button variant="contained" onClick={saveHandler}>
           저장
         </Button>
         <Link
-          to={{ pathname: '/notice' }}
+          to={{ pathname: "/notice" }}
           style={{
-            textDecoration: 'none',
+            textDecoration: "none",
           }}
         >
           <Button variant="outlined" color="error">
