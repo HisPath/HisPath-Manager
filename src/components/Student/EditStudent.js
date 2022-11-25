@@ -31,17 +31,7 @@ function EditStudent({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onValid = async (data) => {
-    await updateStudent(
-      id,
-      data.name,
-      data.studentNum,
-      data.semester,
-      data.phone,
-      data.email,
-      data.departmentId,
-      data.major1Id,
-      data.major2Id
-    );
+    await updateStudent(id, data);
     enqueueSnackbar("수정되었습니다.", { variant: "success" });
     loadData();
     handleClose();
