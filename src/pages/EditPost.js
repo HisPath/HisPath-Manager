@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Editor2 from "../components/notice/Editor2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Backdrop,
   Box,
@@ -35,6 +35,7 @@ const Article = styled(Box)({
 
 function TestPost() {
   const { noticeId } = useParams();
+  const navigate = useNavigate();
   const [notice, setNotice] = useState();
   const [init, setInit] = useState(false);
   const [managerId, setManagerId] = useState();
@@ -47,20 +48,23 @@ function TestPost() {
   const [viewCnt, setViewCnt] = useState();
   const [save, setSave] = useState(false);
 
-  useEffect(async () => {
-    if (save) {
-      await editNotice(
-        noticeId,
-        desc,
-        endDate,
-        managerId,
-        important,
-        startDate,
-        title,
-        viewCnt
-      );
-      window.open(`/notice/${noticeId}`, "_self");
-    }
+  useEffect(() => {
+    const handleSave = async () => {
+      if (save) {
+        await editNotice(
+          noticeId,
+          desc,
+          endDate,
+          managerId,
+          important,
+          startDate,
+          title,
+          viewCnt
+        );
+        navigate(`/notice/${noticeId}`);
+      }
+    };
+    handleSave();
   }, [save]);
 
   const importance = () => {

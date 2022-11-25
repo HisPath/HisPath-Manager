@@ -22,6 +22,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { addNotice } from "../apis/notice";
+import { useNavigate } from "react-router-dom";
 
 const Header = styled("div")({
   display: "flex",
@@ -34,6 +35,7 @@ const Article = styled(Box)({
   height: "calc(100vh - 160px)",
 });
 function TestAdd() {
+  const navigate = useNavigate();
   const [noticeId, setNoticeId] = useState();
   const [saved, setSaved] = useState(false);
   const [managerId, setManagerId] = useState(2);
@@ -68,7 +70,7 @@ function TestAdd() {
   };
 
   const viewNotice = () => {
-    if (saved) window.open(`/notice/${noticeId}`, "_self");
+    if (saved) navigate(`/notice/${noticeId}`);
   };
 
   useEffect(() => {
