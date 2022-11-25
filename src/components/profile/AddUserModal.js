@@ -8,8 +8,9 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import { addManager } from "../../apis/manager";
+import { addManager, getEmail } from "../../apis/manager";
 import { logout } from "../../services/auth";
+import { useEffect } from "react";
 
 const style = {
   display: "flex",
@@ -32,12 +33,12 @@ function AddUserModal({ isLogin, isRegisted }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       department: "",
       email: "",
       name: "",
-      power: 0,
       profile: null,
     },
   });
@@ -47,6 +48,12 @@ function AddUserModal({ isLogin, isRegisted }) {
       window.location.reload();
     });
   };
+  useEffect(() => {
+    getEmail((data) => {
+      console.log(data);
+      setValue("email", data);
+    });
+  }, []);
   return (
     <Modal open={isLogin && !isRegisted}>
       <Box sx={{ ...style }}>
@@ -95,7 +102,7 @@ function AddUserModal({ isLogin, isRegisted }) {
               <TextField
                 type="email"
                 color="secondary"
-                InputProps={{ disableUnderline: true, readOnly: true }}
+                InputProps={{ disableUnderline: true }}
                 fullWidth
                 hiddenLabel
                 variant="filled"
