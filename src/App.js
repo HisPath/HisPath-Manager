@@ -17,7 +17,6 @@ function App() {
           `${process.env.REACT_APP_SERVER}/auth/google/login-manager/token?code=${code}`
         )
         .then((res) => {
-          console.log(res);
           localStorage.setItem("TOKEN", `Bearer ${res.data.token}`);
           window.location.reload();
         });
