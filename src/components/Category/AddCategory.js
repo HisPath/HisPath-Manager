@@ -77,7 +77,7 @@ function AddCategory({ handleClose, loadData }) {
           </Box>
         </Box>
         <Box width="100%">
-          <InputLabel sx={{ mt: 1 }}>전화번호</InputLabel>
+          <InputLabel sx={{ mt: 1 }}>비고:</InputLabel>
           <TextField
             {...register("phone", {
               required: true,

@@ -63,10 +63,10 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  {
-    accessor: "result",
-    Header: "수혜 금액",
-  },
+  // {
+  //   accessor: "result",
+  //   Header: "수혜 금액",
+  // },
   {
     accessor: "phone",
     Header: "전화번호",
@@ -103,10 +103,8 @@ function ScholarshipList() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getSemesters();
-      console.log(response);
       const studentSet = new Set();
       response?.forEach((item) => studentSet.add(item.semester));
-      console.log(studentSet);
       setInit(true);
     };
     fetchData();

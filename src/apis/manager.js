@@ -34,3 +34,35 @@ export const approveManagerNormal = async (level, currentId) => {
   );
   return response;
 };
+
+export const addManager = async (data) => {
+  const response = await axios.post(
+    `${process.env.REACT_APP_SERVER}/manager`,
+    data,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response;
+};
+
+export const updateManager = async (data) => {
+  const response = await axios.put(
+    `${process.env.REACT_APP_SERVER}/manager`,
+    data,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response;
+};
+
+export const getEmail = async () => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/manager/email`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response.data;
+};
