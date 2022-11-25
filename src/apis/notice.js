@@ -48,7 +48,9 @@ export const editNotice = (
 };
 
 export const deleteNotice = (noticeId) => {
-  axios.delete(`${process.env.REACT_APP_SERVER}/notice/${noticeId}`);
+ axios.delete(`${process.env.REACT_APP_SERVER}/notice/${noticeId}`, {
+    headers: { Authorization: localStorage.getItem('TOKEN') },
+  });
 };
 
 export const getNoticeById = async (id) => {
