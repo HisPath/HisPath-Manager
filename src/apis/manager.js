@@ -46,13 +46,23 @@ export const addManager = async (data) => {
   return response;
 };
 
-export const updateManager = async (id, data) => {
+export const updateManager = async (data) => {
   const response = await axios.put(
-    `${process.env.REACT_APP_SERVER}/manager/${id}`,
+    `${process.env.REACT_APP_SERVER}/manager`,
     data,
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
     }
   );
   return response;
+};
+
+export const getEmail = async () => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_SERVER}/manager/email`,
+    {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
+    }
+  );
+  return response.data;
 };
