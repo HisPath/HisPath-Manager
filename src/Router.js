@@ -80,10 +80,10 @@ function Router() {
                 <Route path="/major" element={<Major />} />
                 <Route path="/department" element={<Department />} />
                 <Route path="/category" element={<Category />} />
-                <Route
+                {/* <Route
                   path="/scholarship/actmanagement"
                   element={<ActivityManagement />}
-                />
+                /> */}
                 <Route
                   path="/scholarship/management"
                   element={<ScholarshipManagement />}
