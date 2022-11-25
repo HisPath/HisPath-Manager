@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -127,6 +127,7 @@ function Article({
   );
 }
 function Buttons({ noticeId, history }) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -167,7 +168,7 @@ function Buttons({ noticeId, history }) {
       <Button
         variant="outlined"
         onClick={() => {
-          window.open("/notice", "_self");
+          navigate("/notice");
         }}
       >
         돌아가기
@@ -180,7 +181,7 @@ function Buttons({ noticeId, history }) {
               variant="outlined"
               onClick={() => {
                 handleDelete(noticeId);
-                window.open("/notice", "_self");
+                navigate("/notice");
               }}
             >
               예
@@ -206,7 +207,7 @@ function Buttons({ noticeId, history }) {
               variant="outlined"
               onClick={() => {
                 setOpenEdit(false);
-                window.open(`/editpost/${noticeId}`, "_self");
+                navigate(`/editpost/${noticeId}`);
               }}
             >
               예
