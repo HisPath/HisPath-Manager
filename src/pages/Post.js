@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
-  ButtonGroup,
-  Chip,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -15,10 +13,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { Link } from 'react-router-dom';
-import ReportIcon from '@mui/icons-material/Report';
-
 import { useSnackbar } from 'notistack';
 import '../style/image.css';
 import { deleteNotice, getNoticeById } from '../apis/notice';
@@ -43,7 +37,6 @@ function Article({
   expDate,
 }) {
   function ImpChip({ imp }) {
-    // if (imp) return <Chip label={'중요'} variant="outlined" color="error" />;
     if (imp)
       return (
         <Typography

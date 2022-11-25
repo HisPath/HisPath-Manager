@@ -44,6 +44,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
     await editorChangeHandler();
     setsave(true);
   };
+  
   const uploadFile = (file) => {
     const params = {
       ACL: 'public-read',
