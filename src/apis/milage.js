@@ -115,13 +115,11 @@ export const deleteParticipant = async (activityId, studentId) => {
   const response = await axios.delete(
     `${process.env.REACT_APP_SERVER}/mileage/student`,
     {
+      headers: { Authorization: localStorage.getItem("TOKEN") },
       data: {
         activityId,
         studentId,
       },
-    },
-    {
-      headers: { Authorization: localStorage.getItem("TOKEN") },
     }
   );
   return response;

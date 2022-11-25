@@ -5,6 +5,11 @@ import {
   Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Modal,
   Paper,
   styled,
@@ -89,7 +94,17 @@ function MileageActivity() {
     // if (files) fileReader.readAsDataURL(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
-    await addMileages(formData);
+    await addMileages(formData)
+      .then(function (response) {
+        enqueueSnackbar("마일리지 항목 리스트를 등록했습니다.", {
+          variant: "success",
+        });
+        loadData();
+      })
+      .catch(function (error) {
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
+      });
     loadData();
   };
   const [openAdd, setOpenAdd] = useState(false);
@@ -115,6 +130,11 @@ function MileageActivity() {
     setMileages(data);
     setInit(true);
   };
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
   useEffect(() => {
     loadData();
   }, []);
@@ -196,6 +216,17 @@ function MileageActivity() {
           />
         </Box>
       </Modal>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>잘못된 파일</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} autoFocus>
+            닫기
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
