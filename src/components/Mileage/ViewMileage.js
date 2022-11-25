@@ -94,7 +94,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
   const [dialogContent, setDialogContent] = useState();
   return (
     <>
-      <Button onClick={handleOpen} color="secondary" variant="contained">
+      <Button onClick={handleOpen} variant="contained">
         학생 목록 보기
       </Button>
       <Modal hideBackdrop open={open} onClose={handleClose}>
@@ -108,7 +108,6 @@ function ViewStudentsModal({ id, students, loadStudents }) {
             >
               <TextField
                 name="studentNum"
-                color="secondary"
                 InputProps={{ disableUnderline: true }}
                 hiddenLabel
                 variant="filled"
@@ -121,7 +120,6 @@ function ViewStudentsModal({ id, students, loadStudents }) {
               />
               <TextField
                 name="studentName"
-                color="secondary"
                 InputProps={{ disableUnderline: true }}
                 hiddenLabel
                 variant="filled"
@@ -187,7 +185,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
             </Table>
           </Box>
           <Box mt="auto" display="flex" justifyContent="flex-end">
-            <Button color="secondary" variant="contained" onClick={handleClose}>
+            <Button variant="contained" onClick={handleClose}>
               닫기
             </Button>
           </Box>
@@ -254,7 +252,6 @@ function ViewMileage({ id, handleClose, loadData }) {
           <InputLabel>카테고리</InputLabel>
           <FormControl fullWidth hiddenLabel variant="filled" size="small">
             <TextField
-              color="secondary"
               InputProps={{ disableUnderline: true, readOnly: true }}
               fullWidth
               hiddenLabel
@@ -267,7 +264,6 @@ function ViewMileage({ id, handleClose, loadData }) {
         <Box mb={2}>
           <InputLabel>활동명</InputLabel>
           <TextField
-            color="secondary"
             InputProps={{ disableUnderline: true, readOnly: true }}
             fullWidth
             hiddenLabel
@@ -279,7 +275,6 @@ function ViewMileage({ id, handleClose, loadData }) {
         <Box mb={2}>
           <InputLabel>비고</InputLabel>
           <TextField
-            color="secondary"
             InputProps={{ disableUnderline: true, readOnly: true }}
             fullWidth
             hiddenLabel
@@ -291,7 +286,6 @@ function ViewMileage({ id, handleClose, loadData }) {
         <Box mb={2}>
           <InputLabel>학기</InputLabel>
           <TextField
-            color="secondary"
             InputProps={{ disableUnderline: true, readOnly: true }}
             fullWidth
             hiddenLabel
@@ -308,11 +302,10 @@ function ViewMileage({ id, handleClose, loadData }) {
             href={mileageStudentRegisterExcel}
             download="마일리지 항목 학생 등록 양식"
             variant="outlined"
-            color="secondary"
           >
             학생 양식 다운
           </Button>
-          <Button component="label" variant="outlined" color="secondary">
+          <Button component="label" variant="outlined">
             학생 업로드
             <input
               type="file"
