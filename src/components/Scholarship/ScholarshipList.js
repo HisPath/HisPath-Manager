@@ -63,10 +63,10 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  {
-    accessor: "result",
-    Header: "수혜 금액",
-  },
+  // {
+  //   accessor: "result",
+  //   Header: "수혜 금액",
+  // },
   {
     accessor: "phone",
     Header: "전화번호",

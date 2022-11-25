@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Box, Button } from '@mui/material';
-
 import { Editor } from '@toast-ui/react-editor';
-
 import { Link, useParams } from 'react-router-dom';
 // import '@toast-ui/editor/dist/toastui-editor.css';
 import '../../style/editor.css';
@@ -51,7 +49,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
       ACL: 'public-read',
       Body: file,
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: 'upload/' + file.name,
+      Key: 'upload/notice/' + file.name,
       ContentType: 'image/jpeg',
     };
 
@@ -83,9 +81,7 @@ export default function Editor2({ value, editorHandler, setsave }) {
           addImageBlobHook: async (blob, callback) => {
             console.log(blob);
             uploadFile(blob);
-            callback(
-              `https://shine-jung-test-bucket.s3.ap-northeast-2.amazonaws.com/upload/${blob.name}`,
-            );
+            callback(`${process.env.REACT_APP_S3_STORAGE}/notice/${blob.name}`);
           },
         }}
       />
