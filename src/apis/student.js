@@ -57,29 +57,10 @@ export const getStudents = async () => {
   return response.data;
 };
 
-export const updateStudent = async (
-  id,
-  name,
-  studentNum,
-  semester,
-  phone,
-  email,
-  departmentId,
-  major1Id,
-  major2Id
-) => {
+export const updateStudent = async (id, data) => {
   const response = await axios.put(
     `${process.env.REACT_APP_SERVER}/student/${id}`,
-    {
-      departmentId: departmentId,
-      studentNum: studentNum,
-      semester: semester,
-      name: name,
-      phone: phone,
-      email: email,
-      major1Id: major1Id,
-      major2Id: major2Id,
-    },
+    data,
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
     }

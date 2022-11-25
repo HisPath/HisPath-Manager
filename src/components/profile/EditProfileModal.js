@@ -37,7 +37,6 @@ function EditProfileModal({ dashboardInfo, loadData }) {
       department: dashboardInfo.department,
       email: dashboardInfo.email,
       name: dashboardInfo.name,
-      power: dashboardInfo.power,
       profile: dashboardInfo.profile,
     },
   });
@@ -49,7 +48,7 @@ function EditProfileModal({ dashboardInfo, loadData }) {
     setOpen(false);
   };
   const onValid = async (data) => {
-    await updateManager(dashboardInfo.id, data).then(function (response) {
+    await updateManager(data).then(function (response) {
       enqueueSnackbar("저장되었습니다.", { variant: "success" });
       loadData();
       handleClose();
