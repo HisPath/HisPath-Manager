@@ -161,7 +161,9 @@ function TT() {
   useEffect(() => {
     loadData();
   }, [noticeType]);
-
+  useEffect(() => {
+    loadData();
+  }, []);
   const getRowStyle = (params) => {
     if (params.importance) {
       return { background: 'red' };
