@@ -93,7 +93,7 @@ function Article({
             <Stack
               direction="row"
               spacing={2}
-              justifyContent="right"
+              justifyContent={'right'}
               style={{
                 paddingTop: '7px',
                 paddingLeft: '0',

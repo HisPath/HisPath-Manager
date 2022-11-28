@@ -1,68 +1,76 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, Container, Grid, Modal, styled, Typography } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import { majorState } from '../atom';
-import AddMajor from '../components/Major/AddMajor';
-import EditMajor from '../components/Major/EditMajor';
-import { Paper } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import { deleteMajor, getMajors } from '../apis/major';
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Modal,
+  styled,
+  Typography,
+} from "@mui/material";
+import { useRecoilState } from "recoil";
+import { majorState } from "../atom";
+import AddMajor from "../components/Major/AddMajor";
+import EditMajor from "../components/Major/EditMajor";
+import { Paper } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { deleteMajor, getMajors } from "../apis/major";
 
-import MajorPage from '../components/Major/MajorPage';
-import MajorCardPage from '../components/Major/MajorCardPage';
-import ModeSwitch from '../components/common/ModeSwitch';
+import MajorPage from "../components/Major/MajorPage";
+import MajorCardPage from "../components/Major/MajorCardPage";
+import ModeSwitch from "../components/common/ModeSwitch";
 
-const Header = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
+const Header = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
   paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: 'calc(100vh - 224px)',
+  height: "calc(100vh - 224px)",
   paddingBottom: 24,
 });
 const CardArticle = styled(Box)({
-  height: 'auto',
+  height: "auto",
   paddingBottom: 24,
 });
 
 const columns = [
   {
-    field: 'id',
-    headerName: '번호',
+    field: "id",
+    headerName: "번호",
     width: 80,
   },
   {
-    field: 'name',
-    headerName: '전공',
+    field: "name",
+    headerName: "전공",
     width: 300,
   },
-  {
-    field: 'department',
-    headerName: '소속 학부',
-    width: 250,
-  },
-  {
-    field: 'credit',
-    headerName: '총 학점',
-    width: 150,
-  },
-  {
-    field: 'total',
-    headerName: '총 인원',
-    width: 180,
-  },
+  // {
+  //   field: 'department',
+  //   headerName: '소속 학부',
+  //   width: 250,
+  // },
+  // {
+  //   field: 'credit',
+  //   headerName: '총 학점',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'total',
+  //   headerName: '총 인원',
+  //   width: 180,
+  // },
 ];
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
   boxShadow: 24,
   width: 450,
   p: 3.5,
@@ -83,7 +91,7 @@ function Major() {
   const handleDeleteClick = async (id) => {
     if (window.confirm(`해당 항목을 삭제하시겠습니까?`)) {
       await deleteMajor(id);
-      enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
+      enqueueSnackbar("삭제되었습니다.", { variant: "success" });
       loadData();
     }
   };
@@ -92,7 +100,7 @@ function Major() {
     setMajor(
       data.map((item) => {
         return { ...item, id: item.id };
-      }),
+      })
     );
   };
   useEffect(() => {
@@ -109,7 +117,7 @@ function Major() {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Box container display="flex" justifyContent={'right'}>
+            <Box container display="flex" justifyContent={"right"}>
               <ModeSwitch card={card} setCard={setCard} />
               <Button onClick={handleOpenAdd} variant="outlined">
                 전공 추가
@@ -150,7 +158,11 @@ function Major() {
           <Typography variant="h6" component="h2">
             전공 수정
           </Typography>
-          <EditMajor id={currentId} handleClose={handleCloseEdit} loadData={loadData} />
+          <EditMajor
+            id={currentId}
+            handleClose={handleCloseEdit}
+            loadData={loadData}
+          />
         </Box>
       </Modal>
     </Container>

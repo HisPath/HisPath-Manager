@@ -1,37 +1,42 @@
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
-import CustomNoRowsOverlay from '../Student/CustomNoRowsOverlay';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import CustomNoRowsOverlay from "../Student/CustomNoRowsOverlay";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
 
 const columns = [
   {
-    field: 'id',
-    headerName: '번호',
+    field: "id",
+    headerName: "번호",
     width: 80,
   },
   {
-    field: 'name',
-    headerName: '전공',
-    width: 300,
+    field: "name",
+    headerName: "전공",
+    width: 900,
   },
-  {
-    field: 'department',
-    headerName: '소속 학부',
-    width: 250,
-  },
-  {
-    field: 'credit',
-    headerName: '총 학점',
-    width: 150,
-  },
-  {
-    field: 'total',
-    headerName: '총 인원',
-    width: 180,
-  },
+  // {
+  //   field: 'department',
+  //   headerName: '소속 학부',
+  //   width: 250,
+  // },
+  // {
+  //   field: 'credit',
+  //   headerName: '총 학점',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'total',
+  //   headerName: '총 인원',
+  //   width: 180,
+  // },
 ];
 
-function MajorPage({ majors, setCurrentId, handleOpenEdit, handleDeleteClick }) {
+function MajorPage({
+  majors,
+  setCurrentId,
+  handleOpenEdit,
+  handleDeleteClick,
+}) {
   return (
     <DataGrid
       components={{
@@ -49,11 +54,11 @@ function MajorPage({ majors, setCurrentId, handleOpenEdit, handleDeleteClick }) 
       columns={[
         ...columns,
         {
-          field: 'actions',
-          type: 'actions',
-          headerName: '기능',
+          field: "actions",
+          type: "actions",
+          headerName: "기능",
           width: 128,
-          cellClassName: 'actions',
+          cellClassName: "actions",
           getActions: ({ id }) => {
             return [
               <GridActionsCellItem
