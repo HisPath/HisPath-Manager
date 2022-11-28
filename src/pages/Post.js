@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+
 import { useSnackbar } from 'notistack';
 import '../style/image.css';
 import { deleteNotice, getNoticeById } from '../apis/notice';
@@ -126,8 +127,7 @@ function Buttons({ noticeId, history }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = async (noticeId) => {
-    setOpen(false);
-    deleteNotice(noticeId);
+    await deleteNotice(noticeId).then(() => navigate('/notice'));
     enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
   };
 
@@ -169,7 +169,7 @@ function Buttons({ noticeId, history }) {
       <Dialog open={open}>
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
-          <Box container display="flex" justifycontents={'right'} gap={1}>
+          <Box container display="flex" justifyContents={'right'} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {
@@ -195,7 +195,7 @@ function Buttons({ noticeId, history }) {
       <Dialog open={openEdit}>
         <DialogTitle>공지를 수정하겠습니까?</DialogTitle>
         <DialogActions>
-          <Box container display="flex" justifycontents={'right'} gap={1}>
+          <Box container display="flex" justifyContents={'right'} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {
