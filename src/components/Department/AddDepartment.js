@@ -40,7 +40,7 @@ function AddDepartment({ handleClose, loadData }) {
       </Box>
 
       <Box mb={2} display="flex" gap={2}>
-        <Box width="50%">
+        {/* <Box width="50%">
           <InputLabel sx={{ mt: 1 }}>지도 교수:</InputLabel>
           <TextField
             {...register("credit", {
@@ -109,7 +109,7 @@ function AddDepartment({ handleClose, loadData }) {
           <Typography color="text.secondary" variant="caption" height={24}>
             {errors?.studentNum?.message}
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
       <Box display="flex" justifyContent="flex-end">
         <Box display="flex" gap={1}>
