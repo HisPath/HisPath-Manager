@@ -41,23 +41,23 @@ const columns = [
   {
     field: "name",
     headerName: "이름",
-    width: 300,
+    width: 900,
   },
-  {
-    field: "option",
-    headerName: "여부",
-    width: 150,
-  },
-  {
-    field: "weight",
-    headerName: "총 가중치",
-    width: 170,
-  },
-  {
-    field: "memo",
-    headerName: "비고",
-    width: 250,
-  },
+  // {
+  //   field: "option",
+  //   headerName: "여부",
+  //   width: 150,
+  // },
+  // {
+  //   field: "weight",
+  //   headerName: "총 가중치",
+  //   width: 170,
+  // },
+  // {
+  //   field: "memo",
+  //   headerName: "비고",
+  //   width: 250,
+  // },
 ];
 
 const modalStyle = {
