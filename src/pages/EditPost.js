@@ -37,7 +37,6 @@ const Article = styled(Box)({
 function TestPost() {
   const { noticeId } = useParams();
   const navigate = useNavigate();
-  const [notice, setNotice] = useState();
   const [init, setInit] = useState(false);
   const [managerId, setManagerId] = useState();
   const [title, setTitle] = useState('');

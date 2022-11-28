@@ -1,16 +1,12 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Editor2 from '../components/notice/Editor2';
 import {
-  Backdrop,
   Box,
   Button,
   Stack,
   TextField,
-  CircularProgress,
   Container,
-  FormControl,
   MenuItem,
-  Modal,
   Paper,
   Select,
   styled,
