@@ -44,8 +44,8 @@ function EditMajor({ id, handleClose, loadData }) {
             </Typography>
           </Box>
         </Box>
-        <Box display="flex" gap={2}>
-          <Box width="100%">
+        <Box mb={2} display="flex" gap={2}>
+          {/* <Box width="100%">
             <InputLabel sx={{ mt: 1 }}>소속 학부:</InputLabel>
             <TextField
               {...register("department", {
@@ -97,7 +97,7 @@ function EditMajor({ id, handleClose, loadData }) {
             <Typography color="text.secondary" variant="caption" height={24}>
               {errors?.studentNum?.message}
             </Typography>
-          </Box>
+          </Box> */}
         </Box>
         <Box display="flex" justifyContent="flex-end">
           <Box display="flex" gap={1}>

@@ -92,7 +92,7 @@ function Article({
             <Stack
               direction="row"
               spacing={2}
-              justifyContent="right"
+              justifyContent={'right'}
               style={{
                 paddingTop: '7px',
                 paddingLeft: '0',
@@ -126,8 +126,8 @@ function Buttons({ noticeId, history }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = async (noticeId) => {
+    await deleteNotice(noticeId);
     setOpen(false);
-    deleteNotice(noticeId);
     enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
   };
 
@@ -169,7 +169,7 @@ function Buttons({ noticeId, history }) {
       <Dialog open={open}>
         <DialogTitle>공지를 삭제하겠습니까?</DialogTitle>
         <DialogActions>
-          <Box container display="flex" justifycontents={'right'} gap={1}>
+          <Box container display="flex" justifyContents={'right'} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {
@@ -195,7 +195,7 @@ function Buttons({ noticeId, history }) {
       <Dialog open={openEdit}>
         <DialogTitle>공지를 수정하겠습니까?</DialogTitle>
         <DialogActions>
-          <Box container display="flex" justifycontents={'right'} gap={1}>
+          <Box container display="flex" justifyContents={'right'} gap={1}>
             <Button
               variant="outlined"
               onClick={() => {

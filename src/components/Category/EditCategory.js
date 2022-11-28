@@ -46,7 +46,7 @@ function EditCategory({ id, handleClose, loadData }) {
         </Box>
 
         <Box mb={2} display="flex" gap={2}>
-          <Box width="50%">
+          {/* <Box width="50%">
             <InputLabel sx={{ mt: 1 }}>여부:</InputLabel>
             <TextField
               {...register("credit", {
@@ -96,7 +96,7 @@ function EditCategory({ id, handleClose, loadData }) {
           />
           <Typography color="text.secondary" variant="caption" height={24}>
             {errors?.phone?.message}
-          </Typography>
+          </Typography> */}
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end">
