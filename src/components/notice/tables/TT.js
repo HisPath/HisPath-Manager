@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Backdrop,
   Box,
@@ -8,28 +8,28 @@ import {
   Paper,
   styled,
   Typography,
-} from "@mui/material";
-import CustomNoRowsOverlay from "../../Mileage/CustomNoRowsOverlay";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link, useNavigate } from "react-router-dom";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import { getNotices } from "../../../apis/notice";
-const Header = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
+} from '@mui/material';
+import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { Link, useNavigate } from 'react-router-dom';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { getNotices } from '../../../apis/notice';
+const Header = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-end',
   paddingTop: 24,
   paddingBottom: 24,
 });
 
 const Article = styled(Box)({
-  height: "calc(100vh - 224px)",
+  height: 'calc(100vh - 224px)',
 });
 
 function AlarmIconCheck({ t }) {
   const p = new Date(t.row.pubDate);
   const d = new Date();
-  const s = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  const s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
   const today = new Date(s);
   if (p > today)
     return (
@@ -57,8 +57,8 @@ const StatusIcons = ({ p }) => {
         fontSize="small"
         style={{
           width: 40,
-          float: "right",
-          color: "red",
+          float: 'right',
+          color: 'red',
         }}
       />
     );
@@ -83,16 +83,16 @@ function TT() {
 
   const columns = [
     {
-      field: "importance",
+      field: 'importance',
       width: 30,
-      headerName: "",
+      headerName: '',
       type: Date,
       renderCell: (param) => (
         <strong>
           <Box
             style={{
-              textAlign: "center",
-              width: "inherit",
+              textAlign: 'center',
+              width: 'inherit',
             }}
           >
             <StatusIcons p={param} />
@@ -101,38 +101,37 @@ function TT() {
       ),
     },
     {
-      field: "id",
-      headerName: "No",
+      field: 'id',
+      headerName: 'No',
       width: 50,
       filterable: false,
-      renderCell: (index) =>
-        noticeList.length - index.api.getRowIndex(index.row.id),
+      renderCell: (index) => noticeList.length - index.api.getRowIndex(index.row.id),
     },
     {
-      field: "regDate",
+      field: 'regDate',
       width: 100,
       type: Date,
-      headerName: "등록일",
+      headerName: '등록일',
     },
     {
-      field: "title",
+      field: 'title',
       width: 500,
-      headerName: "제목",
+      headerName: '제목',
     },
     {
-      field: "managerName",
+      field: 'managerName',
       width: 150,
-      headerName: "작성자",
+      headerName: '작성자',
     },
     {
-      field: "pubDate",
+      field: 'pubDate',
       width: 200,
-      headerName: "게시기간",
+      headerName: '게시기간',
       renderCell: (param) => (
         <strong>
           <Box
             style={{
-              textAlign: "center",
+              textAlign: 'center',
             }}
           >
             <PublishDuration p={param} />
@@ -141,9 +140,9 @@ function TT() {
       ),
     },
     {
-      field: "viewCnt",
+      field: 'viewCnt',
       width: 60,
-      headerName: "조회수",
+      headerName: '조회수',
       renderCell: (param) => (
         <strong>
           <AlarmIconCheck t={param} />
@@ -164,16 +163,15 @@ function TT() {
   }, [noticeType]);
 
   const getRowStyle = (params) => {
-    console.log(params);
     if (params.importance) {
-      return { background: "red" };
+      return { background: 'red' };
     }
   };
 
   function noticeFilter(arr) {
     if (!(noticeType === 0)) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         var expD = new Date(data.expDate);
@@ -182,7 +180,7 @@ function TT() {
     }
     if (noticeType === 1 || noticeType === 2) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         const pubD = new Date(data.pubDate);
@@ -192,7 +190,7 @@ function TT() {
       });
     } else if (noticeType === 3) {
       const d = new Date();
-      const t = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      const t = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       const today = new Date(t);
       arr = arr.filter(function (data) {
         const pubD = new Date(data.pubDate);
@@ -213,7 +211,7 @@ function TT() {
         <Typography variant="h5" fontWeight={600}>
           공지사항
         </Typography>
-        <Box display="flex" gap={1.5} justifyContent={"right"}>
+        <Box display="flex" gap={1.5} justifyContent={'right'}>
           <Button variant="outlined" onClick={() => setNoticeType(0)}>
             전체 공지
           </Button>
@@ -228,9 +226,9 @@ function TT() {
           </Button>
 
           <Link
-            to={"/addpost"}
+            to={'/addpost'}
             style={{
-              textDecoration: "none",
+              textDecoration: 'none',
             }}
           >
             <Button variant="contained">공지 추가</Button>
@@ -241,9 +239,9 @@ function TT() {
         {init ? (
           <DataGrid
             sx={{
-              "&:last-child td, &:last-child th": { border: 0 },
-              "&:nth-of-type(even) td, &:nth-of-type(even) th": {
-                backgroundColor: "white",
+              '&:last-child td, &:last-child th': { border: 0 },
+              '&:nth-of-type(even) td, &:nth-of-type(even) th': {
+                backgroundColor: 'white',
               },
             }}
             components={{
@@ -269,10 +267,7 @@ function TT() {
             hideFooterSelectedRowCount
           />
         ) : (
-          <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={true}
-          >
+          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={true}>
             <CircularProgress color="inherit" />
           </Backdrop>
         )}

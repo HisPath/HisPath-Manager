@@ -19,7 +19,7 @@ export const addNotice = async (desc, endDate, managerId, important, startDate, 
   return ret.data;
 };
 
-export const editNotice = (
+export const editNotice = async (
   noticeId,
   desc,
   endDate,
@@ -29,7 +29,7 @@ export const editNotice = (
   title,
   viewCnt,
 ) => {
-  const response = axios.patch(
+  const response = await axios.patch(
     `${process.env.REACT_APP_SERVER}/notice/${noticeId}`,
     {
       content: `${desc}`,
@@ -47,8 +47,8 @@ export const editNotice = (
   return response.data;
 };
 
-export const deleteNotice = (noticeId) => {
- axios.delete(`${process.env.REACT_APP_SERVER}/notice/${noticeId}`, {
+export const deleteNotice = async (noticeId) => {
+  await axios.delete(`${process.env.REACT_APP_SERVER}/notice/${noticeId}`, {
     headers: { Authorization: localStorage.getItem('TOKEN') },
   });
 };
