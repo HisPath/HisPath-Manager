@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import CustomNoRowsOverlay from '../../Mileage/CustomNoRowsOverlay';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { getNotices } from '../../../apis/notice';
 const Header = styled('div')({
@@ -66,6 +66,7 @@ const StatusIcons = ({ p }) => {
 };
 
 function TT() {
+  const navigate = useNavigate();
   const [noticeType, setNoticeType] = useState(1);
   const [init, setInit] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
@@ -256,7 +257,7 @@ function TT() {
             }}
             rows={noticeList}
             columns={columns}
-            onRowClick={({ id }) => window.open(`/notice/${id}`, '_self')}
+            onRowClick={({ id }) => navigate(`/notice/${id}`)}
             pageSize={10}
             rowsPerPageOptions={[10]}
             getRowClassName={getRowStyle}

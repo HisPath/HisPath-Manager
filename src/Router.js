@@ -1,4 +1,4 @@
-import { Box, Modal, Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
 import MileageActivity from "./pages/MileageActivity";
@@ -24,17 +24,22 @@ import Dashboard from "./pages/Dashboard";
 import { useEffect, useState } from "react";
 import Page404 from "./pages/Page404";
 import { getDashboardInfo } from "./apis/dashboard";
-import AddUserModal from "./components/profile/AddUserModal";
+import GuestLoginModal from "./components/profile/GuestLoginModal";
 
 function Router() {
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegisted, setIsRegisted] = useState(true);
+  const [isRegisted, setIsRegisted] = useState(false);
   useEffect(() => {
-    const token = localStorage.getItem("TOKEN");
-    getDashboardInfo().then((data) => setIsRegisted(Boolean(data.id)));
-    if (token) {
-      setIsLogin(true);
-    }
+    const getUserStatus = async () => {
+      const token = localStorage.getItem("TOKEN");
+      await getDashboardInfo()
+        .then(() => setIsRegisted(true))
+        .catch(() => setIsRegisted(false));
+      if (token) {
+        setIsLogin(true);
+      }
+    };
+    getUserStatus();
   }, []);
   return (
     <BrowserRouter>
@@ -75,10 +80,10 @@ function Router() {
                 <Route path="/major" element={<Major />} />
                 <Route path="/department" element={<Department />} />
                 <Route path="/category" element={<Category />} />
-                <Route
+                {/* <Route
                   path="/scholarship/actmanagement"
                   element={<ActivityManagement />}
-                />
+                /> */}
                 <Route
                   path="/scholarship/management"
                   element={<ScholarshipManagement />}
@@ -96,7 +101,7 @@ function Router() {
           </Routes>
         </Box>
       </Box>
-      <AddUserModal isLogin={isLogin} isRegisted={isRegisted} />
+      <GuestLoginModal isLogin={isLogin} isRegisted={isRegisted} />
     </BrowserRouter>
   );
 }
