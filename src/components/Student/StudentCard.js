@@ -1,28 +1,21 @@
-import PropTypes from "prop-types";
-import { alpha, styled } from "@mui/material/styles";
-import {
-  Box,
-  Card,
-  Divider,
-  Typography,
-  Stack,
-  IconButton,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/DeleteOutline";
-import userImg from "../../assets/user.png";
-import SDB from "../../assets/user.png";
-import Image from "../image";
-import Iconify from "../iconify";
+import PropTypes from 'prop-types';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Card, Divider, Typography, Stack, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import userImg from '../../assets/user.png';
+import SDB from '../../assets/user.png';
+import Image from '../image';
+import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------
 
-const StyledOverlay = styled("div")(({ theme }) => ({
+const StyledOverlay = styled('div')(({ theme }) => ({
   top: 0,
   left: 0,
   zIndex: 8,
-  width: "100%",
-  height: "100%",
-  position: "absolute",
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
 
@@ -32,13 +25,7 @@ StudentCard.propTypes = {
   student: PropTypes.object,
 };
 
-function StudentCard({
-  student,
-  setCurrentId,
-  handleOpenView,
-  handleOpenEdit,
-  handleDeleteClick,
-}) {
+function StudentCard({ student, setCurrentId, handleOpenView, handleOpenEdit, handleDeleteClick }) {
   const {
     blog,
     departmentId,
@@ -60,47 +47,39 @@ function StudentCard({
   } = student;
 
   const github = {
-    value: "github",
-    name: "github",
-    icon: "carbon:logo-github",
-    color: "#000000",
+    value: 'github',
+    name: 'github',
+    icon: 'carbon:logo-github',
+    color: '#000000',
     path: `https://www.github.com/${githubId}`,
   };
 
-  const _blog = "uil:blogger";
+  const _blog = {
+    icon: 'uil:blogger',
+    path: `${blog}`,
+  };
 
   return (
-    <Card sx={{ textAlign: "center" }}>
-      <Box sx={{ position: "relative" }}>
+    <Card sx={{ textAlign: 'center' }}>
+      <Box sx={{ position: 'relative' }}>
         <Image src={`${profile}`} ratio="16/9" />
       </Box>
 
-      <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: "black" }}>
+      <Typography variant="subtitle1" sx={{ mt: 6, mb: 0.5, color: 'black' }}>
         {name}
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{ color: "text.secondary", fontWeight: "bolder" }}
-      >
+      <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bolder' }}>
         {semester}학기
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{ color: "text.secondary", fontWeight: "bolder" }}
-      >
+      <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bolder' }}>
         {studentNum}
       </Typography>
 
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ mt: 1, mb: 3 }}
-      >
+      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ mt: 1, mb: 3 }}>
         <IconButton
           sx={{
-            "&:hover": {
-              bgcolor: alpha("#000000", 0.08),
+            '&:hover': {
+              bgcolor: alpha('#000000', 0.08),
             },
           }}
           onClick={(event) => {
@@ -111,35 +90,27 @@ function StudentCard({
         </IconButton>
         <IconButton
           sx={{
-            "&:hover": {
-              bgcolor: alpha("#2DB400", 0.08),
+            '&:hover': {
+              bgcolor: alpha('#2DB400', 0.08),
             },
           }}
           onClick={(event) => {
-            window.open(`${blog}`);
+            window.open(`${_blog.path}`);
           }}
         >
-          <Iconify icon={_blog} />
+          <Iconify icon={_blog.icon} />
         </IconButton>
       </Stack>
-      <Divider sx={{ borderStyle: "dashed" }} />
+      <Divider sx={{ borderStyle: 'dashed' }} />
       <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ py: 2 }}>
         <div>
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ mb: 0.75, color: "text.disabled" }}
-          >
+          <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
             학부
           </Typography>
           <Typography variant="subtitle1">{departmentName}</Typography>
         </div>
         <div>
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ mb: 0.75, color: "text.disabled" }}
-          >
+          <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
             1전공
           </Typography>
 
@@ -154,7 +125,7 @@ function StudentCard({
             handleOpenView();
           }}
         >
-          <Iconify icon={"material-symbols:open-in-full"} />
+          <Iconify icon={'material-symbols:open-in-full'} />
         </IconButton>
 
         <IconButton
@@ -164,7 +135,7 @@ function StudentCard({
             handleOpenEdit();
           }}
         >
-          <Iconify icon={"material-symbols:edit-outline"} />
+          <Iconify icon={'material-symbols:edit-outline'} />
         </IconButton>
 
         <IconButton
@@ -172,7 +143,7 @@ function StudentCard({
           label="Delete"
           onClick={() => handleDeleteClick(+studentId)}
         >
-          <Iconify icon={"material-symbols:delete-outline"} />
+          <Iconify icon={'material-symbols:delete-outline'} />
         </IconButton>
       </Box>
     </Card>
