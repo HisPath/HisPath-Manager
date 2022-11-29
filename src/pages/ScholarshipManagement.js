@@ -119,11 +119,7 @@ function ScholarshipManagement() {
     const formData = new FormData();
     formData.append(
       "semester",
-<<<<<<< HEAD
       new Blob([semester], { type: "application/json" })
-=======
-      new Blob([JSON.stringify(semester)], { type: "application/json" })
->>>>>>> 0a1824b75bace9dfe51b908f8f7a1a220bce2cb6
     );
 
     formData.append("file", files[0]);
