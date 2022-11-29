@@ -7,6 +7,11 @@ import {
   Grid,
   styled,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { studentState } from "../../atom";
@@ -85,15 +90,24 @@ const modalStyle = {
 };
 
 export default function StudentCardsPage({ card, setcard }) {
-  //   const { themeStretch } = useSettingsContext();
   const { enqueueSnackbar } = useSnackbar();
   const [students, setStudent] = useRecoilState(studentState);
+
   const onChangeExcel = async (event) => {
     const { files } = event.target;
     const formData = new FormData();
     formData.append("file", files[0]);
-    await addStudents(formData);
-    enqueueSnackbar("추가되었습니다.", { variant: "success" });
+    await addStudents(formData)
+      .then(function (response) {
+        enqueueSnackbar("학생 리스트를 등록했습니다.", {
+          variant: "success",
+        });
+        loadData();
+      })
+      .catch(function (error) {
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
+      });
     loadData();
   };
 
@@ -122,6 +136,11 @@ export default function StudentCardsPage({ card, setcard }) {
       })
     );
   };
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
   useEffect(() => {
     loadData();
   }, []);
@@ -178,7 +197,6 @@ export default function StudentCardsPage({ card, setcard }) {
               }}
             >
               {students.map((student) => (
-                // <StudentCard key={student.studentId} student={student} />
                 <StudentCard
                   key={student.studentId}
                   student={student}
@@ -219,6 +237,17 @@ export default function StudentCardsPage({ card, setcard }) {
             />
           </Box>
         </Modal>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>잘못된 파일</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{dialogContent}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} autoFocus>
+              닫기
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
     </>
   );
