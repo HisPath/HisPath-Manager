@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const approveScholarships = async (formData) => {
-  const response = await axios.post(
-    `${process.env.REACT_APP_SERVER}/students`,
+  const response = await axios.put(
+    `${process.env.REACT_APP_SERVER}/scholarship/approval`,
     formData,
     {
       headers: { Authorization: localStorage.getItem("TOKEN") },
@@ -92,5 +92,28 @@ export const getScholarshipAverage = async (semester) => {
       headers: { Authorization: localStorage.getItem("TOKEN") },
     }
   );
+  return response.data;
+};
+
+export const getScholarshipListExcel = async (semester) => {
+  const response = await axios
+    .get(
+      `${process.env.REACT_APP_SERVER}/scholarship/excel?semester=${semester}`,
+      {
+        headers: { Authorization: localStorage.getItem("TOKEN") },
+        responseType: "blob",
+      }
+    )
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]), {
+        type: response.headers["content-type"],
+      });
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "마일리지 신청자 승인 명단.xlsx");
+      document.body.appendChild(link);
+      link.click();
+    });
+
   return response.data;
 };
