@@ -16,7 +16,6 @@ import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
 import { scholarshipState, semesterState } from "../atom";
-import scholarshipApprovalExcel from "../assets/scholarship_approval.xlsx";
 import { Paper } from "@mui/material";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
@@ -119,11 +118,7 @@ function ScholarshipManagement() {
     const formData = new FormData();
     formData.append(
       "semester",
-<<<<<<< HEAD
       new Blob([semester], { type: "application/json" })
-=======
-      new Blob([JSON.stringify(semester)], { type: "application/json" })
->>>>>>> 0a1824b75bace9dfe51b908f8f7a1a220bce2cb6
     );
 
     formData.append("file", files[0]);
