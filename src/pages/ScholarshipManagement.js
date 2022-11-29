@@ -22,6 +22,7 @@ import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
 import {
   approveScholarships,
+  getScholarshipListExcel,
   getScholarshipRegistered,
   getSemesters,
   getStudentInfo,
@@ -112,12 +113,22 @@ function ScholarshipManagement() {
 
   const [openView, setOpenView] = useState(false);
   const handleCloseView = () => setOpenView(false);
+
   const onChangeExcel = async (event) => {
     const { files } = event.target;
     const formData = new FormData();
+    formData.append(
+      "semester",
+      new Blob([JSON.stringify(semester)], { type: "application/json" })
+    );
+
     formData.append("file", files[0]);
+
     await approveScholarships(formData);
     loadData();
+  };
+  const excelExport = async () => {
+    getScholarshipListExcel(semester);
   };
 
   const loadData = async () => {
@@ -175,12 +186,7 @@ function ScholarshipManagement() {
           alignItems="flex-end"
           gap={1.5}
         >
-          <Button
-            component="a"
-            href={scholarshipApprovalExcel}
-            download="마일리지 신청자 등록 양식"
-            variant="outlined"
-          >
+          <Button component="a" onClick={excelExport} variant="outlined">
             마일리지 신청자 목록 다운로드
           </Button>
           <Button component="label" variant="outlined">
