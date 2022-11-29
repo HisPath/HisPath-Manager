@@ -13,13 +13,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+
 import { useSnackbar } from 'notistack';
 import '../style/image.css';
 import { deleteNotice, getNoticeById } from '../apis/notice';
 
 const Header = styled('div')({
   display: 'flex',
-  justifycontent: 'space-between',
+  justifyContent: 'space-between',
   alignItems: 'flex-start',
   paddingBottom: 15,
   paddingTop: 15,
@@ -126,8 +127,7 @@ function Buttons({ noticeId, history }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDelete = async (noticeId) => {
-    await deleteNotice(noticeId);
-    setOpen(false);
+    await deleteNotice(noticeId).then(() => navigate('/notice'));
     enqueueSnackbar('삭제되었습니다.', { variant: 'success' });
   };
 
