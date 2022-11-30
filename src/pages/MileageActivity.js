@@ -79,12 +79,14 @@ const modalStyle = {
 function MileageActivity() {
   const { enqueueSnackbar } = useSnackbar();
   const [init, setInit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [mileages, setMileages] = useRecoilState(mileageState);
   const [currentId, setCurrentId] = useState();
   // 확인 과정 추가
   // const [newExcelFile, setNewExcelFile] = useState(null);
   // const [newExcelDir, setNewExcelDir] = useState(null);
   const onChangeExcel = async (event) => {
+    setLoading(true);
     // const fileReader = new FileReader();
     // fileReader.onload = function () {
     //   setNewExcelDir(fileReader.result);
@@ -105,6 +107,7 @@ function MileageActivity() {
         setDialogContent(error.response.data.message);
         setDialogOpen(true);
       });
+    setLoading(false);
     loadData();
   };
   const [openAdd, setOpenAdd] = useState(false);
@@ -227,6 +230,12 @@ function MileageActivity() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 }
