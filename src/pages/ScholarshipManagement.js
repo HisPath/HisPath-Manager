@@ -197,6 +197,7 @@ function ScholarshipManagement() {
   useEffect(() => {
     loadData();
   }, []);
+  console.log(dialogContent);
   return (
     <Container component={Paper}>
       <Header>
@@ -303,7 +304,7 @@ function ScholarshipManagement() {
         <DialogTitle>잘못된 승인 정보</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {dialogContent.split("\n").map((line, index) => {
+            {dialogContent?.split("\n").map((line, index) => {
               return (
                 <span key={index}>
                   {line}
