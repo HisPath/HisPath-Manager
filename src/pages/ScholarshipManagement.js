@@ -10,12 +10,18 @@ import {
   Select,
   MenuItem,
   Button,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Dialog,
+  DialogActions,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { useRecoilState } from "recoil";
 import { scholarshipState, semesterState } from "../atom";
+import { useSnackbar } from "notistack";
 import { Paper } from "@mui/material";
 import * as React from "react";
 import ViewScholarshipRegistered from "../components/Scholarship/ViewScholarshipRegistered";
@@ -101,6 +107,7 @@ const modalStyle = {
 };
 
 function ScholarshipManagement() {
+  const { enqueueSnackbar } = useSnackbar();
   const [setInit] = useState(false);
   const [scholarships, setScholarships] = useRecoilState(scholarshipState);
   const [semester, setSemester] = useRecoilState(semesterState);
@@ -123,7 +130,18 @@ function ScholarshipManagement() {
 
     formData.append("file", files[0]);
 
-    await approveScholarships(formData);
+    await approveScholarships(formData)
+      .then(function (response) {
+        enqueueSnackbar("마일리지 장학금 신청자 승인을 완료하였습니다.", {
+          variant: "success",
+        });
+        loadData();
+      })
+      .catch(function (error) {
+        console.log("aaaa" + error.response.data.message);
+        setDialogContent(error.response.data.message);
+        setDialogOpen(true);
+      });
     loadData();
   };
   const excelExport = async () => {
@@ -172,7 +190,14 @@ function ScholarshipManagement() {
   useEffect(() => {
     getInfo();
   }, []);
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+  const [dialogContent, setDialogContent] = useState();
+  useEffect(() => {
+    loadData();
+  }, []);
   return (
     <Container component={Paper}>
       <Header>
@@ -272,6 +297,17 @@ function ScholarshipManagement() {
           />
         </Box>
       </Modal>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>잘못된 승인 정보</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} autoFocus>
+            닫기
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
