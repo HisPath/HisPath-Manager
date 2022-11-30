@@ -197,7 +197,6 @@ function ScholarshipManagement() {
   useEffect(() => {
     loadData();
   }, []);
-  console.log(dialogContent);
   return (
     <Container component={Paper}>
       <Header>
