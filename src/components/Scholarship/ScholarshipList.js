@@ -46,11 +46,6 @@ const columns = [
     Header: "1전공",
     Filter: SelectColumnFilter,
   },
-  // {
-  //   accessor: "major2Name",
-  //   Header: "2전공",
-  //   Filter: SelectColumnFilter,
-  // },
   {
     accessor: "name",
     Header: "이름",
@@ -63,14 +58,14 @@ const columns = [
     accessor: "totalWeight",
     Header: "총 가중치",
   },
-  // {
-  //   accessor: "result",
-  //   Header: "수혜 금액",
-  // },
   {
-    accessor: "phone",
-    Header: "전화번호",
+    accessor: "result",
+    Header: "결과",
   },
+  // {
+  //   accessor: "phone",
+  //   Header: "전화번호",
+  // },
   {
     accessor: "email",
     Header: "이메일",
@@ -111,7 +106,7 @@ function ScholarshipList() {
   }, []);
 
   return (
-    <Container component={Paper}>
+    <>
       <Article>
         {init ? (
           <ScholarshipListTable
@@ -142,7 +137,7 @@ function ScholarshipList() {
           />
         </Box>
       </Modal>
-    </Container>
+    </>
   );
 }
 
