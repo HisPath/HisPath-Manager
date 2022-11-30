@@ -48,21 +48,6 @@ const columns = [
     headerName: "전공",
     width: 300,
   },
-  // {
-  //   field: 'department',
-  //   headerName: '소속 학부',
-  //   width: 250,
-  // },
-  // {
-  //   field: 'credit',
-  //   headerName: '총 학점',
-  //   width: 150,
-  // },
-  // {
-  //   field: 'total',
-  //   headerName: '총 인원',
-  //   width: 180,
-  // },
 ];
 
 const modalStyle = {
