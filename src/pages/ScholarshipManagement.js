@@ -138,7 +138,6 @@ function ScholarshipManagement() {
         loadData();
       })
       .catch(function (error) {
-        console.log("aaaa" + error.response.data.message);
         setDialogContent(error.response.data.message);
         setDialogOpen(true);
       });
@@ -204,43 +203,46 @@ function ScholarshipManagement() {
         <Typography variant="h5" fontWeight={600}>
           마일리지 장학금 신청자 관리
         </Typography>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          gap={1.5}
-        >
-          <Button component="a" onClick={excelExport} variant="outlined">
-            마일리지 신청자 목록 다운로드
-          </Button>
-          <Button component="label" variant="outlined">
-            승인 목록 업로드
-            <input
-              type="file"
-              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              onChange={onChangeExcel}
-              hidden
-            />
-          </Button>
-        </Box>
-        <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
-          <InputLabel id="semester_id">학기</InputLabel>
-          <Select
-            labelId="semester_id"
-            id="semester_id"
-            value={semester}
-            label="학기"
-            onChange={handleChanges}
+        <Box sx={{ display: "flex", gap: 1.5 }}>
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            gap={1.5}
           >
-            {semesters.map((s, idx) => {
-              return (
-                <MenuItem key={idx} value={s}>
-                  {s}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+            <Button component="a" onClick={excelExport} variant="outlined">
+              마일리지 신청자 목록 다운로드
+            </Button>
+            <Button component="label" variant="outlined">
+              승인 목록 업로드
+              <input
+                type="file"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                onChange={onChangeExcel}
+                hidden
+              />
+            </Button>
+          </Box>
+          <FormControl sx={{ minHeight: 10, minWidth: 120 }}>
+            <InputLabel id="semester_id">학기</InputLabel>
+            <Select
+              size="small"
+              labelId="semester_id"
+              id="semester_id"
+              value={semester}
+              label="학기"
+              onChange={handleChanges}
+            >
+              {semesters.map((s, idx) => {
+                return (
+                  <MenuItem key={idx} value={s}>
+                    {s}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
       </Header>
       <Article>
         <DataGrid
@@ -300,7 +302,16 @@ function ScholarshipManagement() {
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>잘못된 승인 정보</DialogTitle>
         <DialogContent>
-          <DialogContentText>{dialogContent}</DialogContentText>
+          <DialogContentText>
+            {dialogContent.split("\n").map((line, index) => {
+              return (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              );
+            })}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} autoFocus>
