@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useFilters, useSortBy, useTable } from "react-table";
 import { DefaultColumnFilter, Filter } from "./filters";
 import MoreVertIcon from "@mui/icons-material/MoreVert";

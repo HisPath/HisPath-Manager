@@ -15,6 +15,8 @@ import {
   DialogContentText,
   Dialog,
   DialogActions,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../components/Student/CustomNoRowsOverlay";
@@ -108,6 +110,7 @@ const modalStyle = {
 
 function ScholarshipManagement() {
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
   const [setInit] = useState(false);
   const [scholarships, setScholarships] = useRecoilState(scholarshipState);
   const [semester, setSemester] = useRecoilState(semesterState);
@@ -121,6 +124,7 @@ function ScholarshipManagement() {
   const handleCloseView = () => setOpenView(false);
 
   const onChangeExcel = async (event) => {
+    setLoading(true);
     const { files } = event.target;
     const formData = new FormData();
     formData.append(
@@ -141,6 +145,7 @@ function ScholarshipManagement() {
         setDialogContent(error.response.data.message);
         setDialogOpen(true);
       });
+    setLoading(false);
     loadData();
   };
   const excelExport = async () => {
@@ -320,6 +325,12 @@ function ScholarshipManagement() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 }

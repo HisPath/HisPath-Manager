@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -208,6 +210,7 @@ function ViewStudentsModal({ id, students, loadStudents }) {
 
 function ViewMileage({ id, handleClose, loadData }) {
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState([]);
   const mileage = useRecoilValue(mileageState);
   const target = mileage.filter((item) => item.id === id)[0];
@@ -215,6 +218,7 @@ function ViewMileage({ id, handleClose, loadData }) {
     defaultValues: target,
   });
   const onChangeExcel = async (event) => {
+    setLoading(true);
     const { files } = event.target;
     const formData = new FormData();
     formData.append(
@@ -232,6 +236,7 @@ function ViewMileage({ id, handleClose, loadData }) {
         setDialogContent(error.response.data.message);
         setDialogOpen(true);
       });
+    setLoading(false);
   };
   const loadStudents = async () => {
     const data = await getMileage(id);
@@ -332,6 +337,12 @@ function ViewMileage({ id, handleClose, loadData }) {
           </DialogActions>
         </Dialog>
       </Box>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
